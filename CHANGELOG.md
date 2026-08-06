@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Added Result Bundle and Submission v1 with canonical sample packaging, raw-evidence redaction, per-file SHA-256 manifests, atomic ZIP creation, and offline verification.
+- Added explicit authenticated or anonymous submission, HTTPS-by-default endpoint policy, private-only HTTP testing, redirect refusal, response limits, idempotency headers, receipts, CLI commands, schemas, documentation, and tests.
 - Added Database Profile v1 with bounded temporary SQLite connection, point-read, durable insert/update, and concurrent mixed workloads.
 - Added WAL plus synchronous FULL compatibility rules, privacy-safe raw evidence, deterministic cleanup, CLI controls, catalog entries, examples, and tests.
 - Added Web Profile v1 with bounded concurrent HTTP GET workloads, request-rate, error-rate, TTFB, total-latency, and response-throughput metrics.

@@ -8,7 +8,15 @@ from pathlib import Path
 
 from cloudeyes_core.models import PricingCommitment, PricingOperatingSystem
 
-from .commands import run_analyze, run_inspect, run_profile
+from .bundle import DEFAULT_TIMEOUT_SECONDS
+from .commands import (
+    run_analyze,
+    run_bundle,
+    run_inspect,
+    run_profile,
+    run_submit,
+    run_verify_bundle,
+)
 
 
 def _bounded_integer(name: str, value: str, *, minimum: int, maximum: int) -> int:
@@ -219,6 +227,81 @@ def build_parser() -> argparse.ArgumentParser:
         help="operating-system price family used for normalized value comparison",
     )
     analyze_parser.add_argument("--compact", action="store_true", help="emit compact JSON")
+
+    bundle_parser = commands.add_parser(
+        "bundle",
+        help="package validated samples and raw evidence into a checksummed ZIP",
+    )
+    bundle_parser.add_argument(
+        "inputs",
+        nargs="+",
+        type=Path,
+        help="sample JSON file or directory containing sample JSON files",
+    )
+    bundle_parser.add_argument(
+        "--output",
+        type=Path,
+        required=True,
+        help="result bundle ZIP output path",
+    )
+    bundle_parser.add_argument(
+        "--raw-root",
+        type=Path,
+        help="additional trusted root used to resolve raw_output_path references",
+    )
+    bundle_parser.add_argument(
+        "--allow-invalid",
+        action="store_true",
+        help="include semantically invalid samples and record a manifest warning",
+    )
+    bundle_parser.add_argument(
+        "--allow-missing-raw",
+        action="store_true",
+        help="continue when referenced raw evidence is unavailable",
+    )
+    bundle_parser.add_argument("--compact", action="store_true", help="emit compact JSON")
+
+    verify_parser = commands.add_parser(
+        "verify-bundle",
+        help="verify bundle paths, checksums, manifest, and sample semantics",
+    )
+    verify_parser.add_argument("bundle", type=Path, help="result bundle ZIP path")
+    verify_parser.add_argument("--compact", action="store_true", help="emit compact JSON")
+
+    submit_parser = commands.add_parser(
+        "submit",
+        help="explicitly submit a verified result bundle over bounded HTTP",
+    )
+    submit_parser.add_argument("bundle", type=Path, help="verified result bundle ZIP path")
+    submit_parser.add_argument("--endpoint", required=True, help="HTTPS ingestion endpoint")
+    submit_parser.add_argument("--receipt", type=Path, help="optional JSON receipt output path")
+    submit_parser.add_argument(
+        "--token-env",
+        default="CLOUDEYES_API_TOKEN",
+        help="environment variable containing the bearer token",
+    )
+    submit_parser.add_argument(
+        "--anonymous",
+        action="store_true",
+        help="submit without Authorization only to an endpoint that explicitly permits it",
+    )
+    submit_parser.add_argument(
+        "--allow-http",
+        action="store_true",
+        help="allow plain HTTP only for private or loopback test endpoints",
+    )
+    submit_parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="verify and print the submission plan without network access",
+    )
+    submit_parser.add_argument(
+        "--timeout-seconds",
+        type=float,
+        default=DEFAULT_TIMEOUT_SECONDS,
+        help="bounded submission timeout, maximum 300 seconds",
+    )
+    submit_parser.add_argument("--compact", action="store_true", help="emit compact JSON")
     return parser
 
 
@@ -238,6 +321,29 @@ def main(argv: Sequence[str] | None = None) -> int:
             pricing=tuple(args.pricing),
             pricing_commitment=PricingCommitment(args.pricing_commitment),
             pricing_operating_system=PricingOperatingSystem(args.pricing_os),
+        )
+    if args.command == "bundle":
+        return run_bundle(
+            inputs=tuple(args.inputs),
+            output=args.output,
+            raw_root=args.raw_root,
+            allow_invalid_samples=args.allow_invalid,
+            allow_missing_raw=args.allow_missing_raw,
+            pretty=not args.compact,
+        )
+    if args.command == "verify-bundle":
+        return run_verify_bundle(bundle=args.bundle, pretty=not args.compact)
+    if args.command == "submit":
+        return run_submit(
+            bundle=args.bundle,
+            endpoint=args.endpoint,
+            receipt=args.receipt,
+            token_environment=args.token_env,
+            anonymous=args.anonymous,
+            allow_http=args.allow_http,
+            dry_run=args.dry_run,
+            timeout_seconds=args.timeout_seconds,
+            pretty=not args.compact,
         )
     if args.command == "run":
         return run_profile(

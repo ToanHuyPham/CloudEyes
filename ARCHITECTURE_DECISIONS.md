@@ -126,3 +126,21 @@ boundaries, and every connection is closed before the temporary directory is rem
 records SQLite version, sanitized error classes, workload configuration, latencies, rates, and file
 sizes, but not record payloads or the temporary path. Results describe the local VM stack and must not
 be labeled as PostgreSQL, MySQL, networked database, or managed database service performance.
+
+## ADR-019 — Collection and transport are separate, integrity-checked operations
+
+Profile execution never performs network submission. Operators first create a local bundle from
+validated Core samples and referenced JSON evidence. Bundle payloads use canonical JSON and safe
+archive names; every payload receives a SHA-256 digest and exact byte size in a versioned manifest.
+Credential-like fields and URL user/query/fragment components are redacted in the bundled copy,
+while original local evidence remains unchanged. Missing evidence and invalid samples fail closed
+unless an explicit policy exception is recorded in the manifest.
+
+Verification occurs before every submission and rejects traversal paths, duplicate entries,
+symlinks, encrypted entries, unlisted payloads, unsafe archive size, checksum mismatch, unsupported
+manifest shape, and semantically invalid samples. Transport is HTTPS by default, does not follow
+redirects, bounds timeout and response size, reads bearer tokens only from an environment variable,
+and sends the bundle digest as an idempotency key. Plain HTTP is restricted to explicitly allowed
+private or loopback test endpoints. Receipts contain endpoint, status, bundle identity, and response
+digest, but never credentials or response bodies.
+

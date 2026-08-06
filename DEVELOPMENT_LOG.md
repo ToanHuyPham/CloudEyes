@@ -278,3 +278,34 @@
 - Results combine Python, SQLite, CPU, memory, filesystem, and operating-system behavior.
 - Point reads may use page caches, and SQLite serializes write transactions.
 - PostgreSQL, MySQL, remote database authentication, and network latency are outside Database Profile v1.
+
+## 2026-08-06 — Result Bundle and Submission v1
+
+### Completed
+
+- Added canonical multi-sample ZIP bundles with safe internal names and atomic output replacement.
+- Added semantic sample validation, duplicate-ID rejection, explicit invalid/missing-evidence policy,
+  trusted-root raw evidence resolution, credential-key and URL-secret redaction, and SHA-256/size
+  manifest entries.
+- Added offline verification for archive traversal, duplicate entries, symlinks, encryption,
+  archive limits, unlisted files, checksum mismatches, sample identity, and raw JSON structure.
+- Added explicit `cloudeyes bundle`, `cloudeyes verify-bundle`, and `cloudeyes submit` commands.
+- Added HTTPS-by-default submission, environment-only bearer tokens, private/loopback HTTP test
+  policy, redirect refusal, bounded responses, idempotency keys, privacy-safe receipts, schemas,
+  documentation, integration tests, and local HTTP transport tests.
+
+### Current state
+
+- Phase: Platform entry
+- Component: Result Bundle and Submission v1
+- Status: Complete
+- Next component: Backend Ingestion and Validation v1
+
+### Explicit limitations
+
+- The agent does not discover an ingestion endpoint and never submits automatically.
+- Bundle v1 supports JSON samples and JSON raw evidence only.
+- Bearer-token acquisition, server-side signature verification, moderation, and durable ingestion
+  are platform responsibilities outside this module.
+- Anonymous mode must be explicitly selected and accepted by the configured collector.
+

@@ -1,0 +1,147 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cloudeyes.dev/schemas/bundle/manifest-v1.schema.json",
+  "title": "CloudEyes Result Bundle Manifest v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "bundle_id",
+    "created_at",
+    "agent_version",
+    "sample_count",
+    "samples",
+    "files",
+    "policy",
+    "warnings"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "bundle_id": {
+      "type": "string",
+      "pattern": "^bundle-[a-f0-9]{24}$"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "agent_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sample_count": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 1000
+    },
+    "samples": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "sample_id",
+          "profile",
+          "sample_path",
+          "raw_evidence_paths",
+          "validation_warnings"
+        ],
+        "properties": {
+          "sample_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "profile": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sample_path": {
+            "type": "string",
+            "pattern": "^samples/[0-9]{4}\\.json$"
+          },
+          "raw_evidence_paths": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "pattern": "^raw/[0-9]{4}/[0-9]{2}-[^/]+\\.json$"
+            }
+          },
+          "validation_warnings": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "files": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path",
+          "sha256",
+          "size_bytes",
+          "media_type",
+          "redaction_count"
+        ],
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "size_bytes": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "media_type": {
+            "type": "string",
+            "minLength": 1
+          },
+          "redaction_count": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      }
+    },
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "allow_invalid_samples",
+        "allow_missing_raw",
+        "raw_evidence_redaction"
+      ],
+      "properties": {
+        "allow_invalid_samples": {
+          "type": "boolean"
+        },
+        "allow_missing_raw": {
+          "type": "boolean"
+        },
+        "raw_evidence_redaction": {
+          "const": "credential-keys-and-url-secrets-v1"
+        }
+      }
+    },
+    "warnings": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

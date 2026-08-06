@@ -23,7 +23,7 @@ CloudEyes exists to answer:
 
 ## Data flow
 
-Agent → Measurement → Evidence → Sample → Validation → Cohort → Assessment → Explanation → Provider Report → Dashboard
+Agent → Measurement → Evidence → Sample → Validation → Bundle → Submission → Ingestion → Cohort → Assessment → Explanation → Provider Report → Dashboard
 
 ## Main components
 
@@ -49,7 +49,8 @@ Agent → Measurement → Evidence → Sample → Validation → Cohort → Asse
 - Normalized Pricing v1: complete
 - Web Profile v1: complete
 - Database Profile v1: complete
-- Next component: Result Bundle and Submission v1
+- Result Bundle and Submission v1: complete
+- Next component: Backend Ingestion and Validation v1
 
 ## Implementation order
 
@@ -68,8 +69,9 @@ Agent → Measurement → Evidence → Sample → Validation → Cohort → Asse
 13. Normalized pricing — complete v1
 14. Web Profile v1 — complete
 15. Database Profile v1 — complete
-16. Result Bundle and Submission v1
-17. API and dashboard
+16. Result Bundle and Submission v1 — complete
+17. Backend Ingestion and Validation v1
+18. API and dashboard
 
 ## Daily update rule
 

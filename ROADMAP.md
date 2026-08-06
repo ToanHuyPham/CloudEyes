@@ -20,8 +20,8 @@ traceable explanations, JSON output, and Markdown output.
 ## Phase 5 — Specialized profiles — in progress
 Web Profile v1 and Database Profile v1 are complete. Containers, recovery, media, AI, and big data remain.
 
-## Phase 6 — Platform
-API, ingestion, database, workers, dashboard, and provider comparison.
+## Phase 6 — Platform — in progress
+Result Bundle and Submission v1 is complete. Backend ingestion, persistence, workers, dashboard, and provider comparison APIs remain.
 
 ## Phase 7 — Community and verification
 Signed submissions, source tiers, moderation, public datasets, and historical trends.

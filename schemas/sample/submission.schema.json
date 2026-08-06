@@ -1,6 +1,59 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Submission",
+  "$id": "https://cloudeyes.dev/schemas/sample/submission.schema.json",
+  "title": "CloudEyes Submission Receipt v1",
   "type": "object",
-  "additionalProperties": true
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "submitted_at",
+    "endpoint",
+    "bundle_id",
+    "bundle_sha256",
+    "status_code",
+    "accepted",
+    "remote_submission_id",
+    "response_sha256"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "submitted_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "endpoint": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https?://"
+    },
+    "bundle_id": {
+      "type": "string",
+      "pattern": "^bundle-[a-f0-9]{24}$"
+    },
+    "bundle_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "status_code": {
+      "type": "integer",
+      "minimum": 100,
+      "maximum": 599
+    },
+    "accepted": {
+      "type": "boolean"
+    },
+    "remote_submission_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "maxLength": 256
+    },
+    "response_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    }
+  }
 }
