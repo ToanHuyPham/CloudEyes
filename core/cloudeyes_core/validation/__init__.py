@@ -1,9 +1,8 @@
-"""Validation.
+"""CloudEyes validation utilities."""
 
-Placeholder for the CloudEyes foundation.
-Implementation will be added with tests and documentation.
-"""
+from .sample import ValidationResult, validate_sample
 
-from __future__ import annotations
-
-__all__: list[str] = []
+__all__ = [
+    "ValidationResult",
+    "validate_sample",
+]
