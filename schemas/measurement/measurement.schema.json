@@ -1,6 +1,78 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Measurement",
+  "$id": "https://cloudeyes.dev/schemas/measurement/measurement.schema.json",
+  "title": "CloudEyes Measurement",
   "type": "object",
-  "additionalProperties": true
+  "additionalProperties": false,
+  "required": [
+    "measurement_id",
+    "tool",
+    "tool_version",
+    "profile",
+    "protocol_version",
+    "started_at",
+    "finished_at",
+    "status",
+    "metrics",
+    "raw_output_path",
+    "error"
+  ],
+  "properties": {
+    "measurement_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "tool": {
+      "type": "string",
+      "minLength": 1
+    },
+    "tool_version": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "profile": {
+      "type": "string",
+      "minLength": 1
+    },
+    "protocol_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "started_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "finished_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "success",
+        "failed",
+        "skipped"
+      ]
+    },
+    "metrics": {
+      "type": "array",
+      "items": {
+        "$ref": "metric.schema.json"
+      }
+    },
+    "raw_output_path": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "error": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  }
 }
