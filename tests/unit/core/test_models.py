@@ -3,7 +3,6 @@
 from datetime import UTC, datetime
 
 import pytest
-
 from cloudeyes_core.models import (
     Confidence,
     ConfidenceLevel,

@@ -80,7 +80,7 @@ class Sample:
         protocol: ProtocolIdentity,
         measurements: tuple[Measurement, ...],
         quality: SampleQuality,
-    ) -> "Sample":
+    ) -> Sample:
         """Create a sample using the current UTC time."""
 
         return cls(

@@ -78,9 +78,7 @@ def build_provider_reports(
             (item.confidence.overall for item in cohort_reports),
             key=confidence_order.__getitem__,
         )
-        gaps = tuple(
-            sorted({gap for item in cohort_reports for gap in item.coverage.gaps})
-        )
+        gaps = tuple(sorted({gap for item in cohort_reports for gap in item.coverage.gaps}))
         provider_name = ordered_cohorts[0].provider_name
         report_parts = (
             provider_id,

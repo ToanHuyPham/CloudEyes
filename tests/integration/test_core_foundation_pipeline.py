@@ -6,6 +6,7 @@ from datetime import UTC, datetime, timedelta
 from cloudeyes_core.pipeline import analyze_repository
 from cloudeyes_core.repository import JsonSampleRepository
 from cloudeyes_core.serialization import dump
+
 from tests.core_factory import make_sample
 
 

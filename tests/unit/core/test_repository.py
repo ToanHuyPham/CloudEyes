@@ -1,10 +1,10 @@
 """Tests for the validated JSON sample repository."""
 
 import pytest
-
+from cloudeyes_core.models import SampleQualityStatus
 from cloudeyes_core.repository import JsonSampleRepository
 from cloudeyes_core.validation import SampleValidationError
-from cloudeyes_core.models import SampleQualityStatus
+
 from tests.core_factory import make_sample
 
 

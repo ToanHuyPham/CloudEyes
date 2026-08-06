@@ -30,7 +30,8 @@ def validate_sample(sample: Sample) -> ValidationResult:
     errors: list[str] = []
     warnings: list[str] = []
 
-    measurement_ids = [item.measurement_id for item in sample.measurements]
+    measurement_ids = [measurement.measurement_id for measurement in sample.measurements]
+
     if len(measurement_ids) != len(set(measurement_ids)):
         errors.append("measurement IDs must be unique inside a sample")
 
@@ -42,26 +43,36 @@ def validate_sample(sample: Sample) -> ValidationResult:
             errors.append(
                 f"measurement {measurement.measurement_id} profile does not match sample protocol"
             )
+
         if measurement.protocol_version != sample.protocol.version:
             errors.append(
-                f"measurement {measurement.measurement_id} protocol version does not match sample protocol"
+                f"measurement {measurement.measurement_id} "
+                "protocol version does not match sample protocol"
             )
 
-        names = [metric.name for metric in measurement.metrics]
-        if len(names) != len(set(names)):
+        metric_names = [metric.name for metric in measurement.metrics]
+
+        if len(metric_names) != len(set(metric_names)):
             errors.append(
                 f"measurement {measurement.measurement_id} contains duplicate metric names"
             )
 
         if measurement.status is MeasurementStatus.SUCCESS:
             successful_metric_count += len(measurement.metrics)
+
             for metric in measurement.metrics:
                 contract = (metric.unit, metric.direction)
-                existing = metric_contracts.setdefault(metric.name, contract)
+                existing = metric_contracts.setdefault(
+                    metric.name,
+                    contract,
+                )
+
                 if existing != contract:
                     errors.append(f"metric {metric.name} uses incompatible unit or direction")
+
         elif measurement.status is MeasurementStatus.FAILED:
             warnings.append(f"measurement failed: {measurement.measurement_id}")
+
         elif measurement.status is MeasurementStatus.SKIPPED:
             warnings.append(f"measurement skipped: {measurement.measurement_id}")
 
@@ -75,6 +86,7 @@ def validate_sample(sample: Sample) -> ValidationResult:
 
     unique_errors = tuple(dict.fromkeys(errors))
     unique_warnings = tuple(dict.fromkeys(warnings))
+
     return ValidationResult(
         valid=not unique_errors,
         errors=unique_errors,
@@ -86,5 +98,6 @@ def ensure_valid_sample(sample: Sample) -> None:
     """Raise SampleValidationError unless a sample is valid."""
 
     result = validate_sample(sample)
+
     if not result.valid:
         raise SampleValidationError(result.errors)

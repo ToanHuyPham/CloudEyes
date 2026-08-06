@@ -73,8 +73,7 @@ def summarize_cohort(cohort: Cohort) -> CohortSummary:
             values_by_sample[observation.sample_id].append(observation.value)
 
         sample_values = tuple(
-            float(median(values))
-            for _, values in sorted(values_by_sample.items())
+            float(median(values)) for _, values in sorted(values_by_sample.items())
         )
         summaries.append(
             MetricSummary(

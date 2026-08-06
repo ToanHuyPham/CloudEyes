@@ -3,11 +3,12 @@
 from __future__ import annotations
 
 import json
+from collections.abc import Mapping
 from dataclasses import asdict, is_dataclass
 from datetime import datetime
 from enum import Enum
 from pathlib import Path
-from typing import Any, Mapping
+from typing import Any
 
 from ..models import (
     MachineIdentity,

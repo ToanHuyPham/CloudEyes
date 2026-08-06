@@ -45,7 +45,11 @@ class Measurement:
         if self.finished_at < self.started_at:
             raise ValueError("finished_at must not be earlier than started_at")
 
-        status = self.status if isinstance(self.status, MeasurementStatus) else MeasurementStatus(self.status)
+        status = (
+            self.status
+            if isinstance(self.status, MeasurementStatus)
+            else MeasurementStatus(self.status)
+        )
         object.__setattr__(self, "status", status)
         object.__setattr__(self, "metrics", tuple(self.metrics))
 

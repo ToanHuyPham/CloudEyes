@@ -1,10 +1,10 @@
-"""CloudEyes sample validation."""
+"""CloudEyes deterministic core package."""
 
-from .sample import SampleValidationError, ValidationResult, ensure_valid_sample, validate_sample
+from .pipeline import analyze_repository, analyze_samples
 
 __all__ = [
-    "SampleValidationError",
-    "ValidationResult",
-    "ensure_valid_sample",
-    "validate_sample",
+    "analyze_repository",
+    "analyze_samples",
 ]
+
+__version__ = "0.1.0.dev0"

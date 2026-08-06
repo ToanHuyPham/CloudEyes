@@ -3,8 +3,8 @@
 from datetime import UTC, datetime, timedelta
 
 import pytest
-
 from cloudeyes_core.cohorts import build_cohorts, compare_samples
+
 from tests.core_factory import make_sample
 
 

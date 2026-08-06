@@ -1,9 +1,9 @@
 """Tests for descriptive statistics and cohort aggregation."""
 
 import pytest
-
 from cloudeyes_core.cohorts import build_cohorts, summarize_cohort
 from cloudeyes_core.statistics import percentile, summarize
+
 from tests.core_factory import make_sample
 
 
@@ -23,7 +23,9 @@ def test_zero_mean_has_no_coefficient() -> None:
 
 
 def test_each_sample_has_equal_weight() -> None:
-    cohort = build_cohorts((make_sample("a", values=(100.0, 110.0, 120.0)), make_sample("b", values=(200.0,))))[0]
+    cohort = build_cohorts(
+        (make_sample("a", values=(100.0, 110.0, 120.0)), make_sample("b", values=(200.0,)))
+    )[0]
     metric = summarize_cohort(cohort).metrics[0]
     assert metric.raw_observations == 4
     assert metric.contributing_samples == 2

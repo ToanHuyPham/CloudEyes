@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import re
 import tempfile
+from collections.abc import Iterator
 from pathlib import Path
-from typing import Iterator
 
 from ..models import Sample
 from ..serialization import dumps, load_sample

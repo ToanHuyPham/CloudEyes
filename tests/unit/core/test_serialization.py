@@ -3,6 +3,7 @@
 import json
 
 from cloudeyes_core.serialization import dump, dumps, load_sample, loads_sample
+
 from tests.core_factory import make_sample
 
 

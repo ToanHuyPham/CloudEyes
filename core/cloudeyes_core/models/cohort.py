@@ -34,7 +34,7 @@ class CohortKey:
     protocol_fingerprint: str
 
     @classmethod
-    def from_sample(cls, sample: Sample) -> "CohortKey":
+    def from_sample(cls, sample: Sample) -> CohortKey:
         """Build a compatibility key from one sample."""
 
         return cls(
