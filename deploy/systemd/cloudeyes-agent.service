@@ -1,0 +1,6 @@
+[Unit]
+Description=CloudEyes Agent
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/true

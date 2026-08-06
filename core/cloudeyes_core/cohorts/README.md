@@ -1,0 +1,3 @@
+# Cohorts
+
+Core cohorts components.

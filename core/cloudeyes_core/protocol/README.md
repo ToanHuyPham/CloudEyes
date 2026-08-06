@@ -1,0 +1,3 @@
+# Protocol
+
+Core protocol components.

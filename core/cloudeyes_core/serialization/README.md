@@ -1,0 +1,3 @@
+# Serialization
+
+Core serialization components.

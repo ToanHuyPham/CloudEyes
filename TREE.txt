@@ -1,0 +1,694 @@
+CloudEyes-v1.1-Foundation/
+├── .github/
+│   ├── ISSUE_TEMPLATE/
+│   │   ├── bug_report.yml
+│   │   ├── feature_request.yml
+│   │   ├── profile_request.yml
+│   │   └── provider_submission.yml
+│   ├── workflows/
+│   │   ├── ci.yml
+│   │   ├── lint.yml
+│   │   ├── release.yml
+│   │   ├── schema-check.yml
+│   │   └── test.yml
+│   ├── pull_request_template.md
+│   └── README.md
+├── agent/
+│   ├── cloudeyes_agent/
+│   │   ├── commands/
+│   │   │   ├── __init__.py
+│   │   │   ├── explain.py
+│   │   │   ├── inspect.py
+│   │   │   ├── README.md
+│   │   │   ├── run.py
+│   │   │   ├── submit.py
+│   │   │   └── validate.py
+│   │   ├── config/
+│   │   │   ├── __init__.py
+│   │   │   ├── loader.py
+│   │   │   ├── model.py
+│   │   │   ├── README.md
+│   │   │   └── validation.py
+│   │   ├── discovery/
+│   │   │   ├── __init__.py
+│   │   │   ├── hardware.py
+│   │   │   ├── provider.py
+│   │   │   ├── README.md
+│   │   │   ├── system.py
+│   │   │   └── virtualization.py
+│   │   ├── execution/
+│   │   │   ├── __init__.py
+│   │   │   ├── command.py
+│   │   │   ├── context.py
+│   │   │   ├── pipeline.py
+│   │   │   ├── README.md
+│   │   │   ├── runner.py
+│   │   │   └── safety.py
+│   │   ├── profiles/
+│   │   │   ├── ai/
+│   │   │   │   ├── config.yaml
+│   │   │   │   ├── manifest.yaml
+│   │   │   │   ├── profile.py
+│   │   │   │   └── README.md
+│   │   │   ├── bigdata/
+│   │   │   │   ├── config.yaml
+│   │   │   │   ├── manifest.yaml
+│   │   │   │   ├── profile.py
+│   │   │   │   └── README.md
+│   │   │   ├── containers/
+│   │   │   │   ├── config.yaml
+│   │   │   │   ├── manifest.yaml
+│   │   │   │   ├── profile.py
+│   │   │   │   └── README.md
+│   │   │   ├── database/
+│   │   │   │   ├── config.yaml
+│   │   │   │   ├── manifest.yaml
+│   │   │   │   ├── profile.py
+│   │   │   │   └── README.md
+│   │   │   ├── general/
+│   │   │   │   ├── config.yaml
+│   │   │   │   ├── manifest.yaml
+│   │   │   │   ├── profile.py
+│   │   │   │   └── README.md
+│   │   │   ├── media/
+│   │   │   │   ├── config.yaml
+│   │   │   │   ├── manifest.yaml
+│   │   │   │   ├── profile.py
+│   │   │   │   └── README.md
+│   │   │   ├── networking/
+│   │   │   │   ├── config.yaml
+│   │   │   │   ├── manifest.yaml
+│   │   │   │   ├── profile.py
+│   │   │   │   └── README.md
+│   │   │   ├── recovery/
+│   │   │   │   ├── config.yaml
+│   │   │   │   ├── manifest.yaml
+│   │   │   │   ├── profile.py
+│   │   │   │   └── README.md
+│   │   │   ├── storage/
+│   │   │   │   ├── config.yaml
+│   │   │   │   ├── manifest.yaml
+│   │   │   │   ├── profile.py
+│   │   │   │   └── README.md
+│   │   │   ├── web/
+│   │   │   │   ├── config.yaml
+│   │   │   │   ├── manifest.yaml
+│   │   │   │   ├── profile.py
+│   │   │   │   └── README.md
+│   │   │   ├── contract.py
+│   │   │   ├── loader.py
+│   │   │   ├── README.md
+│   │   │   ├── registry.py
+│   │   │   └── validator.py
+│   │   ├── quality/
+│   │   │   ├── __init__.py
+│   │   │   ├── background_load.py
+│   │   │   ├── completeness.py
+│   │   │   ├── cpu_steal.py
+│   │   │   ├── preflight.py
+│   │   │   ├── README.md
+│   │   │   └── throttling.py
+│   │   ├── reporting/
+│   │   │   ├── __init__.py
+│   │   │   ├── console.py
+│   │   │   ├── json.py
+│   │   │   ├── markdown.py
+│   │   │   └── README.md
+│   │   ├── sample/
+│   │   │   ├── __init__.py
+│   │   │   ├── builder.py
+│   │   │   ├── checksum.py
+│   │   │   ├── README.md
+│   │   │   ├── redaction.py
+│   │   │   ├── serializer.py
+│   │   │   └── validator.py
+│   │   ├── storage/
+│   │   │   ├── __init__.py
+│   │   │   ├── paths.py
+│   │   │   ├── raw_output.py
+│   │   │   ├── README.md
+│   │   │   └── repository.py
+│   │   ├── tools/
+│   │   │   ├── contract.py
+│   │   │   ├── fio.py
+│   │   │   ├── iperf3.py
+│   │   │   ├── openssl.py
+│   │   │   ├── ping.py
+│   │   │   ├── README.md
+│   │   │   ├── registry.py
+│   │   │   ├── resolver.py
+│   │   │   ├── stressng.py
+│   │   │   ├── sysbench.py
+│   │   │   └── traceroute.py
+│   │   ├── uploader/
+│   │   │   ├── __init__.py
+│   │   │   ├── client.py
+│   │   │   ├── queue.py
+│   │   │   ├── README.md
+│   │   │   └── receipt.py
+│   │   ├── __init__.py
+│   │   ├── __main__.py
+│   │   └── cli.py
+│   ├── pyproject.toml
+│   └── README.md
+├── catalog/
+│   ├── criteria/
+│   │   ├── confidence.yaml
+│   │   ├── consistency.yaml
+│   │   ├── coverage.yaml
+│   │   ├── performance.yaml
+│   │   ├── price-performance.yaml
+│   │   ├── quality.yaml
+│   │   ├── README.md
+│   │   ├── reliability.yaml
+│   │   └── verdicts.yaml
+│   ├── currencies/
+│   │   ├── currencies.yaml
+│   │   └── README.md
+│   ├── explanations/
+│   │   ├── limitations.yaml
+│   │   ├── README.md
+│   │   ├── reasons.yaml
+│   │   ├── recommendations.yaml
+│   │   └── templates.yaml
+│   ├── metrics/
+│   │   ├── compute.yaml
+│   │   ├── memory.yaml
+│   │   ├── network.yaml
+│   │   ├── README.md
+│   │   ├── stability.yaml
+│   │   └── storage.yaml
+│   ├── protocol_versions/
+│   │   ├── ai-v1.yaml
+│   │   ├── bigdata-v1.yaml
+│   │   ├── containers-v1.yaml
+│   │   ├── database-v1.yaml
+│   │   ├── general-v1.yaml
+│   │   ├── media-v1.yaml
+│   │   ├── networking-v1.yaml
+│   │   ├── README.md
+│   │   ├── recovery-v1.yaml
+│   │   ├── storage-v1.yaml
+│   │   └── web-v1.yaml
+│   ├── provider_features/
+│   │   ├── availability.yaml
+│   │   ├── backup.yaml
+│   │   ├── billing.yaml
+│   │   ├── compliance.yaml
+│   │   ├── compute.yaml
+│   │   ├── databases.yaml
+│   │   ├── iam.yaml
+│   │   ├── kubernetes.yaml
+│   │   ├── network.yaml
+│   │   ├── observability.yaml
+│   │   ├── README.md
+│   │   ├── security.yaml
+│   │   ├── storage.yaml
+│   │   └── support.yaml
+│   ├── providers/
+│   │   ├── aliases.yaml
+│   │   ├── global.yaml
+│   │   ├── README.md
+│   │   └── vietnam.yaml
+│   ├── regions/
+│   │   ├── global.yaml
+│   │   ├── README.md
+│   │   └── vietnam.yaml
+│   ├── use_cases/
+│   │   ├── ai-machine-learning.yaml
+│   │   ├── application-hosting.yaml
+│   │   ├── big-data-analytics.yaml
+│   │   ├── containers-kubernetes.yaml
+│   │   ├── database-management.yaml
+│   │   ├── development-testing.yaml
+│   │   ├── disaster-recovery.yaml
+│   │   ├── enterprise-applications.yaml
+│   │   ├── media-processing.yaml
+│   │   ├── networking-connectivity.yaml
+│   │   ├── README.md
+│   │   ├── storage-backup.yaml
+│   │   ├── virtual-desktop.yaml
+│   │   └── web-hosting.yaml
+│   └── README.md
+├── core/
+│   ├── cloudeyes_core/
+│   │   ├── assessment/
+│   │   │   ├── __init__.py
+│   │   │   ├── consistency.py
+│   │   │   ├── engine.py
+│   │   │   ├── performance.py
+│   │   │   ├── README.md
+│   │   │   ├── reliability.py
+│   │   │   ├── use_cases.py
+│   │   │   ├── value.py
+│   │   │   └── verdict.py
+│   │   ├── capabilities/
+│   │   │   ├── __init__.py
+│   │   │   ├── catalog.py
+│   │   │   ├── model.py
+│   │   │   ├── README.md
+│   │   │   ├── sources.py
+│   │   │   └── verification.py
+│   │   ├── cohorts/
+│   │   │   ├── __init__.py
+│   │   │   ├── builder.py
+│   │   │   ├── compatibility.py
+│   │   │   ├── grouping.py
+│   │   │   ├── key.py
+│   │   │   ├── README.md
+│   │   │   └── summary.py
+│   │   ├── coverage/
+│   │   │   ├── __init__.py
+│   │   │   ├── calculator.py
+│   │   │   ├── gaps.py
+│   │   │   ├── geography.py
+│   │   │   ├── metrics.py
+│   │   │   ├── products.py
+│   │   │   ├── README.md
+│   │   │   └── time.py
+│   │   ├── evidence/
+│   │   │   ├── __init__.py
+│   │   │   ├── completeness.py
+│   │   │   ├── extractor.py
+│   │   │   ├── mapper.py
+│   │   │   ├── README.md
+│   │   │   └── validator.py
+│   │   ├── explanation/
+│   │   │   ├── __init__.py
+│   │   │   ├── engine.py
+│   │   │   ├── limitations.py
+│   │   │   ├── README.md
+│   │   │   ├── reasons.py
+│   │   │   ├── recommendations.py
+│   │   │   ├── rules.py
+│   │   │   └── trace.py
+│   │   ├── models/
+│   │   │   ├── __init__.py
+│   │   │   ├── assessment.py
+│   │   │   ├── cohort.py
+│   │   │   ├── evidence.py
+│   │   │   ├── identity.py
+│   │   │   ├── measurement.py
+│   │   │   ├── metric.py
+│   │   │   ├── protocol.py
+│   │   │   ├── README.md
+│   │   │   ├── report.py
+│   │   │   └── sample.py
+│   │   ├── normalization/
+│   │   │   ├── __init__.py
+│   │   │   ├── hardware.py
+│   │   │   ├── names.py
+│   │   │   ├── price.py
+│   │   │   ├── provider.py
+│   │   │   ├── README.md
+│   │   │   └── units.py
+│   │   ├── pricing/
+│   │   │   ├── __init__.py
+│   │   │   ├── effective_cost.py
+│   │   │   ├── model.py
+│   │   │   ├── normalization.py
+│   │   │   ├── README.md
+│   │   │   └── value.py
+│   │   ├── protocol/
+│   │   │   ├── __init__.py
+│   │   │   ├── compatibility.py
+│   │   │   ├── fingerprint.py
+│   │   │   ├── manifest.py
+│   │   │   ├── README.md
+│   │   │   └── version.py
+│   │   ├── provider/
+│   │   │   ├── __init__.py
+│   │   │   ├── aggregator.py
+│   │   │   ├── comparison.py
+│   │   │   ├── history.py
+│   │   │   ├── identity.py
+│   │   │   ├── README.md
+│   │   │   ├── report.py
+│   │   │   └── scorecard.py
+│   │   ├── serialization/
+│   │   │   ├── __init__.py
+│   │   │   ├── json.py
+│   │   │   ├── migration.py
+│   │   │   ├── README.md
+│   │   │   └── yaml.py
+│   │   ├── statistics/
+│   │   │   ├── __init__.py
+│   │   │   ├── comparison.py
+│   │   │   ├── descriptive.py
+│   │   │   ├── dispersion.py
+│   │   │   ├── outliers.py
+│   │   │   ├── percentiles.py
+│   │   │   ├── README.md
+│   │   │   └── trend.py
+│   │   ├── validation/
+│   │   │   ├── __init__.py
+│   │   │   ├── compatibility.py
+│   │   │   ├── measurement.py
+│   │   │   ├── protocol.py
+│   │   │   ├── quality.py
+│   │   │   ├── README.md
+│   │   │   └── sample.py
+│   │   └── __init__.py
+│   ├── pyproject.toml
+│   └── README.md
+├── data/
+│   ├── assessments/
+│   │   └── README.md
+│   ├── cache/
+│   │   └── README.md
+│   ├── capabilities/
+│   │   └── README.md
+│   ├── cohorts/
+│   │   └── README.md
+│   ├── history/
+│   │   └── README.md
+│   ├── prices/
+│   │   └── README.md
+│   ├── provider-reports/
+│   │   └── README.md
+│   ├── quarantine/
+│   │   └── README.md
+│   ├── raw/
+│   │   └── README.md
+│   ├── samples/
+│   │   └── README.md
+│   ├── submissions/
+│   │   └── README.md
+│   ├── .gitkeep
+│   └── README.md
+├── deploy/
+│   ├── compose/
+│   │   ├── docker-compose.dev.yml
+│   │   ├── docker-compose.prod.yml
+│   │   └── README.md
+│   ├── docker/
+│   │   ├── agent.Dockerfile
+│   │   ├── api.Dockerfile
+│   │   ├── dashboard.Dockerfile
+│   │   ├── README.md
+│   │   └── worker.Dockerfile
+│   ├── kubernetes/
+│   │   ├── api.yaml
+│   │   ├── dashboard.yaml
+│   │   ├── database.yaml
+│   │   ├── ingress.yaml
+│   │   ├── namespace.yaml
+│   │   ├── README.md
+│   │   └── workers.yaml
+│   ├── systemd/
+│   │   ├── cloudeyes-agent.service
+│   │   └── README.md
+│   └── README.md
+├── docs/
+│   ├── architecture/
+│   │   ├── design-principles.md
+│   │   ├── overview.md
+│   │   ├── README.md
+│   │   └── terminology.md
+│   ├── assessment/
+│   │   ├── cohorts.md
+│   │   ├── confidence.md
+│   │   ├── coverage.md
+│   │   ├── evidence.md
+│   │   ├── explanation.md
+│   │   ├── README.md
+│   │   └── use-cases.md
+│   ├── development/
+│   │   ├── migration.md
+│   │   ├── README.md
+│   │   ├── release.md
+│   │   ├── setup.md
+│   │   └── testing.md
+│   ├── measurement/
+│   │   ├── metric-model.md
+│   │   ├── normalization.md
+│   │   ├── README.md
+│   │   ├── sample-quality.md
+│   │   └── statistics.md
+│   ├── platform/
+│   │   ├── api.md
+│   │   ├── dashboard.md
+│   │   ├── ingestion.md
+│   │   ├── README.md
+│   │   └── verification.md
+│   ├── profiles/
+│   │   ├── contract.md
+│   │   ├── development.md
+│   │   ├── README.md
+│   │   └── versioning.md
+│   ├── protocol/
+│   │   ├── compatibility.md
+│   │   ├── execution.md
+│   │   ├── overview.md
+│   │   ├── README.md
+│   │   ├── safety.md
+│   │   └── versioning.md
+│   ├── provider/
+│   │   ├── capabilities.md
+│   │   ├── products-plans.md
+│   │   ├── provider-model.md
+│   │   ├── provider-report.md
+│   │   ├── README.md
+│   │   └── regions.md
+│   └── README.md
+├── examples/
+│   ├── assessments/
+│   │   ├── assessment-example.json
+│   │   └── README.md
+│   ├── cohorts/
+│   │   ├── cohort-example.json
+│   │   └── README.md
+│   ├── configs/
+│   │   ├── agent.yaml
+│   │   ├── profile-overrides.yaml
+│   │   ├── provider.yaml
+│   │   └── README.md
+│   ├── providers/
+│   │   ├── provider-report-example.json
+│   │   └── README.md
+│   ├── samples/
+│   │   ├── README.md
+│   │   ├── sample-complete.json
+│   │   └── sample-minimal.json
+│   └── README.md
+├── platform/
+│   ├── api/
+│   │   ├── __init__.py
+│   │   ├── dependencies.py
+│   │   ├── errors.py
+│   │   ├── main.py
+│   │   └── README.md
+│   ├── dashboard/
+│   │   ├── public/
+│   │   │   └── README.md
+│   │   ├── src/
+│   │   │   └── README.md
+│   │   ├── package.json
+│   │   └── README.md
+│   ├── ingestion/
+│   │   ├── __init__.py
+│   │   ├── deduplication.py
+│   │   ├── pipeline.py
+│   │   ├── quarantine.py
+│   │   ├── README.md
+│   │   └── validator.py
+│   ├── moderation/
+│   │   ├── __init__.py
+│   │   ├── audit.py
+│   │   ├── queue.py
+│   │   ├── README.md
+│   │   └── rules.py
+│   ├── repository/
+│   │   ├── __init__.py
+│   │   ├── assessments.py
+│   │   ├── cohorts.py
+│   │   ├── database.py
+│   │   ├── providers.py
+│   │   ├── README.md
+│   │   └── samples.py
+│   ├── verification/
+│   │   ├── __init__.py
+│   │   ├── anomalies.py
+│   │   ├── checksums.py
+│   │   ├── duplicates.py
+│   │   ├── README.md
+│   │   ├── signatures.py
+│   │   └── trust.py
+│   ├── workers/
+│   │   ├── __init__.py
+│   │   ├── aggregate.py
+│   │   ├── assess.py
+│   │   ├── explain.py
+│   │   ├── README.md
+│   │   └── trends.py
+│   ├── pyproject.toml
+│   └── README.md
+├── reports/
+│   ├── renderers/
+│   │   ├── csv.py
+│   │   ├── html.py
+│   │   ├── json.py
+│   │   ├── markdown.py
+│   │   └── README.md
+│   ├── templates/
+│   │   ├── assessment.md.j2
+│   │   ├── cohort.md.j2
+│   │   ├── comparison.md.j2
+│   │   ├── provider.md.j2
+│   │   ├── README.md
+│   │   └── sample.md.j2
+│   └── README.md
+├── schemas/
+│   ├── assessment/
+│   │   ├── assessment.schema.json
+│   │   ├── dimension.schema.json
+│   │   ├── explanation.schema.json
+│   │   ├── README.md
+│   │   ├── use-case.schema.json
+│   │   └── verdict.schema.json
+│   ├── cohort/
+│   │   ├── cohort-key.schema.json
+│   │   ├── cohort-summary.schema.json
+│   │   ├── cohort.schema.json
+│   │   └── README.md
+│   ├── common/
+│   │   ├── confidence.schema.json
+│   │   ├── identifier.schema.json
+│   │   ├── README.md
+│   │   ├── source.schema.json
+│   │   ├── statistics.schema.json
+│   │   └── timestamp.schema.json
+│   ├── discovery/
+│   │   ├── hardware.schema.json
+│   │   ├── network.schema.json
+│   │   ├── provider.schema.json
+│   │   ├── README.md
+│   │   ├── system.schema.json
+│   │   └── virtualization.schema.json
+│   ├── evidence/
+│   │   ├── coverage.schema.json
+│   │   ├── evidence.schema.json
+│   │   ├── README.md
+│   │   └── sample-quality.schema.json
+│   ├── measurement/
+│   │   ├── measurement.schema.json
+│   │   ├── metric.schema.json
+│   │   ├── raw-output.schema.json
+│   │   ├── README.md
+│   │   └── tool-result.schema.json
+│   ├── protocol/
+│   │   ├── execution.schema.json
+│   │   ├── manifest.schema.json
+│   │   ├── profile.schema.json
+│   │   └── README.md
+│   ├── provider/
+│   │   ├── capability.schema.json
+│   │   ├── plan.schema.json
+│   │   ├── product.schema.json
+│   │   ├── provider-report.schema.json
+│   │   ├── provider.schema.json
+│   │   ├── README.md
+│   │   └── scorecard.schema.json
+│   ├── sample/
+│   │   ├── environment.schema.json
+│   │   ├── identity.schema.json
+│   │   ├── README.md
+│   │   ├── sample.schema.json
+│   │   └── submission.schema.json
+│   └── README.md
+├── scripts/
+│   ├── bootstrap-dev.sh
+│   ├── build_catalog.py
+│   ├── generate_examples.py
+│   ├── lint.sh
+│   ├── migrate_samples.py
+│   ├── README.md
+│   ├── release.py
+│   ├── run-tests.sh
+│   └── validate-schemas.sh
+├── tests/
+│   ├── contract/
+│   │   ├── api-contract/
+│   │   │   └── README.md
+│   │   ├── profile-contract/
+│   │   │   └── README.md
+│   │   ├── schema-contract/
+│   │   │   └── README.md
+│   │   ├── tool-contract/
+│   │   │   └── README.md
+│   │   └── README.md
+│   ├── fixtures/
+│   │   ├── assessments/
+│   │   │   └── README.md
+│   │   ├── cohorts/
+│   │   │   └── README.md
+│   │   ├── discovery/
+│   │   │   └── README.md
+│   │   ├── providers/
+│   │   │   └── README.md
+│   │   ├── samples/
+│   │   │   └── README.md
+│   │   ├── tool-output/
+│   │   │   └── README.md
+│   │   └── README.md
+│   ├── integration/
+│   │   ├── api/
+│   │   │   └── README.md
+│   │   ├── cohort-building/
+│   │   │   └── README.md
+│   │   ├── ingestion/
+│   │   │   └── README.md
+│   │   ├── profile-execution/
+│   │   │   └── README.md
+│   │   ├── provider-assessment/
+│   │   │   └── README.md
+│   │   ├── sample-validation/
+│   │   │   └── README.md
+│   │   └── README.md
+│   ├── performance/
+│   │   ├── aggregation/
+│   │   │   └── README.md
+│   │   ├── ingestion/
+│   │   │   └── README.md
+│   │   ├── reporting/
+│   │   │   └── README.md
+│   │   └── README.md
+│   ├── regression/
+│   │   ├── assessment/
+│   │   │   └── README.md
+│   │   ├── explanation/
+│   │   │   └── README.md
+│   │   ├── statistics/
+│   │   │   └── README.md
+│   │   └── README.md
+│   ├── unit/
+│   │   ├── agent/
+│   │   │   └── README.md
+│   │   ├── catalog/
+│   │   │   └── README.md
+│   │   ├── core/
+│   │   │   └── README.md
+│   │   ├── platform/
+│   │   │   └── README.md
+│   │   ├── reports/
+│   │   │   └── README.md
+│   │   ├── schemas/
+│   │   │   └── README.md
+│   │   └── README.md
+│   ├── README.md
+│   └── test_skeleton.py
+├── .editorconfig
+├── .gitignore
+├── .pre-commit-config.yaml
+├── ARCHITECTURE_DECISIONS.md
+├── CHANGELOG.md
+├── CODE_OF_CONDUCT.md
+├── CONTRIBUTING.md
+├── DEVELOPMENT_LOG.md
+├── LICENSE
+├── Makefile
+├── PROJECT_GUIDE.md
+├── pyproject.toml
+├── README.md
+├── ROADMAP.md
+└── SECURITY.md

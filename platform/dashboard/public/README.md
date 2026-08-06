@@ -1,0 +1,3 @@
+# Public
+
+Dashboard public directory.

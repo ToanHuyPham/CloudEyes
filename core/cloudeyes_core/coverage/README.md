@@ -1,0 +1,3 @@
+# Coverage
+
+Core coverage components.
