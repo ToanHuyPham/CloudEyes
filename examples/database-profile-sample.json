@@ -1,0 +1,104 @@
+{
+  "created_at": "2026-08-06T11:00:00+00:00",
+  "machine": {
+    "architecture": "AMD64",
+    "cpu_count": 8,
+    "machine_type": "virtual_machine",
+    "memory_bytes": 17179869184
+  },
+  "measurements": [
+    {
+      "error": null,
+      "finished_at": "2026-08-06T11:00:00+00:00",
+      "measurement_id": "database-example-database",
+      "metrics": [
+        {
+          "direction": "lower_is_better",
+          "name": "database.sqlite.connection.p50_milliseconds",
+          "unit": "milliseconds",
+          "value": 0.32342000122298487
+        },
+        {
+          "direction": "lower_is_better",
+          "name": "database.sqlite.connection.p95_milliseconds",
+          "unit": "milliseconds",
+          "value": 0.3843459999188781
+        },
+        {
+          "direction": "lower_is_better",
+          "name": "database.sqlite.point_read.p50_milliseconds",
+          "unit": "milliseconds",
+          "value": 0.0033045016607502475
+        },
+        {
+          "direction": "lower_is_better",
+          "name": "database.sqlite.point_read.p95_milliseconds",
+          "unit": "milliseconds",
+          "value": 0.006151548222987911
+        },
+        {
+          "direction": "higher_is_better",
+          "name": "database.sqlite.insert.transactions_per_second",
+          "unit": "transactions_per_second",
+          "value": 715.3813207809467
+        },
+        {
+          "direction": "higher_is_better",
+          "name": "database.sqlite.update.transactions_per_second",
+          "unit": "transactions_per_second",
+          "value": 357.96402665316884
+        },
+        {
+          "direction": "lower_is_better",
+          "name": "database.sqlite.write_transaction.p95_milliseconds",
+          "unit": "milliseconds",
+          "value": 4.054879399700447
+        },
+        {
+          "direction": "higher_is_better",
+          "name": "database.sqlite.mixed.operations_per_second",
+          "unit": "operations_per_second",
+          "value": 1891.020453439226
+        },
+        {
+          "direction": "lower_is_better",
+          "name": "database.sqlite.mixed.error_rate.percent",
+          "unit": "percent",
+          "value": 0.0
+        }
+      ],
+      "profile": "database",
+      "protocol_version": "1.0.0",
+      "raw_output_path": "examples/raw/database-example-database.json",
+      "started_at": "2026-08-06T11:00:00+00:00",
+      "status": "success",
+      "tool": "python-sqlite-profile",
+      "tool_version": "3.13.5"
+    }
+  ],
+  "product": {
+    "plan": "standard-4",
+    "product": "virtual-machine",
+    "region": "vn-central",
+    "zone": "vn-central-a"
+  },
+  "protocol": {
+    "fingerprint": "5248aaa2f92e2482fb7be9a383c7ced239a89604c79b9eb34f0e2e3291c63acb",
+    "profile": "database",
+    "version": "1.0.0"
+  },
+  "provider": {
+    "country_code": "VN",
+    "name": "Example Cloud",
+    "provider_id": "example-cloud"
+  },
+  "quality": {
+    "errors": [],
+    "status": "valid_with_warnings",
+    "warnings": [
+      "database_profile_uses_local_sqlite",
+      "database_single_repetition"
+    ]
+  },
+  "sample_id": "database-example"
+}

@@ -18,7 +18,7 @@ traceable USD-per-hour price evidence, compatible value comparisons, multidimens
 traceable explanations, JSON output, and Markdown output.
 
 ## Phase 5 — Specialized profiles — in progress
-Web Profile v1 is complete. Database, containers, recovery, media, AI, and big data remain.
+Web Profile v1 and Database Profile v1 are complete. Containers, recovery, media, AI, and big data remain.
 
 ## Phase 6 — Platform
 API, ingestion, database, workers, dashboard, and provider comparison.

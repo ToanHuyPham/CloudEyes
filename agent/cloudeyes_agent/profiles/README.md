@@ -9,7 +9,8 @@ Implemented:
 - `networking` v1 — explicit-endpoint DNS, TCP, TLS, HTTP, throughput, and loss measurements.
 - `compute` v1 — bounded single-process and multi-process CPU measurements with raw evidence.
 - `web` v1 — bounded concurrent HTTP GET service measurements with privacy-safe raw evidence.
+- `database` v1 — bounded temporary SQLite reads, durable writes, and mixed concurrency.
 
 Planned next:
 
-- Database Profile v1.
+- Result Bundle and Submission v1.

@@ -39,7 +39,7 @@ Agent → Measurement → Evidence → Sample → Validation → Cohort → Asse
 
 - Phase: Specialized profiles
 - Version: 0.1.0-dev
-- Completed profiles: General v1, Storage v1, Networking v1, Compute v1, and Web v1
+- Completed profiles: General v1, Storage v1, Networking v1, Compute v1, Web v1, and Database v1
 - Raw storage evidence: Atomic local JSON
 - Platform: Skeleton only
 - Shared measurement reliability policies: complete
@@ -48,7 +48,8 @@ Agent → Measurement → Evidence → Sample → Validation → Cohort → Asse
 - Compatible Peer Comparison v1: complete
 - Normalized Pricing v1: complete
 - Web Profile v1: complete
-- Next component: Database Profile v1
+- Database Profile v1: complete
+- Next component: Result Bundle and Submission v1
 
 ## Implementation order
 
@@ -66,8 +67,9 @@ Agent → Measurement → Evidence → Sample → Validation → Cohort → Asse
 12. Compatible peer comparison — complete v1
 13. Normalized pricing — complete v1
 14. Web Profile v1 — complete
-15. Database and remaining specialized profiles
-16. API and dashboard
+15. Database Profile v1 — complete
+16. Result Bundle and Submission v1
+17. API and dashboard
 
 ## Daily update rule
 

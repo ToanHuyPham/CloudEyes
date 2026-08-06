@@ -283,3 +283,78 @@ def test_interrupted_isolated_run_returns_130(monkeypatch, capsys) -> None:
 
     assert exit_code == 130
     assert "profile cancelled" in capsys.readouterr().out
+
+
+def test_run_database_passes_bounded_workload_options(tmp_path, monkeypatch, capsys) -> None:
+    sample = make_sample(profile="database")
+    captured: dict[str, object] = {}
+
+    def fake_database_profile(**kwargs):
+        captured.update(kwargs)
+        return sample
+
+    monkeypatch.setattr(run_command, "run_database_profile", fake_database_profile)
+    output = tmp_path / "database-sample.json"
+    work_dir = tmp_path / "database-work"
+
+    exit_code = cli.main(
+        (
+            "run",
+            "database",
+            "--quick",
+            "--no-isolation",
+            "--work-dir",
+            str(work_dir),
+            "--database-records",
+            "300",
+            "--database-payload-bytes",
+            "512",
+            "--concurrency",
+            "3",
+            "--output",
+            str(output),
+            "--compact",
+        )
+    )
+
+    printed = json.loads(capsys.readouterr().out)
+    written = json.loads(output.read_text(encoding="utf-8"))
+
+    assert exit_code == 0
+    assert printed == written
+    config = captured["config"]
+    assert config.record_count == 300
+    assert config.payload_bytes == 512
+    assert config.concurrency == 3
+    assert captured["work_dir"] == work_dir
+    assert captured["raw_output_dir"] == output.parent / "raw"
+
+
+def test_database_options_are_rejected_for_other_profiles(capsys) -> None:
+    exit_code = cli.main(
+        (
+            "run",
+            "general",
+            "--quick",
+            "--no-isolation",
+            "--database-records",
+            "200",
+        )
+    )
+
+    assert exit_code == 4
+    assert "only valid for the database profile" in capsys.readouterr().out
+
+
+def test_concurrency_is_rejected_for_profiles_without_concurrency(capsys) -> None:
+    exit_code = cli.main(("run", "general", "--quick", "--no-isolation", "--concurrency", "2"))
+
+    assert exit_code == 4
+    assert "web or database profile" in capsys.readouterr().out
+
+
+def test_database_concurrency_rejects_more_than_32(capsys) -> None:
+    exit_code = cli.main(("run", "database", "--quick", "--no-isolation", "--concurrency", "33"))
+
+    assert exit_code == 4
+    assert "must not exceed 32" in capsys.readouterr().out

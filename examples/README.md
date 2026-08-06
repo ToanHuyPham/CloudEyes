@@ -11,6 +11,8 @@ Profile examples:
 - `raw/networking-example-networking.json`
 - `web-profile-sample.json`
 - `raw/web-example-web.json`
+- `database-profile-sample.json`
+- `raw/database-example-database.json`
 
 
 ## Compute Profile v1

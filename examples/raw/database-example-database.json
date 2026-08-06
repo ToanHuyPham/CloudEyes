@@ -1,0 +1,161 @@
+{
+  "aggregates": {
+    "connection_p50_milliseconds": 0.32342000122298487,
+    "connection_p95_milliseconds": 0.3843459999188781,
+    "insert_transactions_per_second": 715.3813207809467,
+    "mixed_error_rate_percent": 0.0,
+    "mixed_operations_per_second": 1891.020453439226,
+    "point_read_p50_milliseconds": 0.0033045016607502475,
+    "point_read_p95_milliseconds": 0.006151548222987911,
+    "update_transactions_per_second": 357.96402665316884,
+    "write_transaction_p95_milliseconds": 4.054879399700447
+  },
+  "configuration": {
+    "busy_timeout_seconds": 2.0,
+    "concurrency": 2,
+    "connection_operations": 5,
+    "engine": "sqlite",
+    "insert_operations": 10,
+    "journal_mode": "wal",
+    "mixed_operations": 100,
+    "mixed_read_percent": 80,
+    "payload_bytes": 128,
+    "point_read_operations": 50,
+    "random_seed": 20260806,
+    "record_count": 200,
+    "repetitions": 1,
+    "synchronous": "full",
+    "update_operations": 10,
+    "version": "1.0.0",
+    "warmup_operations": 10
+  },
+  "database_files_before_cleanup": {
+    "database_bytes": 40960,
+    "wal_bytes": 0
+  },
+  "engine": {
+    "journal_mode": "wal",
+    "name": "sqlite",
+    "synchronous": "full",
+    "version": "3.46.1"
+  },
+  "limitations": [
+    "Database Profile v1 measures a temporary local SQLite database, not a managed database service",
+    "results combine Python, SQLite, CPU, memory, filesystem, and operating-system behavior",
+    "WAL mode and synchronous FULL are fixed compatibility requirements",
+    "mixed concurrency uses one SQLite connection per worker thread"
+  ],
+  "profile": "database",
+  "protocol_version": "1.0.0",
+  "runs": [
+    {
+      "connection_latencies_ms": [
+        0.39232400013133883,
+        0.35243399906903505,
+        0.32342000122298487,
+        0.30343600155902095,
+        0.2990360007970594
+      ],
+      "insert_transaction_latencies_ms": [
+        2.8614030015887693,
+        1.347202000033576,
+        1.1676839967549313,
+        1.1347229992679786,
+        1.1232050019316375,
+        1.13146500007133,
+        1.3015559998166282,
+        1.3029610017838422,
+        1.4398439998331014,
+        1.1494539976411033
+      ],
+      "insert_transactions_per_second": 715.3813207809467,
+      "mixed": {
+        "attempted_operations": 100,
+        "completed_operations": 100,
+        "elapsed_seconds": 0.052881501000229036,
+        "error_rate_percent": 0.0,
+        "error_type_counts": {},
+        "operations_per_second": 1891.020453439226
+      },
+      "point_read_latencies_ms": [
+        0.02245799987576902,
+        0.007425001967931166,
+        0.004239998816046864,
+        0.003535998985171318,
+        0.005787998816231266,
+        0.005189998773857951,
+        0.005251000402495265,
+        0.0034910008253064007,
+        0.0032629977795295417,
+        0.0033529977372381836,
+        0.0034999975468963385,
+        0.0035369994293432683,
+        0.003440000000409782,
+        0.004812001861864701,
+        0.0036340024962555617,
+        0.003555000148480758,
+        0.003360000846441835,
+        0.0032569987524766475,
+        0.0033150026865769178,
+        0.0032239986467175186,
+        0.0032039970392361283,
+        0.006448997737606987,
+        0.0033420001273043454,
+        0.0032269999792333692,
+        0.003312001354061067,
+        0.0032480020308867097,
+        0.0032519965316168964,
+        0.0032530006137676537,
+        0.003297001967439428,
+        0.0046050008677411824,
+        0.0032659991120453924,
+        0.0033670003176666796,
+        0.0031990020943339914,
+        0.0032749994716141373,
+        0.003188000846421346,
+        0.0031909985409583896,
+        0.003198001650162041,
+        0.0042810024751815945,
+        0.003234999894630164,
+        0.0032319985621143132,
+        0.00321100014843978,
+        0.003221000952180475,
+        0.0031569979910273105,
+        0.0032320022000931203,
+        0.0032559983083046973,
+        0.003321998519822955,
+        0.0032940006349235773,
+        0.0032200005080085248,
+        0.003244000254198909,
+        0.004191999323666096
+      ],
+      "repetition": 0,
+      "update_transaction_latencies_ms": [
+        3.4869900009653065,
+        13.2386889999907,
+        3.5715209996851627,
+        1.3010229995416012,
+        0.9353310015285388,
+        1.5647210020688362,
+        0.9403830008523073,
+        0.9780340005818289,
+        0.8114310003293213,
+        1.0811889987962786
+      ],
+      "update_transactions_per_second": 357.96402665316884
+    }
+  ],
+  "safety": {
+    "database_path_persisted": false,
+    "estimated_database_bytes": 8388608,
+    "free_bytes_before_run": 41732009984,
+    "required_free_bytes": 41943040,
+    "temporary_database": true
+  },
+  "sample_id": "database-example",
+  "schema_version": "1.0.0",
+  "warnings": [
+    "database_profile_uses_local_sqlite",
+    "database_single_repetition"
+  ]
+}

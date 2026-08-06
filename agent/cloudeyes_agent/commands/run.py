@@ -17,6 +17,7 @@ from ..execution import (
     run_isolated,
 )
 from ..profiles.compute import ComputeProfileConfig, run_compute_profile
+from ..profiles.database import DatabaseProfileConfig, run_database_profile
 from ..profiles.general import GeneralProfileConfig, run_general_profile
 from ..profiles.networking import (
     NetworkingProfileConfig,
@@ -200,6 +201,53 @@ def _web_sample(
     )
 
 
+def _database_sample(
+    *,
+    quick: bool,
+    work_dir: Path | None,
+    raw_output_dir: Path,
+    concurrency: int | None,
+    database_records: int | None,
+    database_payload_bytes: int | None,
+    provider_id: str | None,
+    provider_name: str | None,
+    country_code: str | None,
+    product: str | None,
+    plan: str | None,
+    region: str | None,
+    zone: str | None,
+    cancellation_token: CancellationToken | None = None,
+) -> Sample:
+    selected_concurrency = 2 if quick else 4
+    if concurrency is not None:
+        selected_concurrency = concurrency
+    config = (
+        DatabaseProfileConfig.quick(concurrency=selected_concurrency)
+        if quick
+        else replace(DatabaseProfileConfig(), concurrency=selected_concurrency)
+    )
+    changes: dict[str, int] = {}
+    if database_records is not None:
+        changes["record_count"] = database_records
+    if database_payload_bytes is not None:
+        changes["payload_bytes"] = database_payload_bytes
+    if changes:
+        config = replace(config, **changes)
+    return run_database_profile(
+        config=config,
+        work_dir=work_dir,
+        raw_output_dir=raw_output_dir,
+        provider_id=provider_id,
+        provider_name=provider_name,
+        country_code=country_code,
+        product=product,
+        plan=plan,
+        region=region,
+        zone=zone,
+        cancellation_token=cancellation_token,
+    )
+
+
 def _compute_sample(
     *,
     quick: bool,
@@ -240,6 +288,7 @@ PROFILE_TIMEOUT_SECONDS = {
     "compute": 600.0,
     "storage": 900.0,
     "web": 180.0,
+    "database": 300.0,
 }
 
 
@@ -259,6 +308,8 @@ def _execute_profile(
     request_count: int | None,
     concurrency: int | None,
     max_response_bytes: int | None,
+    database_records: int | None,
+    database_payload_bytes: int | None,
     provider_id: str | None,
     provider_name: str | None,
     country_code: str | None,
@@ -337,6 +388,24 @@ def _execute_profile(
             zone=zone,
             cancellation_token=cancellation_token,
         )
+    if profile == "database":
+        raw_output_dir = output.parent / "raw" if output is not None else Path("data/raw")
+        return _database_sample(
+            quick=quick,
+            work_dir=selected_work_dir,
+            raw_output_dir=raw_output_dir,
+            concurrency=concurrency,
+            database_records=database_records,
+            database_payload_bytes=database_payload_bytes,
+            provider_id=provider_id,
+            provider_name=provider_name,
+            country_code=country_code,
+            product=product,
+            plan=plan,
+            region=region,
+            zone=zone,
+            cancellation_token=cancellation_token,
+        )
     if profile == "compute":
         raw_output_dir = output.parent / "raw" if output is not None else Path("data/raw")
         return _compute_sample(
@@ -381,6 +450,8 @@ def run_profile(
     request_count: int | None = None,
     concurrency: int | None = None,
     max_response_bytes: int | None = None,
+    database_records: int | None = None,
+    database_payload_bytes: int | None = None,
     isolated: bool = True,
     timeout_seconds: float | None = None,
 ) -> int:
@@ -395,11 +466,21 @@ def run_profile(
     if profile != "compute" and workers is not None:
         print("--workers is only valid for the compute profile")
         return 4
-    if profile != "web" and any(
-        value is not None for value in (request_count, concurrency, max_response_bytes)
+    if profile != "web" and any(value is not None for value in (request_count, max_response_bytes)):
+        print("--requests and --max-response-bytes are only valid for the web profile")
+        return 4
+    if profile not in {"web", "database"} and concurrency is not None:
+        print("--concurrency is only valid for the web or database profile")
+        return 4
+    if profile == "database" and concurrency is not None and concurrency > 32:
+        print("--concurrency must not exceed 32 for the database profile")
+        return 4
+    if profile != "database" and any(
+        value is not None for value in (database_records, database_payload_bytes)
     ):
         print(
-            "--requests, --concurrency, and --max-response-bytes are only valid for the web profile"
+            "--database-records and --database-payload-bytes "
+            "are only valid for the database profile"
         )
         return 4
     if timeout_seconds is not None and timeout_seconds <= 0:
@@ -432,6 +513,8 @@ def run_profile(
         "request_count": request_count,
         "concurrency": concurrency,
         "max_response_bytes": max_response_bytes,
+        "database_records": database_records,
+        "database_payload_bytes": database_payload_bytes,
         "provider_id": provider_id,
         "provider_name": provider_name,
         "country_code": country_code,

@@ -116,3 +116,13 @@ but never the query string, response body, credentials, or resolved addresses. P
 a fresh connection per request and therefore treats connection setup as part of observed web-service
 latency. Results are comparable only when endpoint identity and all workload bounds match.
 
+## ADR-018 — Database v1 uses a disposable local SQLite protocol
+
+Database Profile v1 creates a new temporary SQLite database for every sample and never accepts an
+existing database path. WAL journal mode and `synchronous=FULL` are fixed compatibility requirements.
+Seed payload, operation counts, concurrency, busy timeout, free space, and process duration are
+bounded. Each concurrent worker owns one connection, cancellation is checked only at safe transaction
+boundaries, and every connection is closed before the temporary directory is removed. Raw evidence
+records SQLite version, sanitized error classes, workload configuration, latencies, rates, and file
+sizes, but not record payloads or the temporary path. Results describe the local VM stack and must not
+be labeled as PostgreSQL, MySQL, networked database, or managed database service performance.

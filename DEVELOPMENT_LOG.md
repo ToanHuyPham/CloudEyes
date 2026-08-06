@@ -255,3 +255,26 @@
 - Application state, route conditions, caching, and rate limits can change independently of the tested VM.
 - CloudEyes does not follow redirects or send authentication material in Web Profile v1.
 
+## 2026-08-06 — Database Profile v1
+
+### Completed
+
+- Added a bounded temporary SQLite workload with verified connection setup, indexed point reads, durable single-row insert/update transactions, and concurrent mixed reads/writes.
+- Fixed WAL journal mode and synchronous FULL as protocol compatibility requirements.
+- Added seed-size, operation-count, concurrency, busy-timeout, and free-space safety limits.
+- Added cooperative cancellation checkpoints, process-isolated hard timeout support, deterministic temporary database cleanup, and atomic raw evidence.
+- Added `cloudeyes run database`, workload controls, metrics/protocol catalogs, documentation, examples, schema tests, and integration tests.
+
+### Current state
+
+- Phase: Specialized profiles
+- Component: Database Profile v1
+- Status: Complete
+- Next component: Result Bundle and Submission v1
+
+### Explicit limitations
+
+- Protocol 1.0.0 measures a local temporary SQLite database, not a managed database service.
+- Results combine Python, SQLite, CPU, memory, filesystem, and operating-system behavior.
+- Point reads may use page caches, and SQLite serializes write transactions.
+- PostgreSQL, MySQL, remote database authentication, and network latency are outside Database Profile v1.

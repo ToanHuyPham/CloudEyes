@@ -1,3 +1,16 @@
 name: database
-version: 1
-status: planned
+version: 1.0.0
+status: implemented
+tool: python-sqlite-profile
+method: bounded-temporary-sqlite-workload
+metrics:
+  - database.sqlite.connection.p50_milliseconds
+  - database.sqlite.connection.p95_milliseconds
+  - database.sqlite.point_read.p50_milliseconds
+  - database.sqlite.point_read.p95_milliseconds
+  - database.sqlite.insert.transactions_per_second
+  - database.sqlite.update.transactions_per_second
+  - database.sqlite.write_transaction.p95_milliseconds
+  - database.sqlite.mixed.operations_per_second
+  - database.sqlite.mixed.error_rate.percent
+raw_evidence: required_for_cli_runs

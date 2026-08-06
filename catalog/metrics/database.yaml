@@ -1,0 +1,40 @@
+name: database
+version: 1
+status: implemented
+metrics:
+  database.sqlite.connection.p50_milliseconds:
+    unit: milliseconds
+    direction: lower_is_better
+    description: Median SQLite connection-open, protocol session setup, and SELECT 1 latency.
+  database.sqlite.connection.p95_milliseconds:
+    unit: milliseconds
+    direction: lower_is_better
+    description: 95th-percentile SQLite connection-open, protocol session setup, and SELECT 1 latency.
+  database.sqlite.point_read.p50_milliseconds:
+    unit: milliseconds
+    direction: lower_is_better
+    description: Median indexed primary-key point-read latency on one reused connection.
+  database.sqlite.point_read.p95_milliseconds:
+    unit: milliseconds
+    direction: lower_is_better
+    description: 95th-percentile indexed primary-key point-read latency.
+  database.sqlite.insert.transactions_per_second:
+    unit: transactions_per_second
+    direction: higher_is_better
+    description: Durable single-row insert transactions completed per second.
+  database.sqlite.update.transactions_per_second:
+    unit: transactions_per_second
+    direction: higher_is_better
+    description: Durable single-row update transactions completed per second.
+  database.sqlite.write_transaction.p95_milliseconds:
+    unit: milliseconds
+    direction: lower_is_better
+    description: 95th-percentile latency across durable insert and update transactions.
+  database.sqlite.mixed.operations_per_second:
+    unit: operations_per_second
+    direction: higher_is_better
+    description: Successful concurrent mixed point reads and durable updates per second.
+  database.sqlite.mixed.error_rate.percent:
+    unit: percent
+    direction: lower_is_better
+    description: Percentage of bounded mixed operations that returned a SQLite error.

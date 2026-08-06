@@ -5,6 +5,7 @@ from __future__ import annotations
 import pytest
 from cloudeyes_agent.execution import CancellationRequested, CancellationToken
 from cloudeyes_agent.profiles.compute import ComputeProfileConfig, run_compute_profile
+from cloudeyes_agent.profiles.database import DatabaseProfileConfig, run_database_profile
 from cloudeyes_agent.profiles.general import GeneralProfileConfig, run_general_profile
 from cloudeyes_agent.profiles.networking import (
     NetworkingProfileConfig,
@@ -24,6 +25,7 @@ from tests.unit.agent.test_discovery_models import make_result
         (run_networking_profile, NetworkingProfileConfig.quick()),
         (run_compute_profile, ComputeProfileConfig.quick(workers=1)),
         (run_web_profile, WebProfileConfig.quick()),
+        (run_database_profile, DatabaseProfileConfig.quick()),
     ),
 )
 def test_profile_propagates_pre_requested_cancellation(runner, config) -> None:

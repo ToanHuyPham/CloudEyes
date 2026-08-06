@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Added Database Profile v1 with bounded temporary SQLite connection, point-read, durable insert/update, and concurrent mixed workloads.
+- Added WAL plus synchronous FULL compatibility rules, privacy-safe raw evidence, deterministic cleanup, CLI controls, catalog entries, examples, and tests.
 - Added Web Profile v1 with bounded concurrent HTTP GET workloads, request-rate, error-rate, TTFB, total-latency, and response-throughput metrics.
 - Added explicit public/private target scope enforcement, privacy-safe per-request raw evidence, CLI workload controls, protocol catalog entries, examples, and cross-platform tests.
 - Added Normalized Pricing v1 with versioned offline price catalogs, explicit billing-period hours, source tiers, FX-to-USD normalization, and time-bounded cohort matching.

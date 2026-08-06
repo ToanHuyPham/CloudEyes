@@ -33,6 +33,14 @@ def _web_concurrency(value: str) -> int:
     return _bounded_integer("concurrency", value, minimum=1, maximum=64)
 
 
+def _database_record_count(value: str) -> int:
+    return _bounded_integer("database-records", value, minimum=100, maximum=100_000)
+
+
+def _database_payload_bytes(value: str) -> int:
+    return _bounded_integer("database-payload-bytes", value, minimum=32, maximum=4_096)
+
+
 def _web_response_bytes(value: str) -> int:
     return _bounded_integer(
         "max-response-bytes",
@@ -72,7 +80,8 @@ def build_parser() -> argparse.ArgumentParser:
         help="run a bounded measurement profile",
     )
     run_parser.add_argument(
-        "profile", choices=("general", "storage", "networking", "compute", "web")
+        "profile",
+        choices=("general", "storage", "networking", "compute", "web", "database"),
     )
     run_parser.add_argument("--output", type=Path, help="optional sample JSON output path")
     run_parser.add_argument("--quick", action="store_true", help="use the CI-sized workload")
@@ -142,12 +151,22 @@ def build_parser() -> argparse.ArgumentParser:
     run_parser.add_argument(
         "--concurrency",
         type=_web_concurrency,
-        help="maximum concurrent GET requests for the web profile",
+        help="maximum concurrent operations for the web or database profile",
     )
     run_parser.add_argument(
         "--max-response-bytes",
         type=_web_response_bytes,
         help="maximum response bytes read per web request",
+    )
+    run_parser.add_argument(
+        "--database-records",
+        type=_database_record_count,
+        help="seed record count for the temporary SQLite database",
+    )
+    run_parser.add_argument(
+        "--database-payload-bytes",
+        type=_database_payload_bytes,
+        help="payload bytes stored in each seeded SQLite record",
     )
     run_parser.add_argument(
         "--timeout-seconds",
@@ -246,6 +265,8 @@ def main(argv: Sequence[str] | None = None) -> int:
             request_count=args.request_count,
             concurrency=args.concurrency,
             max_response_bytes=args.max_response_bytes,
+            database_records=args.database_records,
+            database_payload_bytes=args.database_payload_bytes,
             isolated=not args.no_isolation,
             timeout_seconds=args.timeout_seconds,
         )

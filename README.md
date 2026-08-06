@@ -13,6 +13,7 @@ Implemented Agent profiles:
 - Networking Profile v1
 - Compute Profile v1
 - Web Profile v1
+- Database Profile v1
 
 Example controlled networking run:
 
@@ -41,6 +42,16 @@ python -m cloudeyes_agent run web \
   --requests 40 \
   --concurrency 4 \
   --output data/web-sample.json
+```
+
+Example bounded local SQLite run:
+
+```bash
+python -m cloudeyes_agent run database \
+  --database-records 2000 \
+  --database-payload-bytes 256 \
+  --concurrency 4 \
+  --output data/database-sample.json
 ```
 
 Offline provider analytics with optional normalized pricing:

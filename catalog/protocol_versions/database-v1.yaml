@@ -1,3 +1,31 @@
 name: database-v1
-version: 1
-status: planned
+profile: database
+version: 1.0.0
+status: implemented
+compatibility_key:
+  - protocol_fingerprint
+  - engine
+  - record_count
+  - payload_bytes
+  - connection_operations
+  - point_read_operations
+  - insert_operations
+  - update_operations
+  - mixed_operations
+  - mixed_read_percent
+  - concurrency
+  - repetitions
+  - busy_timeout_seconds
+  - journal_mode
+  - synchronous
+rules:
+  - compare only samples with matching protocol fingerprints
+  - use a new temporary SQLite database for every sample
+  - require WAL journal mode and synchronous FULL
+  - use one SQLite connection per mixed-workload worker
+  - do not compare local SQLite results with managed database service results
+limitations:
+  - results combine Python, SQLite, CPU, memory, filesystem, and operating-system behavior
+  - Database Profile v1 does not connect to PostgreSQL, MySQL, or managed database services
+  - point reads may benefit from operating-system and SQLite page caches
+  - SQLite serializes write transactions even when mixed workers run concurrently
