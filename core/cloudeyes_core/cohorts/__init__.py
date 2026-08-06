@@ -1,9 +1,12 @@
-"""Cohorts.
+"""CloudEyes cohort utilities."""
 
-Placeholder for the CloudEyes foundation.
-Implementation will be added with tests and documentation.
-"""
+from .builder import build_cohorts
+from .compatibility import CompatibilityResult, compare_samples
+from .key import build_cohort_key
 
-from __future__ import annotations
-
-__all__: list[str] = []
+__all__ = [
+    "CompatibilityResult",
+    "build_cohort_key",
+    "build_cohorts",
+    "compare_samples",
+]
