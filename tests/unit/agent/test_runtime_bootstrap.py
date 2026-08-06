@@ -8,6 +8,7 @@ import pytest
 from cloudeyes_agent.bootstrap import (
     RuntimeDependencyError,
     RuntimeDependencyReport,
+    detect_runtime_dependencies,
     ensure_runtime_dependencies,
     render_install_command,
 )
@@ -74,3 +75,39 @@ def test_package_commands_cover_supported_linux_families() -> None:
         command = render_install_command(report)
         assert manager in command
         assert package in command
+
+
+def test_networking_ping_dependency_maps_to_native_package() -> None:
+    report = RuntimeDependencyReport(
+        platform="ubuntu",
+        package_manager="apt-get",
+        missing_commands=("ping",),
+        packages=("iputils-ping",),
+    )
+
+    command = render_install_command(report)
+
+    assert "apt-get" in command
+    assert "iputils-ping" in command
+
+
+def test_detector_includes_profile_specific_ping_command() -> None:
+    def fake_which(command: str) -> str | None:
+        if command == "apt-get":
+            return "/usr/bin/apt-get"
+        if command in {"lscpu", "free", "ip", "lspci"}:
+            return f"/usr/bin/{command}"
+        return None
+
+    with (
+        patch("cloudeyes_agent.bootstrap.detector.platform.system", return_value="Linux"),
+        patch("cloudeyes_agent.bootstrap.detector.shutil.which", side_effect=fake_which),
+        patch(
+            "cloudeyes_agent.bootstrap.detector._read_os_id",
+            return_value='ID="ubuntu"',
+        ),
+    ):
+        report = detect_runtime_dependencies(extra_commands=("ping",))
+
+    assert report.missing_commands == ("ping",)
+    assert report.packages == ("iputils-ping",)

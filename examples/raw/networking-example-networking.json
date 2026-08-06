@@ -1,0 +1,85 @@
+{
+  "configuration": {
+    "download_limit_bytes": 262144,
+    "ping_count": 0,
+    "repetitions": 2,
+    "scope": "private",
+    "target_url": null,
+    "timeout_seconds": 5.0,
+    "upload_bytes": 65536,
+    "upload_url": null,
+    "user_agent": "CloudEyes/0.1 networking-v1",
+    "verify_tls": true,
+    "version": "1.0.0"
+  },
+  "dns_latencies_milliseconds": [
+    0.38,
+    0.46
+  ],
+  "download_error_types": [],
+  "download_runs": [
+    {
+      "download_mib_per_second": 409.84,
+      "download_seconds": 0.00061,
+      "downloaded_bytes": 262144,
+      "status": 200,
+      "ttfb_milliseconds": 3.51
+    },
+    {
+      "download_mib_per_second": 415.66,
+      "download_seconds": 0.0006,
+      "downloaded_bytes": 262144,
+      "status": 200,
+      "ttfb_milliseconds": 4.01
+    }
+  ],
+  "icmp_packet_loss_percent": null,
+  "limitations": [
+    "results describe the configured endpoint path and route at measurement time",
+    "HTTP throughput includes application, TCP, and optional TLS overhead",
+    "ICMP loss may differ from TCP or HTTP behavior because networks can filter ping",
+    "no response body, request body, query string, credential, or resolved IP is persisted"
+  ],
+  "profile": "networking",
+  "protocol_version": "1.0.0",
+  "sample_id": "networking-example",
+  "schema_version": "1.0.0",
+  "target": {
+    "address_families": [
+      "ipv4"
+    ],
+    "origin": "http://10.10.0.20:8080",
+    "path_sha256": "36c58999ecf3baba8f01a3553c5cdc6db11e847e6bb5aa458c0e2dc9e3261803",
+    "resolved_address_count": 1,
+    "scope": "private"
+  },
+  "tcp_connect_latencies_milliseconds": [
+    1.75,
+    1.93
+  ],
+  "tls_handshake_latencies_milliseconds": [],
+  "tls_versions": [],
+  "upload": {
+    "configured": true,
+    "error_types": [],
+    "origin": "http://10.10.0.20:8080",
+    "path_sha256": "9a5ea6ccd4dc13823617991b0dda4e3070a1cfd6b7d773ea8809175c1ee118b3",
+    "runs": [
+      {
+        "status": 204,
+        "upload_mib_per_second": 284.09,
+        "upload_seconds": 0.00022,
+        "uploaded_bytes": 65536
+      },
+      {
+        "status": 204,
+        "upload_mib_per_second": 288.71,
+        "upload_seconds": 0.00021,
+        "uploaded_bytes": 65536
+      }
+    ]
+  },
+  "warnings": [
+    "icmp_sampling_disabled"
+  ]
+}

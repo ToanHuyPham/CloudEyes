@@ -1,3 +1,52 @@
 name: network
 version: 1
-status: planned
+status: implemented
+metrics:
+  network.dns.lookup.p50_milliseconds:
+    unit: milliseconds
+    direction: lower_is_better
+    description: Median DNS lookup latency for the configured target.
+  network.dns.lookup.p95_milliseconds:
+    unit: milliseconds
+    direction: lower_is_better
+    description: 95th-percentile DNS lookup latency for the configured target.
+  network.tcp.connect.p50_milliseconds:
+    unit: milliseconds
+    direction: lower_is_better
+    description: Median TCP connection latency to the selected resolved address.
+  network.tcp.connect.p95_milliseconds:
+    unit: milliseconds
+    direction: lower_is_better
+    description: 95th-percentile TCP connection latency.
+  network.tls.handshake.p50_milliseconds:
+    unit: milliseconds
+    direction: lower_is_better
+    description: Median TLS handshake latency for an HTTPS target.
+  network.tls.handshake.p95_milliseconds:
+    unit: milliseconds
+    direction: lower_is_better
+    description: 95th-percentile TLS handshake latency for an HTTPS target.
+  network.http.ttfb.p50_milliseconds:
+    unit: milliseconds
+    direction: lower_is_better
+    description: Median HTTP request-to-response-header time.
+  network.http.ttfb.p95_milliseconds:
+    unit: milliseconds
+    direction: lower_is_better
+    description: 95th-percentile HTTP request-to-response-header time.
+  network.download.mib_per_second:
+    unit: mib_per_second
+    direction: higher_is_better
+    description: Median bounded response-body read throughput.
+  network.upload.mib_per_second:
+    unit: mib_per_second
+    direction: higher_is_better
+    description: Median bounded HTTP POST throughput when an upload endpoint is configured.
+  network.http.request_loss_percent:
+    unit: percent
+    direction: lower_is_better
+    description: Percentage of bounded HTTP download probes that failed.
+  network.icmp.packet_loss_percent:
+    unit: percent
+    direction: lower_is_better
+    description: Packet loss reported by the optional system ping command.

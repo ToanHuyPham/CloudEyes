@@ -37,3 +37,20 @@ The automatically managed native commands are:
 
 Windows General Profile requires no extra native package; the check therefore
 continues without changing the system.
+
+## Profile-specific tools
+
+Networking Profile v1 requests the optional `ping` command only when ICMP
+sampling is enabled. With `--install-deps`, CloudEyes maps it to the native
+package for the detected Linux family (`iputils-ping` on Debian/Ubuntu and
+`iputils` on RHEL, SLES, Alpine, and Arch families).
+
+```bash
+python -m cloudeyes_agent run networking \
+  --quick \
+  --install-deps \
+  --yes
+```
+
+Use `--no-ping` when ICMP is intentionally unavailable; CloudEyes then does not
+request the package and records that ICMP coverage was disabled.

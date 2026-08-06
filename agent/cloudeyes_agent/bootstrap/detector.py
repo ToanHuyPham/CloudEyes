@@ -12,36 +12,42 @@ from .model import RuntimeDependencyReport
 _REQUIRED_COMMANDS = ("lscpu", "free", "ip", "lspci")
 _PACKAGE_MAP = {
     "apt-get": {
+        "ping": "iputils-ping",
         "lscpu": "util-linux",
         "free": "procps",
         "ip": "iproute2",
         "lspci": "pciutils",
     },
     "dnf": {
+        "ping": "iputils",
         "lscpu": "util-linux",
         "free": "procps-ng",
         "ip": "iproute",
         "lspci": "pciutils",
     },
     "yum": {
+        "ping": "iputils",
         "lscpu": "util-linux",
         "free": "procps-ng",
         "ip": "iproute",
         "lspci": "pciutils",
     },
     "zypper": {
+        "ping": "iputils",
         "lscpu": "util-linux",
         "free": "procps",
         "ip": "iproute2",
         "lspci": "pciutils",
     },
     "apk": {
+        "ping": "iputils",
         "lscpu": "util-linux",
         "free": "procps",
         "ip": "iproute2",
         "lspci": "pciutils",
     },
     "pacman": {
+        "ping": "iputils",
         "lscpu": "util-linux",
         "free": "procps-ng",
         "ip": "iproute2",
@@ -64,7 +70,10 @@ def _read_os_id(path: Path = Path("/etc/os-release")) -> str:
         return ""
 
 
-def detect_runtime_dependencies() -> RuntimeDependencyReport:
+def detect_runtime_dependencies(
+    *,
+    extra_commands: tuple[str, ...] = (),
+) -> RuntimeDependencyReport:
     """Return missing optional tools and their native package names."""
 
     system = platform.system().lower()
@@ -74,7 +83,8 @@ def detect_runtime_dependencies() -> RuntimeDependencyReport:
         return RuntimeDependencyReport(platform=system or os.name, package_manager=None)
 
     manager = _find_package_manager()
-    missing = tuple(command for command in _REQUIRED_COMMANDS if shutil.which(command) is None)
+    required_commands = tuple(dict.fromkeys((*_REQUIRED_COMMANDS, *extra_commands)))
+    missing = tuple(command for command in required_commands if shutil.which(command) is None)
     mapping = _PACKAGE_MAP.get(manager or "", {})
     packages = tuple(dict.fromkeys(mapping[command] for command in missing if command in mapping))
 

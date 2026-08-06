@@ -1,0 +1,103 @@
+{
+  "created_at": "2026-08-06T07:30:00+00:00",
+  "machine": {
+    "architecture": "x86_64",
+    "cpu_count": 4,
+    "machine_type": "virtual_machine",
+    "memory_bytes": 17179869184
+  },
+  "measurements": [
+    {
+      "error": null,
+      "finished_at": "2026-08-06T07:30:01+00:00",
+      "measurement_id": "networking-example-networking",
+      "metrics": [
+        {
+          "direction": "lower_is_better",
+          "name": "network.dns.lookup.p50_milliseconds",
+          "unit": "milliseconds",
+          "value": 0.42
+        },
+        {
+          "direction": "lower_is_better",
+          "name": "network.dns.lookup.p95_milliseconds",
+          "unit": "milliseconds",
+          "value": 0.61
+        },
+        {
+          "direction": "lower_is_better",
+          "name": "network.tcp.connect.p50_milliseconds",
+          "unit": "milliseconds",
+          "value": 1.84
+        },
+        {
+          "direction": "lower_is_better",
+          "name": "network.tcp.connect.p95_milliseconds",
+          "unit": "milliseconds",
+          "value": 2.11
+        },
+        {
+          "direction": "lower_is_better",
+          "name": "network.http.request_loss_percent",
+          "unit": "percent",
+          "value": 0.0
+        },
+        {
+          "direction": "lower_is_better",
+          "name": "network.http.ttfb.p50_milliseconds",
+          "unit": "milliseconds",
+          "value": 3.76
+        },
+        {
+          "direction": "lower_is_better",
+          "name": "network.http.ttfb.p95_milliseconds",
+          "unit": "milliseconds",
+          "value": 4.12
+        },
+        {
+          "direction": "higher_is_better",
+          "name": "network.download.mib_per_second",
+          "unit": "mib_per_second",
+          "value": 412.75
+        },
+        {
+          "direction": "higher_is_better",
+          "name": "network.upload.mib_per_second",
+          "unit": "mib_per_second",
+          "value": 286.4
+        }
+      ],
+      "profile": "networking",
+      "protocol_version": "1.0.0",
+      "raw_output_path": "examples/raw/networking-example-networking.json",
+      "started_at": "2026-08-06T07:30:00+00:00",
+      "status": "success",
+      "tool": "python-networking-profile",
+      "tool_version": "3.12.13"
+    }
+  ],
+  "product": {
+    "plan": "n2-standard-4",
+    "product": "Compute Engine",
+    "region": "asia-southeast1",
+    "zone": "asia-southeast1-a"
+  },
+  "protocol": {
+    "fingerprint": "6a6e890bb4799e6bee4b99ad83521fe1e112e74679d5b992e15a3598019fd3ca",
+    "profile": "networking",
+    "version": "1.0.0"
+  },
+  "provider": {
+    "country_code": "VN",
+    "name": "Google Cloud",
+    "provider_id": "gcp"
+  },
+  "quality": {
+    "errors": [],
+    "status": "valid_with_warnings",
+    "warnings": [
+      "icmp_sampling_disabled"
+    ]
+  },
+  "sample_id": "networking-example"
+}

@@ -1,3 +1,22 @@
 name: networking-v1
-version: 1
-status: planned
+profile: networking
+version: 1.0.0
+status: implemented
+compatibility_key:
+  - protocol_fingerprint
+  - target_origin
+  - target_path_sha256
+  - scope
+  - repetitions
+  - timeout_seconds
+  - download_limit_bytes
+  - upload_bytes
+  - verify_tls
+rules:
+  - compare only samples with matching protocol fingerprints and endpoint identity
+  - do not compare public-Internet and private-network scopes as one cohort
+  - treat missing upload and ICMP metrics as explicit coverage gaps
+limitations:
+  - endpoint and route conditions can change independently of the tested provider
+  - HTTP throughput includes protocol overhead
+  - ICMP filtering can differ from TCP and HTTP behavior

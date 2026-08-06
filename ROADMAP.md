@@ -7,9 +7,9 @@ Models, schemas, protocol contracts, documentation, and tests.
 Discovery, general profile, raw-output storage, sample creation, and local JSON output.
 
 ## Phase 3 — Reliable measurements — in progress
-Storage Profile v1 is complete with warm-up, repetitions, safety limits, raw evidence,
-and explicit cache limitations. Networking Profile v1 is next, followed by shared
-timeout and sample-quality policies.
+Storage Profile v1 and Networking Profile v1 are complete with bounded workloads,
+raw evidence, explicit safety policies, and quality warnings. Shared timeout and
+sample-quality policies are next.
 
 ## Phase 4 — Provider analytics
 Cohorts, compatibility, coverage, consistency, pricing, assessment, and explanation.

@@ -1,3 +1,24 @@
 name: networking
-version: 1
-status: planned
+version: 1.0.0
+status: implemented
+implementation: cloudeyes_agent.profiles.networking
+metrics:
+  - network.dns.lookup.p50_milliseconds
+  - network.dns.lookup.p95_milliseconds
+  - network.tcp.connect.p50_milliseconds
+  - network.tcp.connect.p95_milliseconds
+  - network.tls.handshake.p50_milliseconds
+  - network.tls.handshake.p95_milliseconds
+  - network.http.ttfb.p50_milliseconds
+  - network.http.ttfb.p95_milliseconds
+  - network.download.mib_per_second
+  - network.upload.mib_per_second
+  - network.http.request_loss_percent
+  - network.icmp.packet_loss_percent
+safety:
+  port_scanning: false
+  bounded_download: true
+  bounded_upload: true
+  link_local_targets: blocked
+  credentials_persisted: false
+  payloads_persisted: false

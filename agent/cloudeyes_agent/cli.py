@@ -38,7 +38,7 @@ def build_parser() -> argparse.ArgumentParser:
         "run",
         help="run a bounded measurement profile",
     )
-    run_parser.add_argument("profile", choices=("general", "storage"))
+    run_parser.add_argument("profile", choices=("general", "storage", "networking"))
     run_parser.add_argument("--output", type=Path, help="optional sample JSON output path")
     run_parser.add_argument("--quick", action="store_true", help="use the CI-sized workload")
     run_parser.add_argument(
@@ -69,6 +69,30 @@ def build_parser() -> argparse.ArgumentParser:
     run_parser.add_argument("--plan")
     run_parser.add_argument("--region")
     run_parser.add_argument("--zone")
+    run_parser.add_argument(
+        "--target",
+        help="HTTP(S) endpoint for the networking profile",
+    )
+    run_parser.add_argument(
+        "--upload-target",
+        help="optional HTTP(S) POST endpoint for upload throughput",
+    )
+    run_parser.add_argument(
+        "--scope",
+        choices=("public", "private"),
+        default="public",
+        help="network address scope allowed for the target",
+    )
+    run_parser.add_argument(
+        "--insecure",
+        action="store_true",
+        help="disable TLS certificate verification for an explicitly trusted endpoint",
+    )
+    run_parser.add_argument(
+        "--no-ping",
+        action="store_true",
+        help="skip optional ICMP packet-loss sampling",
+    )
     return parser
 
 
@@ -95,5 +119,10 @@ def main(argv: Sequence[str] | None = None) -> int:
             install_deps=args.install_deps,
             assume_yes=args.yes,
             work_dir=args.work_dir,
+            target_url=args.target,
+            upload_url=args.upload_target,
+            network_scope=args.scope,
+            verify_tls=not args.insecure,
+            enable_ping=not args.no_ping,
         )
     raise AssertionError(f"unsupported command: {args.command}")

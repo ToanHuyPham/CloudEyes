@@ -44,6 +44,7 @@ def ensure_runtime_dependencies(
     assume_yes: bool = False,
     input_fn: Callable[[str], str] = input,
     run: Callable[..., subprocess.CompletedProcess[str]] = subprocess.run,
+    extra_commands: tuple[str, ...] = (),
 ) -> RuntimeDependencyReport:
     """Check dependencies and optionally install missing native packages.
 
@@ -52,7 +53,7 @@ def ensure_runtime_dependencies(
     the user confirms the exact package command.
     """
 
-    report = detect_runtime_dependencies()
+    report = detect_runtime_dependencies(extra_commands=extra_commands)
     if report.ready:
         return report
 
@@ -75,7 +76,7 @@ def ensure_runtime_dependencies(
             raise RuntimeDependencyError("Runtime dependency installation was cancelled.")
 
     run(command, check=True, text=True)
-    refreshed = detect_runtime_dependencies()
+    refreshed = detect_runtime_dependencies(extra_commands=extra_commands)
     if not refreshed.ready:
         remaining = ", ".join(refreshed.missing_commands)
         raise RuntimeDependencyError(
@@ -85,7 +86,9 @@ def ensure_runtime_dependencies(
 
 
 def render_install_command(
-    report: RuntimeDependencyReport, *, assume_yes: bool = True
+    report: RuntimeDependencyReport,
+    *,
+    assume_yes: bool = True,
 ) -> Sequence[str]:
     """Expose the deterministic native command for diagnostics and tests."""
 

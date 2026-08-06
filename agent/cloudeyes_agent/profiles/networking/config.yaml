@@ -1,3 +1,13 @@
 name: networking-config
-version: 1
-status: planned
+version: 1.0.0
+scope: public
+repetitions: 5
+timeout_seconds: 10.0
+download_limit_bytes: 4194304
+upload_bytes: 1048576
+ping_count: 5
+verify_tls: true
+notes:
+  - target_url defaults to https://example.com/ for a smoke test only
+  - upload_url is optional and must accept an HTTP POST body
+  - use a controlled endpoint for comparable throughput results

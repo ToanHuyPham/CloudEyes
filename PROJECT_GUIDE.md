@@ -39,10 +39,10 @@ Agent → Measurement → Evidence → Sample → Validation → Cohort → Asse
 
 - Phase: Reliable measurements
 - Version: 0.1.0-dev
-- Completed profiles: General v1 and Storage v1
+- Completed profiles: General v1, Storage v1, and Networking v1
 - Raw storage evidence: Atomic local JSON
 - Platform: Skeleton only
-- Next component: Networking Profile v1
+- Next component: Shared measurement reliability policies
 
 ## Implementation order
 
@@ -51,7 +51,7 @@ Agent → Measurement → Evidence → Sample → Validation → Cohort → Asse
 3. General profile — complete
 4. Sample builder and validator — complete
 5. Storage profile — complete
-6. Networking profile — next
+6. Networking profile — complete
 7. Cohort builder — complete foundation, expand after reliable measurements
 8. Provider aggregation — complete foundation, expand after reliable measurements
 9. Rule-based assessment and explanation

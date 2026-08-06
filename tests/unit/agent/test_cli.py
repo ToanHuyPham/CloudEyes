@@ -97,3 +97,45 @@ def test_run_storage_writes_sample_and_selects_work_dir(
     assert output.exists()
     assert captured["work_dir"] == work_dir
     assert captured["raw_output_dir"] == output.parent / "raw"
+
+
+def test_run_networking_passes_endpoint_options(tmp_path, monkeypatch, capsys) -> None:
+    sample = make_sample()
+    captured: dict[str, object] = {}
+
+    def fake_networking_profile(**kwargs):
+        captured.update(kwargs)
+        return sample
+
+    monkeypatch.setattr(run_command, "run_networking_profile", fake_networking_profile)
+    output = tmp_path / "networking-sample.json"
+
+    exit_code = cli.main(
+        (
+            "run",
+            "networking",
+            "--quick",
+            "--target",
+            "http://10.0.0.10:8080/download",
+            "--upload-target",
+            "http://10.0.0.10:8080/upload",
+            "--scope",
+            "private",
+            "--no-ping",
+            "--output",
+            str(output),
+            "--compact",
+        )
+    )
+
+    printed = json.loads(capsys.readouterr().out)
+    written = json.loads(output.read_text(encoding="utf-8"))
+
+    assert exit_code == 0
+    assert printed == written
+    config = captured["config"]
+    assert config.target_url == "http://10.0.0.10:8080/download"
+    assert config.upload_url == "http://10.0.0.10:8080/upload"
+    assert config.scope.value == "private"
+    assert config.ping_count == 0
+    assert captured["raw_output_dir"] == output.parent / "raw"

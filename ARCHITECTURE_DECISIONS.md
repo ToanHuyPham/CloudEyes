@@ -35,3 +35,16 @@ each run. It never targets an existing path as a file.
 Portable Python reads cannot guarantee cache bypass across every supported
 operating system. Storage v1 therefore labels affected read metrics as `cached`
 and records this limitation in raw evidence instead of claiming raw-device speed.
+
+## ADR-009 — Networking v1 measures only explicit endpoints
+
+Networking Profile v1 never scans address ranges or ports. Every remote request
+is directed to a user-selected HTTP or HTTPS endpoint, uses bounded payloads and
+timeouts, and records endpoint identity without retaining queries or payloads.
+
+## ADR-010 — Network scope is enforced before application probes
+
+Public scope rejects private, loopback, link-local, multicast, unspecified, and
+reserved addresses. Private scope permits controlled private and loopback tests
+but still blocks link-local metadata addresses and unsafe address classes.
+

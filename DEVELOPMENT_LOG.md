@@ -60,3 +60,30 @@
 - Portable read measurements may use the operating-system page cache.
 - Random I/O is single-process and queue-depth one.
 - A result represents only the tested filesystem path and protocol fingerprint.
+
+## 2026-08-06 — Networking Profile v1 completed
+
+### Completed
+
+- Explicit HTTP(S) endpoint measurement with public and private scope policies.
+- DNS, TCP, TLS, HTTP TTFB, bounded download, and optional bounded upload metrics.
+- HTTP request-loss and optional ICMP packet-loss measurement.
+- Link-local, multicast, unspecified, reserved, and unsafe public targets blocked.
+- Privacy-safe raw evidence without full URLs, queries, credentials, payloads, or IP values.
+- Profile-aware runtime installation for the optional `ping` command.
+- `cloudeyes run networking` CLI options for endpoint, upload endpoint, scope, TLS, and ICMP.
+- Unit, schema-contract, CLI, local-server, and end-to-end integration tests.
+
+### Current state
+
+- Phase: Reliable measurements
+- Component: Networking Profile v1
+- Status: Complete
+- Next component: Shared timeout and sample-quality policies
+
+### Explicit limitations
+
+- Results describe one endpoint and route at one point in time.
+- HTTP throughput includes application, TCP, and optional TLS overhead.
+- ICMP loss may not match TCP or HTTP behavior when networks filter ping.
+
