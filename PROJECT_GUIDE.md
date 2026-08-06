@@ -42,7 +42,8 @@ Agent → Measurement → Evidence → Sample → Validation → Cohort → Asse
 - Completed profiles: General v1, Storage v1, Networking v1, and Compute v1
 - Raw storage evidence: Atomic local JSON
 - Platform: Skeleton only
-- Next component: Shared measurement reliability policies
+- Shared measurement reliability policies: complete
+- Next component: Process-isolated execution and cooperative cancellation
 
 ## Implementation order
 

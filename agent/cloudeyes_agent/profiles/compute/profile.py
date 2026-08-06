@@ -16,11 +16,10 @@ from cloudeyes_core.models import (
     ProtocolIdentity,
     ProviderIdentity,
     Sample,
-    SampleQuality,
-    SampleQualityStatus,
 )
 
 from ...discovery import DiscoveryResult, VirtualizationKind, discover_all
+from ...reliability import ReliabilityPolicy, evaluate_sample_quality
 from ...storage import write_raw_output
 from .benchmarks import ComputeBenchmarkResult, benchmark_compute_profile
 from .config import ComputeProfileConfig
@@ -132,7 +131,6 @@ def run_compute_profile(
     )
 
     warnings = [*discovered.warnings, *benchmark_warnings]
-    errors: tuple[str, ...] = ()
     if discovered.provider.provider_id is None and provider_id is None:
         warnings.append("provider_unknown")
     if discovered.hardware.memory_bytes is None:
@@ -140,13 +138,12 @@ def run_compute_profile(
     if raw_output_dir is None:
         warnings.append("raw_output_not_persisted")
 
-    if measurement.status is MeasurementStatus.FAILED:
-        quality_status = SampleQualityStatus.INVALID
-        errors = ("compute_measurement_failed",)
-    elif warnings:
-        quality_status = SampleQualityStatus.VALID_WITH_WARNINGS
-    else:
-        quality_status = SampleQualityStatus.VALID
+    quality = evaluate_sample_quality(
+        (measurement,),
+        warnings=tuple(warnings),
+        invalid_error="compute_measurement_failed",
+        policy=ReliabilityPolicy(max_measurement_seconds=600.0),
+    )
 
     return Sample(
         sample_id=resolved_sample_id,
@@ -165,9 +162,5 @@ def run_compute_profile(
             fingerprint=selected_config.fingerprint,
         ),
         measurements=(measurement,),
-        quality=SampleQuality(
-            status=quality_status,
-            warnings=tuple(dict.fromkeys(warnings)),
-            errors=errors,
-        ),
+        quality=quality,
     )

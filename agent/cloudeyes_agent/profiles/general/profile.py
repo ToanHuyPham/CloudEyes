@@ -17,11 +17,10 @@ from cloudeyes_core.models import (
     ProtocolIdentity,
     ProviderIdentity,
     Sample,
-    SampleQuality,
-    SampleQualityStatus,
 )
 
 from ...discovery import DiscoveryResult, VirtualizationKind, discover_all
+from ...reliability import ReliabilityPolicy, evaluate_sample_quality
 from .benchmarks import benchmark_cpu, benchmark_memory, benchmark_storage
 from .config import GeneralProfileConfig
 
@@ -176,32 +175,12 @@ def run_general_profile(
     if discovered.hardware.memory_bytes is None:
         warnings.append("memory_capacity_unknown")
 
-    failed = [
-        measurement
-        for measurement in measurements
-        if measurement.status is MeasurementStatus.FAILED
-    ]
-    skipped = [
-        measurement
-        for measurement in measurements
-        if measurement.status is MeasurementStatus.SKIPPED
-    ]
-    warnings.extend(f"measurement_failed:{item.tool}" for item in failed)
-    warnings.extend(f"measurement_skipped:{item.tool}" for item in skipped)
-
-    successful = [
-        measurement
-        for measurement in measurements
-        if measurement.status is MeasurementStatus.SUCCESS
-    ]
-    errors: tuple[str, ...] = ()
-    if not successful:
-        quality_status = SampleQualityStatus.INVALID
-        errors = ("no_successful_measurements",)
-    elif warnings:
-        quality_status = SampleQualityStatus.VALID_WITH_WARNINGS
-    else:
-        quality_status = SampleQualityStatus.VALID
+    quality = evaluate_sample_quality(
+        tuple(measurements),
+        warnings=tuple(warnings),
+        invalid_error="no_successful_measurements",
+        policy=ReliabilityPolicy(max_measurement_seconds=120.0),
+    )
 
     return Sample(
         sample_id=resolved_sample_id,
@@ -220,9 +199,5 @@ def run_general_profile(
             fingerprint=selected_config.fingerprint,
         ),
         measurements=tuple(measurements),
-        quality=SampleQuality(
-            status=quality_status,
-            warnings=tuple(dict.fromkeys(warnings)),
-            errors=errors,
-        ),
+        quality=quality,
     )

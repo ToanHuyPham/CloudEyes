@@ -57,3 +57,10 @@ portable and offline. The default automatic worker count is capped at four proce
 users must explicitly request a larger count. Raw evidence records the Python implementation,
 version, resolved worker count, repetitions, and verification checksums. Results are not
 presented as native instruction throughput or FLOPS.
+
+## ADR — Soft elapsed-time budgets before hard cancellation
+
+CloudEyes records elapsed-time budget overruns as deterministic quality warnings. It does
+not kill in-process benchmark work in v1 because forced thread cancellation cannot guarantee
+cleanup of temporary files, sockets, or evidence. Hard timeouts require process isolation
+and an explicit cleanup contract.

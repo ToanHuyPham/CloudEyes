@@ -114,3 +114,10 @@
 - Results include Python interpreter and standard-library implementation effects.
 - Multi-core throughput includes worker-process coordination overhead.
 - CPU frequency, host contention, and thermal state can change results.
+
+## 2026-08-06 — Shared Measurement Reliability v1
+
+- Centralized sample-quality classification for General, Storage, Networking, and Compute.
+- Added profile-specific soft elapsed-time budgets.
+- Preserved partial-result warnings and profile-specific invalid error codes.
+- Added unit coverage and reliability policy documentation.
