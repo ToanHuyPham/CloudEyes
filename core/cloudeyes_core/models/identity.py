@@ -1,4 +1,4 @@
-"""Identity models used across CloudEyes."""
+"""Provider, product, and machine identity models."""
 
 from __future__ import annotations
 
@@ -12,9 +12,16 @@ def _required(value: str, field_name: str) -> str:
     return cleaned
 
 
+def _optional(value: str | None) -> str | None:
+    if value is None:
+        return None
+    cleaned = value.strip()
+    return cleaned or None
+
+
 @dataclass(frozen=True, slots=True)
 class ProviderIdentity:
-    """Identity of a cloud or infrastructure provider."""
+    """Stable identity of a cloud or infrastructure provider."""
 
     provider_id: str
     name: str
@@ -26,14 +33,14 @@ class ProviderIdentity:
 
         if self.country_code is not None:
             code = self.country_code.strip().upper()
-            if len(code) != 2:
-                raise ValueError("country_code must be a 2-letter ISO code")
+            if len(code) != 2 or not code.isalpha():
+                raise ValueError("country_code must be a 2-letter code")
             object.__setattr__(self, "country_code", code)
 
 
 @dataclass(frozen=True, slots=True)
 class ProductIdentity:
-    """Provider product, plan, and location represented by a sample."""
+    """Product, plan, and location represented by a sample."""
 
     product: str | None = None
     plan: str | None = None
@@ -42,15 +49,12 @@ class ProductIdentity:
 
     def __post_init__(self) -> None:
         for field_name in ("product", "plan", "region", "zone"):
-            value = getattr(self, field_name)
-            if value is not None:
-                cleaned = value.strip()
-                object.__setattr__(self, field_name, cleaned or None)
+            object.__setattr__(self, field_name, _optional(getattr(self, field_name)))
 
 
 @dataclass(frozen=True, slots=True)
 class MachineIdentity:
-    """Basic machine identity without sensitive host information."""
+    """Non-sensitive machine identity used for cohort compatibility."""
 
     machine_type: str
     cpu_count: int
@@ -61,8 +65,7 @@ class MachineIdentity:
         object.__setattr__(self, "machine_type", _required(self.machine_type, "machine_type"))
         object.__setattr__(self, "architecture", _required(self.architecture, "architecture"))
 
-        if self.cpu_count <= 0:
+        if isinstance(self.cpu_count, bool) or self.cpu_count <= 0:
             raise ValueError("cpu_count must be greater than zero")
-
-        if self.memory_bytes <= 0:
+        if isinstance(self.memory_bytes, bool) or self.memory_bytes <= 0:
             raise ValueError("memory_bytes must be greater than zero")

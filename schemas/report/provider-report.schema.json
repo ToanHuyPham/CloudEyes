@@ -1,0 +1,329 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cloudeyes.dev/schemas/report/provider-report.schema.json",
+  "title": "CloudEyes Provider Report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "report_id",
+    "generated_at",
+    "provider_id",
+    "provider_name",
+    "total_samples",
+    "cohort_count",
+    "overall_confidence",
+    "gaps",
+    "cohorts"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "1.0.0"
+    },
+    "report_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "provider_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "provider_name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "total_samples": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "cohort_count": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "overall_confidence": {
+      "type": "string",
+      "enum": [
+        "low",
+        "medium",
+        "high"
+      ]
+    },
+    "gaps": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "cohorts": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "cohort_id",
+          "cohort_key",
+          "protocol",
+          "started_at",
+          "ended_at",
+          "sample_count",
+          "sample_ids",
+          "coverage",
+          "confidence",
+          "metrics"
+        ],
+        "properties": {
+          "cohort_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "cohort_key": {
+            "type": "string",
+            "minLength": 1
+          },
+          "protocol": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "$id": "https://cloudeyes.dev/schemas/protocol/manifest.schema.json",
+            "title": "CloudEyes Protocol Identity",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "profile",
+              "version",
+              "fingerprint"
+            ],
+            "properties": {
+              "profile": {
+                "type": "string",
+                "minLength": 1
+              },
+              "version": {
+                "type": "string",
+                "minLength": 1
+              },
+              "fingerprint": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "started_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "ended_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "sample_count": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "sample_ids": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string"
+            }
+          },
+          "coverage": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "sample_count",
+              "observation_days",
+              "regions",
+              "zones",
+              "products",
+              "plans",
+              "available_metrics",
+              "expected_metrics",
+              "gaps"
+            ],
+            "properties": {
+              "sample_count": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "observation_days": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "regions": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "zones": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "products": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "plans": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "available_metrics": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "expected_metrics": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "gaps": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "confidence": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "measurement",
+              "statistical",
+              "coverage"
+            ],
+            "properties": {
+              "measurement": {
+                "type": "string",
+                "enum": [
+                  "low",
+                  "medium",
+                  "high"
+                ]
+              },
+              "statistical": {
+                "type": "string",
+                "enum": [
+                  "low",
+                  "medium",
+                  "high"
+                ]
+              },
+              "coverage": {
+                "type": "string",
+                "enum": [
+                  "low",
+                  "medium",
+                  "high"
+                ]
+              }
+            }
+          },
+          "metrics": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "name",
+                "unit",
+                "direction",
+                "contributing_samples",
+                "raw_observations",
+                "statistics"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "unit": {
+                  "type": "string"
+                },
+                "direction": {
+                  "type": "string",
+                  "enum": [
+                    "higher_is_better",
+                    "lower_is_better",
+                    "neutral"
+                  ]
+                },
+                "contributing_samples": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "raw_observations": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "statistics": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "count",
+                    "minimum",
+                    "maximum",
+                    "mean",
+                    "median",
+                    "standard_deviation",
+                    "coefficient_of_variation",
+                    "p10",
+                    "p90"
+                  ],
+                  "properties": {
+                    "count": {
+                      "type": "integer",
+                      "minimum": 1
+                    },
+                    "minimum": {
+                      "type": "number"
+                    },
+                    "maximum": {
+                      "type": "number"
+                    },
+                    "mean": {
+                      "type": "number"
+                    },
+                    "median": {
+                      "type": "number"
+                    },
+                    "standard_deviation": {
+                      "type": "number",
+                      "minimum": 0
+                    },
+                    "coefficient_of_variation": {
+                      "type": [
+                        "number",
+                        "null"
+                      ],
+                      "minimum": 0
+                    },
+                    "p10": {
+                      "type": "number"
+                    },
+                    "p90": {
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

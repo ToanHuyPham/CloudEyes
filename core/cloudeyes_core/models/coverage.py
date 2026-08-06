@@ -1,4 +1,4 @@
-"""Coverage models for CloudEyes provider assessments."""
+"""Evidence coverage model."""
 
 from __future__ import annotations
 
@@ -7,7 +7,7 @@ from dataclasses import dataclass, field
 
 @dataclass(frozen=True, slots=True)
 class Coverage:
-    """Describes how much of the target scope has been observed."""
+    """Describes how much of a target evidence scope was observed."""
 
     sample_count: int
     observation_days: int
@@ -22,7 +22,6 @@ class Coverage:
     def __post_init__(self) -> None:
         if self.sample_count < 0:
             raise ValueError("sample_count must not be negative")
-
         if self.observation_days < 0:
             raise ValueError("observation_days must not be negative")
 
@@ -32,8 +31,6 @@ class Coverage:
 
         if not self.expected_metrics:
             return 1.0
-
         expected = set(self.expected_metrics)
         available = set(self.available_metrics)
-
         return len(expected & available) / len(expected)

@@ -2,8 +2,4 @@
 
 from .descriptive import SummaryStatistics, percentile, summarize
 
-__all__ = [
-    "SummaryStatistics",
-    "percentile",
-    "summarize",
-]
+__all__ = ["SummaryStatistics", "percentile", "summarize"]

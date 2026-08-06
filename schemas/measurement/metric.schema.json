@@ -13,22 +13,14 @@
   "properties": {
     "name": {
       "type": "string",
-      "minLength": 1,
-      "examples": [
-        "storage.random_read.iops"
-      ]
+      "minLength": 1
     },
     "value": {
       "type": "number"
     },
     "unit": {
       "type": "string",
-      "minLength": 1,
-      "examples": [
-        "iops",
-        "bytes_per_second",
-        "milliseconds"
-      ]
+      "minLength": 1
     },
     "direction": {
       "type": "string",

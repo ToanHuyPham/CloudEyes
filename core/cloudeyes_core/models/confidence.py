@@ -1,4 +1,4 @@
-"""Confidence models for CloudEyes assessments."""
+"""Assessment confidence model."""
 
 from __future__ import annotations
 
@@ -16,11 +16,17 @@ class ConfidenceLevel(StrEnum):
 
 @dataclass(frozen=True, slots=True)
 class Confidence:
-    """Confidence dimensions for one assessment."""
+    """Independent confidence dimensions for one cohort assessment."""
 
     measurement: ConfidenceLevel
     statistical: ConfidenceLevel
     coverage: ConfidenceLevel
+
+    def __post_init__(self) -> None:
+        for field_name in ("measurement", "statistical", "coverage"):
+            value = getattr(self, field_name)
+            if not isinstance(value, ConfidenceLevel):
+                object.__setattr__(self, field_name, ConfidenceLevel(value))
 
     @property
     def overall(self) -> ConfidenceLevel:
@@ -31,12 +37,7 @@ class Confidence:
             ConfidenceLevel.MEDIUM: 1,
             ConfidenceLevel.HIGH: 2,
         }
-
         return min(
-            (
-                self.measurement,
-                self.statistical,
-                self.coverage,
-            ),
+            (self.measurement, self.statistical, self.coverage),
             key=order.__getitem__,
         )

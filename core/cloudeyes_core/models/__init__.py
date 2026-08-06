@@ -7,11 +7,13 @@ from .identity import MachineIdentity, ProductIdentity, ProviderIdentity
 from .measurement import Measurement, MeasurementStatus
 from .metric import Metric, MetricDirection
 from .protocol import ProtocolIdentity
+from .report import CohortReport, ProviderReport
 from .sample import Sample, SampleQuality, SampleQualityStatus
 
 __all__ = [
     "Cohort",
     "CohortKey",
+    "CohortReport",
     "Confidence",
     "ConfidenceLevel",
     "Coverage",
@@ -23,6 +25,7 @@ __all__ = [
     "ProductIdentity",
     "ProtocolIdentity",
     "ProviderIdentity",
+    "ProviderReport",
     "Sample",
     "SampleQuality",
     "SampleQualityStatus",

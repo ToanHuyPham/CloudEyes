@@ -59,7 +59,38 @@
     "metrics": {
       "type": "array",
       "items": {
-        "$ref": "metric.schema.json"
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://cloudeyes.dev/schemas/measurement/metric.schema.json",
+        "title": "CloudEyes Metric",
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "value",
+          "unit",
+          "direction"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "value": {
+            "type": "number"
+          },
+          "unit": {
+            "type": "string",
+            "minLength": 1
+          },
+          "direction": {
+            "type": "string",
+            "enum": [
+              "higher_is_better",
+              "lower_is_better",
+              "neutral"
+            ]
+          }
+        }
       }
     },
     "raw_output_path": {

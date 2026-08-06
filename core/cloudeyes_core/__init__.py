@@ -1,9 +1,10 @@
-"""CloudEyes Core.
+"""CloudEyes sample validation."""
 
-Placeholder for the CloudEyes foundation.
-Implementation will be added with tests and documentation.
-"""
+from .sample import SampleValidationError, ValidationResult, ensure_valid_sample, validate_sample
 
-from __future__ import annotations
-
-__all__: list[str] = []
+__all__ = [
+    "SampleValidationError",
+    "ValidationResult",
+    "ensure_valid_sample",
+    "validate_sample",
+]
