@@ -121,3 +121,10 @@
 - Added profile-specific soft elapsed-time budgets.
 - Preserved partial-result warnings and profile-specific invalid error codes.
 - Added unit coverage and reliability policy documentation.
+
+## Process-isolated execution v1
+
+- Added a spawned child-process boundary for complete profile runs.
+- Added hard wall-clock timeout enforcement with terminate/kill fallback.
+- Added `--timeout-seconds` and debugging-only `--no-isolation` CLI options.
+- Kept dependency installation in the parent process so elevation and prompts are explicit.

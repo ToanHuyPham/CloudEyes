@@ -46,6 +46,7 @@ def test_run_general_writes_core_sample(tmp_path, monkeypatch, capsys) -> None:
             "run",
             "general",
             "--quick",
+            "--no-isolation",
             "--no-storage",
             "--output",
             str(output),
@@ -82,6 +83,7 @@ def test_run_storage_writes_sample_and_selects_work_dir(
             "run",
             "storage",
             "--quick",
+            "--no-isolation",
             "--work-dir",
             str(work_dir),
             "--output",
@@ -116,6 +118,7 @@ def test_run_networking_passes_endpoint_options(tmp_path, monkeypatch, capsys) -
             "run",
             "networking",
             "--quick",
+            "--no-isolation",
             "--target",
             "http://10.0.0.10:8080/download",
             "--upload-target",
@@ -158,6 +161,7 @@ def test_run_compute_passes_worker_count(tmp_path, monkeypatch, capsys) -> None:
             "run",
             "compute",
             "--quick",
+            "--no-isolation",
             "--workers",
             "3",
             "--output",
@@ -176,7 +180,7 @@ def test_run_compute_passes_worker_count(tmp_path, monkeypatch, capsys) -> None:
 
 
 def test_workers_option_is_rejected_for_non_compute_profile(capsys) -> None:
-    exit_code = cli.main(("run", "general", "--quick", "--workers", "2"))
+    exit_code = cli.main(("run", "general", "--quick", "--no-isolation", "--workers", "2"))
 
     assert exit_code == 4
     assert "only valid for the compute profile" in capsys.readouterr().out

@@ -108,6 +108,16 @@ def build_parser() -> argparse.ArgumentParser:
         type=_worker_count,
         help="compute worker processes; 0 selects the bounded automatic count",
     )
+    run_parser.add_argument(
+        "--timeout-seconds",
+        type=float,
+        help="hard wall-clock deadline for the isolated profile process",
+    )
+    run_parser.add_argument(
+        "--no-isolation",
+        action="store_true",
+        help="run in the CLI process for debugging; disables hard timeout enforcement",
+    )
     return parser
 
 
@@ -140,5 +150,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             verify_tls=not args.insecure,
             enable_ping=not args.no_ping,
             workers=args.workers,
+            isolated=not args.no_isolation,
+            timeout_seconds=args.timeout_seconds,
         )
     raise AssertionError(f"unsupported command: {args.command}")

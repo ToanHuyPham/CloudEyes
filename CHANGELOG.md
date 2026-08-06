@@ -12,3 +12,5 @@
 - Created CloudEyes v1.1 Foundation.
 
 - Added shared deterministic sample-quality and elapsed-time reliability policies.
+
+- Add cross-platform spawned-process isolation and hard profile deadlines.
