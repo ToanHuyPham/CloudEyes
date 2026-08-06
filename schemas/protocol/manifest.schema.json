@@ -1,6 +1,26 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Manifest",
+  "$id": "https://cloudeyes.dev/schemas/protocol/manifest.schema.json",
+  "title": "CloudEyes Protocol Identity",
   "type": "object",
-  "additionalProperties": true
+  "additionalProperties": false,
+  "required": [
+    "profile",
+    "version",
+    "fingerprint"
+  ],
+  "properties": {
+    "profile": {
+      "type": "string",
+      "minLength": 1
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "fingerprint": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
 }
