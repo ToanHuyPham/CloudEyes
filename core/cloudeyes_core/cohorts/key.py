@@ -1,9 +1,11 @@
-"""cohorts key.
-
-Placeholder for the CloudEyes foundation.
-Implementation will be added with tests and documentation.
-"""
+"""Cohort key helpers."""
 
 from __future__ import annotations
 
-__all__: list[str] = []
+from cloudeyes_core.models import CohortKey, Sample
+
+
+def build_cohort_key(sample: Sample) -> CohortKey:
+    """Build the compatibility key for a sample."""
+
+    return CohortKey.from_sample(sample)
