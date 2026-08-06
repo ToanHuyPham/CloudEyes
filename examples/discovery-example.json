@@ -1,0 +1,39 @@
+{
+  "discovered_at": "2026-08-06T12:45:00+07:00",
+  "hardware": {
+    "architecture": "AMD64",
+    "cpu_model": "Example CPU",
+    "logical_cpu_count": 8,
+    "memory_bytes": 17179869184,
+    "physical_cpu_count": 4
+  },
+  "network": {
+    "hostname_resolves": true,
+    "interface_count": 2,
+    "supports_ipv4": true,
+    "supports_ipv6": true
+  },
+  "provider": {
+    "confidence": "low",
+    "evidence": [],
+    "provider_id": null,
+    "provider_name": null,
+    "source": "unknown"
+  },
+  "schema_version": "1.0.0",
+  "system": {
+    "architecture": "AMD64",
+    "kernel_version": "10.0.26100",
+    "os_name": "Windows",
+    "os_version": "Windows-11",
+    "python_version": "3.13.14",
+    "timezone": "SE Asia Standard Time"
+  },
+  "virtualization": {
+    "confidence": "low",
+    "evidence": [],
+    "hypervisor": null,
+    "kind": "unknown"
+  },
+  "warnings": []
+}

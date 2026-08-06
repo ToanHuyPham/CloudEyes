@@ -1,9 +1,5 @@
-"""Commands.
+"""CloudEyes Agent command implementations."""
 
-Placeholder for the CloudEyes foundation.
-Implementation will be added with tests and documentation.
-"""
+from .inspect import run_inspect
 
-from __future__ import annotations
-
-__all__: list[str] = []
+__all__ = ["run_inspect"]

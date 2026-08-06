@@ -1,9 +1,7 @@
-"""Agent entry point.
-
-Placeholder for the CloudEyes foundation.
-Implementation will be added with tests and documentation.
-"""
+"""Module entry point for ``python -m cloudeyes_agent``."""
 
 from __future__ import annotations
 
-__all__: list[str] = []
+from .cli import main
+
+raise SystemExit(main())

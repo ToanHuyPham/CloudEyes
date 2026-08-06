@@ -1,6 +1,19 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Network",
+  "$id": "https://cloudeyes.dev/schemas/discovery/network.schema.json",
+  "title": "CloudEyes Network Discovery",
   "type": "object",
-  "additionalProperties": true
+  "additionalProperties": false,
+  "required": [
+    "interface_count",
+    "supports_ipv4",
+    "supports_ipv6",
+    "hostname_resolves"
+  ],
+  "properties": {
+    "interface_count": {"type": "integer", "minimum": 0},
+    "supports_ipv4": {"type": "boolean"},
+    "supports_ipv6": {"type": "boolean"},
+    "hostname_resolves": {"type": "boolean"}
+  }
 }

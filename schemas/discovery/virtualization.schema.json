@@ -1,6 +1,24 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Virtualization",
+  "$id": "https://cloudeyes.dev/schemas/discovery/virtualization.schema.json",
+  "title": "CloudEyes Virtualization Discovery",
   "type": "object",
-  "additionalProperties": true
+  "additionalProperties": false,
+  "required": ["kind", "hypervisor", "confidence", "evidence"],
+  "properties": {
+    "kind": {
+      "type": "string",
+      "enum": ["bare_metal", "virtual_machine", "container", "unknown"]
+    },
+    "hypervisor": {"type": ["string", "null"]},
+    "confidence": {
+      "type": "string",
+      "enum": ["low", "medium", "high"]
+    },
+    "evidence": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1},
+      "uniqueItems": true
+    }
+  }
 }

@@ -1,6 +1,31 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Provider",
+  "$id": "https://cloudeyes.dev/schemas/discovery/provider.schema.json",
+  "title": "CloudEyes Provider Discovery",
   "type": "object",
-  "additionalProperties": true
+  "additionalProperties": false,
+  "required": [
+    "provider_id",
+    "provider_name",
+    "confidence",
+    "source",
+    "evidence"
+  ],
+  "properties": {
+    "provider_id": {"type": ["string", "null"]},
+    "provider_name": {"type": ["string", "null"]},
+    "confidence": {
+      "type": "string",
+      "enum": ["low", "medium", "high"]
+    },
+    "source": {
+      "type": "string",
+      "enum": ["environment", "system", "unknown"]
+    },
+    "evidence": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1},
+      "uniqueItems": true
+    }
+  }
 }

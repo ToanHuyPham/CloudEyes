@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cloudeyes.dev/schemas/discovery/result.schema.json",
+  "title": "CloudEyes Agent Discovery Result",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "discovered_at",
+    "system",
+    "hardware",
+    "virtualization",
+    "provider",
+    "network",
+    "warnings"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "discovered_at": {"type": "string", "format": "date-time"},
+    "system": {"$ref": "system.schema.json"},
+    "hardware": {"$ref": "hardware.schema.json"},
+    "virtualization": {"$ref": "virtualization.schema.json"},
+    "provider": {"$ref": "provider.schema.json"},
+    "network": {"$ref": "network.schema.json"},
+    "warnings": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1},
+      "uniqueItems": true
+    }
+  }
+}

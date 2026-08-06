@@ -1,6 +1,23 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "System",
+  "$id": "https://cloudeyes.dev/schemas/discovery/system.schema.json",
+  "title": "CloudEyes System Discovery",
   "type": "object",
-  "additionalProperties": true
+  "additionalProperties": false,
+  "required": [
+    "os_name",
+    "os_version",
+    "kernel_version",
+    "architecture",
+    "python_version",
+    "timezone"
+  ],
+  "properties": {
+    "os_name": {"type": "string", "minLength": 1},
+    "os_version": {"type": "string", "minLength": 1},
+    "kernel_version": {"type": "string", "minLength": 1},
+    "architecture": {"type": "string", "minLength": 1},
+    "python_version": {"type": "string", "minLength": 1},
+    "timezone": {"type": "string", "minLength": 1}
+  }
 }

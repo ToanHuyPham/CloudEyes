@@ -18,16 +18,20 @@ dev = [
   "ruff>=0.6"
 ]
 
-[tool.setuptools]
-package-dir = { "" = "core" }
+[project.scripts]
+cloudeyes = "cloudeyes_agent.cli:main"
+
+[tool.setuptools.package-dir]
+cloudeyes_core = "core/cloudeyes_core"
+cloudeyes_agent = "agent/cloudeyes_agent"
 
 [tool.setuptools.packages.find]
-where = ["core"]
-include = ["cloudeyes_core*"]
+where = ["core", "agent"]
+include = ["cloudeyes_core*", "cloudeyes_agent*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-pythonpath = ["core"]
+pythonpath = ["core", "agent"]
 addopts = "-q"
 
 [tool.ruff]

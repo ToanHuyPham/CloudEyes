@@ -1,9 +1,7 @@
-"""CloudEyes Agent.
+"""CloudEyes local measurement agent."""
 
-Placeholder for the CloudEyes foundation.
-Implementation will be added with tests and documentation.
-"""
+from .discovery import DiscoveryResult, discover_all
 
-from __future__ import annotations
+__all__ = ["DiscoveryResult", "discover_all"]
 
-__all__: list[str] = []
+__version__ = "0.1.0.dev0"
