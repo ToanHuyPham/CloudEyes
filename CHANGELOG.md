@@ -14,3 +14,4 @@
 - Added shared deterministic sample-quality and elapsed-time reliability policies.
 
 - Add cross-platform spawned-process isolation and hard profile deadlines.
+- Added process-safe cooperative cancellation, cleanup checkpoints, graceful timeout shutdown, and exit code 130 for interrupted runs.

@@ -11,17 +11,20 @@ import time
 import zlib
 from collections.abc import Callable
 from concurrent.futures import ProcessPoolExecutor
+from concurrent.futures import TimeoutError as FutureTimeoutError
 from dataclasses import asdict, dataclass
 from statistics import median
 from typing import Any
 
 from cloudeyes_core.models import Metric, MetricDirection
 
+from ...execution import CancellationToken
 from .config import ComputeProfileConfig
 
 _MIB = 1024 * 1024
 _Timer = Callable[[], float]
 _MASK_64 = (1 << 64) - 1
+_WORKER_CANCELLATION_TOKEN: CancellationToken | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -37,17 +40,53 @@ def _elapsed(started_at: float, timer: _Timer) -> float:
     return max(timer() - started_at, 1e-12)
 
 
+def _initialize_worker_cancellation(token: CancellationToken) -> None:
+    global _WORKER_CANCELLATION_TOKEN
+    _WORKER_CANCELLATION_TOKEN = token
+
+
+def _checkpoint(token: CancellationToken | None = None) -> None:
+    selected = token or _WORKER_CANCELLATION_TOKEN
+    if selected is not None:
+        selected.checkpoint()
+
+
+def _future_result(
+    future: Any,
+    *,
+    timeout_seconds: float,
+    cancellation_token: CancellationToken | None,
+) -> Any:
+    deadline = time.monotonic() + timeout_seconds
+    while True:
+        _checkpoint(cancellation_token)
+        remaining = deadline - time.monotonic()
+        if remaining <= 0:
+            return future.result(timeout=0)
+        try:
+            return future.result(timeout=min(0.1, remaining))
+        except FutureTimeoutError:
+            if time.monotonic() >= deadline:
+                raise
+
+
 def _median(values: list[float]) -> float:
     if not values:
         raise ValueError("at least one timing sample is required")
     return float(median(values))
 
 
-def _integer_kernel(iterations: int, seed: int) -> int:
+def _integer_kernel(
+    iterations: int,
+    seed: int,
+    cancellation_token: CancellationToken | None = None,
+) -> int:
     """Run a deterministic integer-mixing loop and return its checksum."""
 
     value = seed & _MASK_64
     for index in range(iterations):
+        if index % 4096 == 0:
+            _checkpoint(cancellation_token)
         value ^= (value << 13) & _MASK_64
         value ^= value >> 7
         value ^= (value << 17) & _MASK_64
@@ -55,12 +94,18 @@ def _integer_kernel(iterations: int, seed: int) -> int:
     return value
 
 
-def _floating_point_kernel(iterations: int, seed: int) -> float:
+def _floating_point_kernel(
+    iterations: int,
+    seed: int,
+    cancellation_token: CancellationToken | None = None,
+) -> float:
     """Run deterministic scalar floating-point arithmetic."""
 
     value = 1.0 + (seed % 997) / 997.0
     accumulator = 0.0
     for index in range(iterations):
+        if index % 4096 == 0:
+            _checkpoint(cancellation_token)
         value = value * 1.0000001192092896 + (index % 97) * 0.000001
         value = value / 1.0000000298023224
         if value > 10_000.0:
@@ -69,17 +114,28 @@ def _floating_point_kernel(iterations: int, seed: int) -> float:
     return accumulator
 
 
-def _sha256_kernel(block: bytes, iterations: int) -> str:
+def _sha256_kernel(
+    block: bytes,
+    iterations: int,
+    cancellation_token: CancellationToken | None = None,
+) -> str:
     digest = hashlib.sha256()
     for _ in range(iterations):
+        _checkpoint(cancellation_token)
         digest.update(block)
     return digest.hexdigest()
 
 
-def _compression_kernel(block: bytes, iterations: int, level: int) -> tuple[int, int]:
+def _compression_kernel(
+    block: bytes,
+    iterations: int,
+    level: int,
+    cancellation_token: CancellationToken | None = None,
+) -> tuple[int, int]:
     total_output_bytes = 0
     checksum = 0
     for _ in range(iterations):
+        _checkpoint(cancellation_token)
         compressed = zlib.compress(block, level)
         total_output_bytes += len(compressed)
         checksum ^= compressed[-1]
@@ -123,12 +179,18 @@ def _integer_single_core(
     config: ComputeProfileConfig,
     *,
     timer: _Timer,
+    cancellation_token: CancellationToken | None = None,
 ) -> tuple[list[float], list[int]]:
     rates: list[float] = []
     checksums: list[int] = []
     for repetition in range(config.repetitions):
+        _checkpoint(cancellation_token)
         started_at = timer()
-        checksum = _integer_kernel(config.integer_iterations, 101 + repetition)
+        checksum = _integer_kernel(
+            config.integer_iterations,
+            101 + repetition,
+            cancellation_token,
+        )
         elapsed_seconds = _elapsed(started_at, timer)
         rates.append(config.integer_iterations / elapsed_seconds)
         checksums.append(checksum)
@@ -140,31 +202,49 @@ def _integer_multi_core(
     *,
     workers: int,
     timer: _Timer,
+    cancellation_token: CancellationToken | None = None,
 ) -> tuple[list[float], list[int]]:
     rates: list[float] = []
     checksums: list[int] = []
 
     if workers == 1:
         for repetition in range(config.repetitions):
+            _checkpoint(cancellation_token)
             started_at = timer()
-            checksum = _integer_kernel(config.integer_iterations, 10_001 + repetition)
+            checksum = _integer_kernel(
+                config.integer_iterations,
+                10_001 + repetition,
+                cancellation_token,
+            )
             elapsed_seconds = _elapsed(started_at, timer)
             rates.append(config.integer_iterations / elapsed_seconds)
             checksums.append(checksum)
         return rates, checksums
 
-    with ProcessPoolExecutor(
-        max_workers=workers,
-        mp_context=multiprocessing.get_context("spawn"),
-    ) as executor:
+    executor_options: dict[str, Any] = {
+        "max_workers": workers,
+        "mp_context": multiprocessing.get_context("spawn"),
+    }
+    if cancellation_token is not None:
+        executor_options.update(
+            initializer=_initialize_worker_cancellation,
+            initargs=(cancellation_token,),
+        )
+
+    with ProcessPoolExecutor(**executor_options) as executor:
         warmups = [
             executor.submit(_integer_kernel, config.warmup_iterations, 50_000 + worker)
             for worker in range(workers)
         ]
         for future in warmups:
-            future.result(timeout=config.worker_timeout_seconds)
+            _future_result(
+                future,
+                timeout_seconds=config.worker_timeout_seconds,
+                cancellation_token=cancellation_token,
+            )
 
         for repetition in range(config.repetitions):
+            _checkpoint(cancellation_token)
             started_at = timer()
             futures = [
                 executor.submit(
@@ -174,7 +254,14 @@ def _integer_multi_core(
                 )
                 for worker in range(workers)
             ]
-            results = [future.result(timeout=config.worker_timeout_seconds) for future in futures]
+            results = [
+                _future_result(
+                    future,
+                    timeout_seconds=config.worker_timeout_seconds,
+                    cancellation_token=cancellation_token,
+                )
+                for future in futures
+            ]
             elapsed_seconds = _elapsed(started_at, timer)
             rates.append((config.integer_iterations * workers) / elapsed_seconds)
             checksums.append(sum(results) & _MASK_64)
@@ -186,9 +273,11 @@ def benchmark_compute_profile(
     *,
     config: ComputeProfileConfig | None = None,
     timer: _Timer = time.perf_counter,
+    cancellation_token: CancellationToken | None = None,
 ) -> ComputeBenchmarkResult:
     """Execute bounded CPU workloads and aggregate each metric with the median."""
 
+    _checkpoint(cancellation_token)
     selected = config or ComputeProfileConfig()
     workers, warnings = _resolve_workers(selected)
 
@@ -197,38 +286,47 @@ def benchmark_compute_profile(
         1,
         min(selected.warmup_iterations, selected.floating_point_iterations),
     )
-    _integer_kernel(integer_warmup, 1)
-    _floating_point_kernel(float_warmup, 1)
+    _integer_kernel(integer_warmup, 1, cancellation_token)
+    _floating_point_kernel(float_warmup, 1, cancellation_token)
 
     sha_block = b"CloudEyes-Compute-v1" * (
         selected.sha256_block_bytes // len(b"CloudEyes-Compute-v1") + 1
     )
     sha_block = sha_block[: selected.sha256_block_bytes]
     compression_block = _deterministic_block(selected.compression_block_bytes)
-    _sha256_kernel(sha_block[: min(len(sha_block), 64 * 1024)], 1)
+    _sha256_kernel(
+        sha_block[: min(len(sha_block), 64 * 1024)],
+        1,
+        cancellation_token,
+    )
     _compression_kernel(
         compression_block[: min(len(compression_block), 64 * 1024)],
         1,
         selected.compression_level,
+        cancellation_token,
     )
 
     integer_single_rates, integer_single_checksums = _integer_single_core(
         selected,
         timer=timer,
+        cancellation_token=cancellation_token,
     )
     integer_multi_rates, integer_multi_checksums = _integer_multi_core(
         selected,
         workers=workers,
         timer=timer,
+        cancellation_token=cancellation_token,
     )
 
     float_rates: list[float] = []
     float_checksums: list[float] = []
     for repetition in range(selected.repetitions):
+        _checkpoint(cancellation_token)
         started_at = timer()
         checksum = _floating_point_kernel(
             selected.floating_point_iterations,
             201 + repetition,
+            cancellation_token,
         )
         elapsed_seconds = _elapsed(started_at, timer)
         float_rates.append(selected.floating_point_iterations / elapsed_seconds)
@@ -238,8 +336,13 @@ def benchmark_compute_profile(
     sha_checksums: list[str] = []
     sha_total_bytes = selected.sha256_block_bytes * selected.sha256_iterations
     for _ in range(selected.repetitions):
+        _checkpoint(cancellation_token)
         started_at = timer()
-        checksum = _sha256_kernel(sha_block, selected.sha256_iterations)
+        checksum = _sha256_kernel(
+            sha_block,
+            selected.sha256_iterations,
+            cancellation_token,
+        )
         elapsed_seconds = _elapsed(started_at, timer)
         sha_rates.append((sha_total_bytes / _MIB) / elapsed_seconds)
         sha_checksums.append(checksum)
@@ -249,11 +352,13 @@ def benchmark_compute_profile(
     compression_checksums: list[int] = []
     compression_total_bytes = selected.compression_block_bytes * selected.compression_iterations
     for _ in range(selected.repetitions):
+        _checkpoint(cancellation_token)
         started_at = timer()
         output_bytes, checksum = _compression_kernel(
             compression_block,
             selected.compression_iterations,
             selected.compression_level,
+            cancellation_token,
         )
         elapsed_seconds = _elapsed(started_at, timer)
         compression_rates.append((compression_total_bytes / _MIB) / elapsed_seconds)

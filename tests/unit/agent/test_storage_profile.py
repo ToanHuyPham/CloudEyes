@@ -5,6 +5,7 @@ from __future__ import annotations
 from datetime import UTC, datetime
 
 import pytest
+from cloudeyes_agent.execution import CancellationRequested
 from cloudeyes_agent.profiles.storage import (
     StorageBenchmarkResult,
     StorageProfileConfig,
@@ -17,6 +18,16 @@ from cloudeyes_core.models import Metric, MetricDirection, SampleQualityStatus
 from cloudeyes_core.validation import validate_sample
 
 from tests.unit.agent.test_discovery_models import make_result
+
+
+class _CancelAfterCheckpoints:
+    def __init__(self, allowed: int) -> None:
+        self.remaining = allowed
+
+    def checkpoint(self) -> None:
+        self.remaining -= 1
+        if self.remaining <= 0:
+            raise CancellationRequested("test cancellation")
 
 
 def _result() -> StorageBenchmarkResult:
@@ -71,6 +82,19 @@ def test_quick_benchmark_returns_all_metrics_and_cleans_up(tmp_path) -> None:
     }
     assert all(metric.value > 0 for metric in result.metrics)
     assert result.evidence["profile"] == "storage"
+    assert not any(tmp_path.iterdir())
+
+
+def test_cancellation_removes_partial_storage_files(tmp_path) -> None:
+    token = _CancelAfterCheckpoints(6)
+
+    with pytest.raises(CancellationRequested, match="test cancellation"):
+        benchmark_storage_profile(
+            config=StorageProfileConfig.quick(),
+            work_dir=tmp_path,
+            cancellation_token=token,
+        )
+
     assert not any(tmp_path.iterdir())
 
 

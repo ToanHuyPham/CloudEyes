@@ -19,6 +19,7 @@ from cloudeyes_core.models import (
 )
 
 from ...discovery import DiscoveryResult, VirtualizationKind, discover_all
+from ...execution import CancellationRequested, CancellationToken
 from ...reliability import ReliabilityPolicy, evaluate_sample_quality
 from ...storage import write_raw_output
 from .benchmarks import StorageBenchmarkResult, benchmark_storage_profile
@@ -62,13 +63,17 @@ def _measurement(
     work_dir: str | Path | None,
     raw_output_dir: str | Path | None,
     clock: Clock,
+    cancellation_token: CancellationToken | None = None,
 ) -> Measurement:
     started_at = clock()
     try:
         result: StorageBenchmarkResult = benchmark_storage_profile(
             config=config,
             work_dir=work_dir,
+            cancellation_token=cancellation_token,
         )
+        if cancellation_token is not None:
+            cancellation_token.checkpoint()
         raw_output_path: str | None = None
         if raw_output_dir is not None:
             payload = dict(result.evidence)
@@ -79,6 +84,8 @@ def _measurement(
                 stem=f"{sample_id}-storage",
             )
             raw_output_path = path.as_posix()
+        if cancellation_token is not None:
+            cancellation_token.checkpoint()
         return Measurement(
             measurement_id=f"{sample_id}-storage",
             tool="python-storage-profile",
@@ -91,6 +98,8 @@ def _measurement(
             metrics=result.metrics,
             raw_output_path=raw_output_path,
         )
+    except CancellationRequested:
+        raise
     except Exception as error:  # pragma: no cover - behavior tested via monkeypatch
         return Measurement(
             measurement_id=f"{sample_id}-storage",
@@ -120,8 +129,12 @@ def run_storage_profile(
     region: str | None = None,
     zone: str | None = None,
     clock: Clock = _utc_now,
+    cancellation_token: CancellationToken | None = None,
 ) -> Sample:
     """Discover the host, run the storage workload, and build one Core sample."""
+
+    if cancellation_token is not None:
+        cancellation_token.checkpoint()
 
     selected_config = config or StorageProfileConfig()
     discovered = discovery or discover_all()
@@ -132,6 +145,7 @@ def run_storage_profile(
         work_dir=work_dir,
         raw_output_dir=raw_output_dir,
         clock=clock,
+        cancellation_token=cancellation_token,
     )
 
     warnings = list(discovered.warnings)

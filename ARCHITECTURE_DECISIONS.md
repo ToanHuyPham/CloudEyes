@@ -64,3 +64,13 @@ CloudEyes records elapsed-time budget overruns as deterministic quality warnings
 not kill in-process benchmark work in v1 because forced thread cancellation cannot guarantee
 cleanup of temporary files, sockets, or evidence. Hard timeouts require process isolation
 and an explicit cleanup contract.
+
+## ADR-013 — Cooperative cancellation precedes forced termination
+
+When an isolated profile exceeds its deadline or the parent is interrupted, CloudEyes first
+sets a process-safe cancellation event and waits for a bounded grace period. Implemented
+profiles check that event only at safe cleanup boundaries and propagate cancellation instead
+of converting it into a failed measurement. Terminate and kill remain final fallbacks for
+blocking system calls or non-cooperative code. A deadline still returns exit code 124 even
+when cooperative cleanup succeeds; an interactive interruption returns 130.
+

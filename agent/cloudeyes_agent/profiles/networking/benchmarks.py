@@ -21,6 +21,7 @@ from urllib.parse import SplitResult, urlsplit
 
 from cloudeyes_core.models import Metric, MetricDirection
 
+from ...execution import CancellationRequested, CancellationToken
 from .config import NetworkingProfileConfig, NetworkScope
 
 _MIB = 1024 * 1024
@@ -43,6 +44,11 @@ class NetworkingBenchmarkResult:
 
 def _elapsed(started_at: float, timer: _Timer) -> float:
     return max(timer() - started_at, 1e-9)
+
+
+def _checkpoint(token: CancellationToken | None) -> None:
+    if token is not None:
+        token.checkpoint()
 
 
 def _percentile(values: Sequence[float], percentile: float) -> float:
@@ -225,7 +231,9 @@ def _http_download_probe(
     config: NetworkingProfileConfig,
     *,
     timer: _Timer,
+    cancellation_token: CancellationToken | None = None,
 ) -> dict[str, Any]:
+    _checkpoint(cancellation_token)
     connection = _connection(parsed, config)
     request_started = timer()
     try:
@@ -247,6 +255,7 @@ def _http_download_probe(
         downloaded = 0
         download_started = timer()
         while downloaded < config.download_limit_bytes:
+            _checkpoint(cancellation_token)
             chunk = response.read(min(64 * 1024, config.download_limit_bytes - downloaded))
             if not chunk:
                 break
@@ -268,7 +277,9 @@ def _http_upload_probe(
     config: NetworkingProfileConfig,
     *,
     timer: _Timer,
+    cancellation_token: CancellationToken | None = None,
 ) -> dict[str, Any]:
+    _checkpoint(cancellation_token)
     payload = b"\xa5" * config.upload_bytes
     connection = _connection(parsed, config)
     started = timer()
@@ -285,6 +296,7 @@ def _http_upload_probe(
         )
         response = connection.getresponse()
         response.read()
+        _checkpoint(cancellation_token)
         elapsed_seconds = _elapsed(started, timer)
         if not 200 <= response.status < 400:
             raise OSError(f"HTTP upload returned status {response.status}")
@@ -323,7 +335,9 @@ def _ping_probe(
     config: NetworkingProfileConfig,
     *,
     run: Callable[..., subprocess.CompletedProcess[str]],
+    cancellation_token: CancellationToken | None = None,
 ) -> tuple[float | None, str | None]:
+    _checkpoint(cancellation_token)
     if config.ping_count == 0:
         return None, "icmp_sampling_disabled"
     if shutil.which("ping") is None:
@@ -362,15 +376,18 @@ def benchmark_networking_profile(
     timer: _Timer = time.perf_counter,
     resolver: _Resolver = socket.getaddrinfo,
     run: Callable[..., subprocess.CompletedProcess[str]] = subprocess.run,
+    cancellation_token: CancellationToken | None = None,
 ) -> NetworkingBenchmarkResult:
     """Measure one explicit HTTP(S) endpoint with bounded traffic and timeouts."""
 
+    _checkpoint(cancellation_token)
     target = urlsplit(config.target_url)
     target_host, target_port = _endpoint(target)
 
     dns_latencies: list[float] = []
     resolved: tuple[tuple[int, str], ...] = ()
     for _ in range(config.repetitions):
+        _checkpoint(cancellation_token)
         latency, addresses = _resolve_once(
             target_host,
             target_port,
@@ -386,6 +403,7 @@ def benchmark_networking_profile(
     tls_versions: list[str] = []
     selected_families: list[int] = []
     for _ in range(config.repetitions):
+        _checkpoint(cancellation_token)
         sock, tcp_latency, selected_family = _connect_resolved(
             resolved,
             target_port,
@@ -414,8 +432,18 @@ def benchmark_networking_profile(
     download_runs: list[dict[str, Any]] = []
     download_errors: list[str] = []
     for _ in range(config.repetitions):
+        _checkpoint(cancellation_token)
         try:
-            download_runs.append(_http_download_probe(target, config, timer=timer))
+            download_runs.append(
+                _http_download_probe(
+                    target,
+                    config,
+                    timer=timer,
+                    cancellation_token=cancellation_token,
+                )
+            )
+        except CancellationRequested:
+            raise
         except Exception as error:
             download_errors.append(type(error).__name__)
 
@@ -432,8 +460,18 @@ def benchmark_networking_profile(
         )
         _validate_addresses(upload_addresses, scope=config.scope)
         for _ in range(config.repetitions):
+            _checkpoint(cancellation_token)
             try:
-                upload_runs.append(_http_upload_probe(upload_target, config, timer=timer))
+                upload_runs.append(
+                    _http_upload_probe(
+                        upload_target,
+                        config,
+                        timer=timer,
+                        cancellation_token=cancellation_token,
+                    )
+                )
+            except CancellationRequested:
+                raise
             except Exception as error:
                 upload_errors.append(type(error).__name__)
 
@@ -449,10 +487,16 @@ def benchmark_networking_profile(
     if not config.verify_tls and target.scheme == "https":
         warnings.append("tls_verification_disabled")
 
-    packet_loss, ping_warning = _ping_probe(target_host, config, run=run)
+    packet_loss, ping_warning = _ping_probe(
+        target_host,
+        config,
+        run=run,
+        cancellation_token=cancellation_token,
+    )
     if ping_warning is not None:
         warnings.append(ping_warning)
 
+    _checkpoint(cancellation_token)
     metrics: list[Metric] = [
         _metric(
             "network.dns.lookup.p50_milliseconds",

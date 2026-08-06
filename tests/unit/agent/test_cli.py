@@ -3,11 +3,13 @@
 from __future__ import annotations
 
 import json
+from types import SimpleNamespace
 
 import pytest
 from cloudeyes_agent import cli
 from cloudeyes_agent.commands import inspect as inspect_command
 from cloudeyes_agent.commands import run as run_command
+from cloudeyes_agent.execution import IsolatedExecutionCancelled
 
 from tests.core_factory import make_sample
 from tests.unit.agent.test_discovery_models import make_result
@@ -191,3 +193,32 @@ def test_workers_option_rejects_out_of_range_value() -> None:
         cli.main(("run", "compute", "--workers", "65"))
 
     assert error.value.code == 2
+
+
+def test_isolated_run_injects_cancellation_token(monkeypatch, capsys) -> None:
+    captured: dict[str, object] = {}
+
+    def fake_run_isolated(target, **kwargs):
+        captured["target"] = target
+        captured.update(kwargs)
+        return SimpleNamespace(value=make_sample())
+
+    monkeypatch.setattr(run_command, "run_isolated", fake_run_isolated)
+
+    exit_code = cli.main(("run", "general", "--quick", "--compact"))
+
+    assert exit_code == 0
+    assert json.loads(capsys.readouterr().out)["protocol"]["profile"] == "general"
+    assert captured["cancellation_kwarg"] == "cancellation_token"
+
+
+def test_interrupted_isolated_run_returns_130(monkeypatch, capsys) -> None:
+    def cancel(*_, **__):
+        raise IsolatedExecutionCancelled("cooperative cleanup completed")
+
+    monkeypatch.setattr(run_command, "run_isolated", cancel)
+
+    exit_code = cli.main(("run", "general", "--quick"))
+
+    assert exit_code == 130
+    assert "profile cancelled" in capsys.readouterr().out

@@ -11,6 +11,8 @@ from pathlib import Path
 
 from cloudeyes_core.models import Metric, MetricDirection
 
+from ...execution import CancellationToken
+
 _MIB = 1024 * 1024
 _Timer = Callable[[], float]
 
@@ -23,11 +25,17 @@ def _throughput_mib(total_bytes: int, elapsed_seconds: float) -> float:
     return total_bytes / _MIB / elapsed_seconds
 
 
+def _checkpoint(token: CancellationToken | None) -> None:
+    if token is not None:
+        token.checkpoint()
+
+
 def benchmark_cpu(
     *,
     block_bytes: int,
     iterations: int,
     timer: _Timer = time.perf_counter,
+    cancellation_token: CancellationToken | None = None,
 ) -> tuple[Metric, ...]:
     """Measure single-process SHA-256 throughput with a fixed workload."""
 
@@ -35,9 +43,13 @@ def benchmark_cpu(
     payload = payload[:block_bytes]
     digest = b""
 
+    _checkpoint(cancellation_token)
     started_at = timer()
-    for _ in range(iterations):
+    for index in range(iterations):
+        if index % 256 == 0:
+            _checkpoint(cancellation_token)
         digest = hashlib.sha256(payload + digest).digest()
+    _checkpoint(cancellation_token)
     elapsed_seconds = _elapsed(started_at, timer)
 
     if not digest:  # pragma: no cover - defensive guard
@@ -58,15 +70,20 @@ def benchmark_memory(
     block_bytes: int,
     iterations: int,
     timer: _Timer = time.perf_counter,
+    cancellation_token: CancellationToken | None = None,
 ) -> tuple[Metric, ...]:
     """Measure in-process memory copy throughput."""
 
     source = bytearray(b"\xa5" * block_bytes)
     target = bytearray(block_bytes)
 
+    _checkpoint(cancellation_token)
     started_at = timer()
-    for _ in range(iterations):
+    for index in range(iterations):
+        if index % 256 == 0:
+            _checkpoint(cancellation_token)
         target[:] = source
+    _checkpoint(cancellation_token)
     elapsed_seconds = _elapsed(started_at, timer)
 
     if target[0] != source[0]:  # pragma: no cover - defensive guard
@@ -89,6 +106,7 @@ def benchmark_storage(
     fsync: bool,
     work_dir: str | Path | None = None,
     timer: _Timer = time.perf_counter,
+    cancellation_token: CancellationToken | None = None,
 ) -> tuple[Metric, ...]:
     """Measure bounded sequential write and read throughput in a temporary file."""
 
@@ -99,12 +117,15 @@ def benchmark_storage(
     block = b"\x5a" * block_bytes
     total_bytes = block_bytes * iterations
 
+    _checkpoint(cancellation_token)
     with tempfile.TemporaryDirectory(dir=parent) as temporary_directory:
         path = Path(temporary_directory) / "cloudeyes-general-profile.bin"
 
         write_started = timer()
         with path.open("wb", buffering=0) as stream:
-            for _ in range(iterations):
+            for index in range(iterations):
+                if index % 64 == 0:
+                    _checkpoint(cancellation_token)
                 stream.write(block)
             if fsync:
                 os.fsync(stream.fileno())
@@ -114,8 +135,10 @@ def benchmark_storage(
         read_started = timer()
         with path.open("rb", buffering=0) as stream:
             while chunk := stream.read(block_bytes):
+                _checkpoint(cancellation_token)
                 bytes_read += len(chunk)
         read_elapsed = _elapsed(read_started, timer)
+        _checkpoint(cancellation_token)
 
     if bytes_read != total_bytes:
         raise RuntimeError("storage benchmark read verification failed")

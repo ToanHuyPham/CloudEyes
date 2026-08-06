@@ -128,3 +128,28 @@
 - Added hard wall-clock timeout enforcement with terminate/kill fallback.
 - Added `--timeout-seconds` and debugging-only `--no-isolation` CLI options.
 - Kept dependency installation in the parent process so elevation and prompts are explicit.
+
+## 2026-08-06 — Cooperative Cancellation and Cleanup v1
+
+### Completed
+
+- Added a process-safe cancellation token shared by the parent profile worker and compute subprocesses.
+- Added safe cancellation checkpoints to General, Storage, Networking, and Compute workloads.
+- Changed timeout shutdown order to cancellation request, grace period, terminate, then kill.
+- Preserved atomic raw evidence and parent-only final sample writes.
+- Added deterministic storage temporary-file cleanup tests.
+- Added CLI exit code `130` for interrupted isolated runs while retaining `124` for deadlines.
+- Added cross-platform spawn tests for cooperative cleanup and hard fallback behavior.
+
+### Current state
+
+- Phase: Reliable measurements
+- Component: Cooperative Cancellation and Cleanup v1
+- Status: Complete
+- Next component: Provider Analytics v1
+
+### Explicit limitations
+
+- A blocking operating-system call observes cancellation only after it returns or reaches its own timeout.
+- Hard termination remains necessary when third-party or operating-system code ignores the cooperative contract.
+

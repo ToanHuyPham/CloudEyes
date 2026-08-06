@@ -6,11 +6,10 @@ Models, schemas, protocol contracts, documentation, and tests.
 ## Phase 2 — Agent MVP — complete
 Discovery, general profile, raw-output storage, sample creation, and local JSON output.
 
-## Phase 3 — Reliable measurements — in progress
+## Phase 3 — Reliable measurements — complete
 Storage Profile v1, Networking Profile v1, and Compute Profile v1 are complete with
-bounded workloads, raw evidence, explicit safety policies, and quality warnings. Shared
-sample-quality and elapsed-time policies are complete. Cooperative cancellation and
-process-isolated hard timeouts are next.
+bounded workloads, raw evidence, explicit safety policies, shared quality rules,
+process-isolated hard deadlines, cooperative cancellation, and deterministic cleanup.
 
 ## Phase 4 — Provider analytics
 Cohorts, compatibility, coverage, consistency, pricing, assessment, and explanation.

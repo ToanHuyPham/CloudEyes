@@ -43,7 +43,8 @@ Agent → Measurement → Evidence → Sample → Validation → Cohort → Asse
 - Raw storage evidence: Atomic local JSON
 - Platform: Skeleton only
 - Shared measurement reliability policies: complete
-- Next component: Process-isolated execution and cooperative cancellation
+- Process isolation and cooperative cancellation: complete
+- Next component: Provider analytics v1
 
 ## Implementation order
 

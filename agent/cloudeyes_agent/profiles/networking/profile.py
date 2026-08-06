@@ -19,6 +19,7 @@ from cloudeyes_core.models import (
 )
 
 from ...discovery import DiscoveryResult, VirtualizationKind, discover_all
+from ...execution import CancellationRequested, CancellationToken
 from ...reliability import ReliabilityPolicy, evaluate_sample_quality
 from ...storage import write_raw_output
 from .benchmarks import NetworkingBenchmarkResult, benchmark_networking_profile
@@ -61,10 +62,16 @@ def _measurement(
     config: NetworkingProfileConfig,
     raw_output_dir: str | Path | None,
     clock: Clock,
+    cancellation_token: CancellationToken | None = None,
 ) -> tuple[Measurement, tuple[str, ...]]:
     started_at = clock()
     try:
-        result: NetworkingBenchmarkResult = benchmark_networking_profile(config=config)
+        result: NetworkingBenchmarkResult = benchmark_networking_profile(
+            config=config,
+            cancellation_token=cancellation_token,
+        )
+        if cancellation_token is not None:
+            cancellation_token.checkpoint()
         raw_output_path: str | None = None
         if raw_output_dir is not None:
             payload = dict(result.evidence)
@@ -75,6 +82,8 @@ def _measurement(
                 stem=f"{sample_id}-networking",
             )
             raw_output_path = path.as_posix()
+        if cancellation_token is not None:
+            cancellation_token.checkpoint()
         measurement = Measurement(
             measurement_id=f"{sample_id}-networking",
             tool="python-networking-profile",
@@ -88,6 +97,8 @@ def _measurement(
             raw_output_path=raw_output_path,
         )
         return measurement, result.warnings
+    except CancellationRequested:
+        raise
     except Exception as error:  # pragma: no cover - tested through monkeypatch
         measurement = Measurement(
             measurement_id=f"{sample_id}-networking",
@@ -117,8 +128,12 @@ def run_networking_profile(
     region: str | None = None,
     zone: str | None = None,
     clock: Clock = _utc_now,
+    cancellation_token: CancellationToken | None = None,
 ) -> Sample:
     """Discover the host, benchmark one endpoint, and build one Core sample."""
+
+    if cancellation_token is not None:
+        cancellation_token.checkpoint()
 
     selected_config = config or NetworkingProfileConfig()
     discovered = discovery or discover_all()
@@ -128,6 +143,7 @@ def run_networking_profile(
         config=selected_config,
         raw_output_dir=raw_output_dir,
         clock=clock,
+        cancellation_token=cancellation_token,
     )
 
     warnings = [*discovered.warnings, *benchmark_warnings]

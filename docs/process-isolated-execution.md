@@ -21,9 +21,12 @@ Override the deadline explicitly:
 python -m cloudeyes_agent run compute --timeout-seconds 300
 ```
 
-A timeout returns exit code `124`. CloudEyes terminates the child, waits briefly,
-and then uses a hard kill if the process remains alive. Dependency installation is
-performed before isolation so prompts and privilege changes remain visible.
+A timeout returns exit code `124`. CloudEyes first requests cooperative cancellation
+and waits for profile cleanup. It then uses terminate and hard kill only when the
+process remains alive. Dependency installation is performed before isolation so
+prompts and privilege changes remain visible.
+
+An interactive interruption returns exit code `130`.
 
 `--no-isolation` is intended only for debugging. It disables hard timeout
 enforcement and runs the benchmark in the CLI process.

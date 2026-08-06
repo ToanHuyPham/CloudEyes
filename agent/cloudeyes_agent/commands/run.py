@@ -9,7 +9,13 @@ from cloudeyes_core.models import Sample, SampleQualityStatus
 from cloudeyes_core.serialization import dump, dumps
 
 from ..bootstrap import RuntimeDependencyError, ensure_runtime_dependencies
-from ..execution import IsolatedExecutionError, IsolatedExecutionTimeout, run_isolated
+from ..execution import (
+    CancellationToken,
+    IsolatedExecutionCancelled,
+    IsolatedExecutionError,
+    IsolatedExecutionTimeout,
+    run_isolated,
+)
 from ..profiles.compute import ComputeProfileConfig, run_compute_profile
 from ..profiles.general import GeneralProfileConfig, run_general_profile
 from ..profiles.networking import (
@@ -32,6 +38,7 @@ def _general_sample(
     plan: str | None,
     region: str | None,
     zone: str | None,
+    cancellation_token: CancellationToken | None = None,
 ) -> Sample:
     config = (
         GeneralProfileConfig.quick(include_storage=include_storage)
@@ -48,6 +55,7 @@ def _general_sample(
         plan=plan,
         region=region,
         zone=zone,
+        cancellation_token=cancellation_token,
     )
 
 
@@ -63,6 +71,7 @@ def _storage_sample(
     plan: str | None,
     region: str | None,
     zone: str | None,
+    cancellation_token: CancellationToken | None = None,
 ) -> Sample:
     config = StorageProfileConfig.quick() if quick else StorageProfileConfig()
     return run_storage_profile(
@@ -76,6 +85,7 @@ def _storage_sample(
         plan=plan,
         region=region,
         zone=zone,
+        cancellation_token=cancellation_token,
     )
 
 
@@ -95,6 +105,7 @@ def _networking_sample(
     plan: str | None,
     region: str | None,
     zone: str | None,
+    cancellation_token: CancellationToken | None = None,
 ) -> Sample:
     resolved_target = target_url or "https://example.com/"
     scope = NetworkScope(network_scope)
@@ -125,6 +136,7 @@ def _networking_sample(
         plan=plan,
         region=region,
         zone=zone,
+        cancellation_token=cancellation_token,
     )
 
 
@@ -140,6 +152,7 @@ def _compute_sample(
     plan: str | None,
     region: str | None,
     zone: str | None,
+    cancellation_token: CancellationToken | None = None,
 ) -> Sample:
     selected_workers = 0 if workers is None else workers
     config = (
@@ -157,6 +170,7 @@ def _compute_sample(
         plan=plan,
         region=region,
         zone=zone,
+        cancellation_token=cancellation_token,
     )
 
 
@@ -188,6 +202,7 @@ def _execute_profile(
     plan: str | None,
     region: str | None,
     zone: str | None,
+    cancellation_token: CancellationToken | None = None,
 ) -> Sample:
     selected_work_dir = work_dir or (output.parent if output is not None else None)
     if profile == "general":
@@ -202,6 +217,7 @@ def _execute_profile(
             plan=plan,
             region=region,
             zone=zone,
+            cancellation_token=cancellation_token,
         )
     if profile == "storage":
         raw_output_dir = output.parent / "raw" if output is not None else Path("data/raw")
@@ -216,6 +232,7 @@ def _execute_profile(
             plan=plan,
             region=region,
             zone=zone,
+            cancellation_token=cancellation_token,
         )
     if profile == "networking":
         raw_output_dir = output.parent / "raw" if output is not None else Path("data/raw")
@@ -234,6 +251,7 @@ def _execute_profile(
             plan=plan,
             region=region,
             zone=zone,
+            cancellation_token=cancellation_token,
         )
     if profile == "compute":
         raw_output_dir = output.parent / "raw" if output is not None else Path("data/raw")
@@ -248,6 +266,7 @@ def _execute_profile(
             plan=plan,
             region=region,
             zone=zone,
+            cancellation_token=cancellation_token,
         )
     raise ValueError(f"unsupported profile: {profile}")
 
@@ -328,7 +347,11 @@ def run_profile(
                 _execute_profile,
                 kwargs=execution_kwargs,
                 timeout_seconds=deadline,
+                cancellation_kwarg="cancellation_token",
             ).value
+        except IsolatedExecutionCancelled as exc:
+            print(f"CloudEyes profile cancelled: {exc}")
+            return 130
         except IsolatedExecutionTimeout as exc:
             print(f"CloudEyes profile timed out: {exc}")
             return 124
@@ -336,7 +359,14 @@ def run_profile(
             print(f"CloudEyes isolated profile failed: {exc}")
             return 2
     else:
-        sample = _execute_profile(**execution_kwargs)
+        try:
+            sample = _execute_profile(
+                **execution_kwargs,
+                cancellation_token=CancellationToken.local(),
+            )
+        except KeyboardInterrupt:
+            print("CloudEyes profile cancelled by user")
+            return 130
 
     indent = 2 if pretty else None
     text = dumps(sample, indent=indent)

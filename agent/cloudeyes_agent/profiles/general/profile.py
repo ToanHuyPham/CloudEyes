@@ -20,6 +20,7 @@ from cloudeyes_core.models import (
 )
 
 from ...discovery import DiscoveryResult, VirtualizationKind, discover_all
+from ...execution import CancellationRequested, CancellationToken
 from ...reliability import ReliabilityPolicy, evaluate_sample_quality
 from .benchmarks import benchmark_cpu, benchmark_memory, benchmark_storage
 from .config import GeneralProfileConfig
@@ -43,6 +44,8 @@ def _measurement(
     started_at = clock()
     try:
         metrics = tuple(benchmark())
+    except CancellationRequested:
+        raise
     except Exception as error:  # pragma: no cover - tested through injected failure
         return Measurement(
             measurement_id=measurement_id,
@@ -108,8 +111,12 @@ def run_general_profile(
     region: str | None = None,
     zone: str | None = None,
     clock: Clock = _utc_now,
+    cancellation_token: CancellationToken | None = None,
 ) -> Sample:
     """Discover the machine, run bounded benchmarks, and build one sample."""
+
+    if cancellation_token is not None:
+        cancellation_token.checkpoint()
 
     selected_config = config or GeneralProfileConfig()
     discovered = discovery or discover_all()
@@ -123,6 +130,7 @@ def run_general_profile(
             benchmark=lambda: benchmark_cpu(
                 block_bytes=selected_config.cpu_block_bytes,
                 iterations=selected_config.cpu_iterations,
+                cancellation_token=cancellation_token,
             ),
             clock=clock,
         ),
@@ -133,6 +141,7 @@ def run_general_profile(
             benchmark=lambda: benchmark_memory(
                 block_bytes=selected_config.memory_block_bytes,
                 iterations=selected_config.memory_iterations,
+                cancellation_token=cancellation_token,
             ),
             clock=clock,
         ),
@@ -149,6 +158,7 @@ def run_general_profile(
                     iterations=selected_config.storage_iterations,
                     fsync=selected_config.fsync_storage,
                     work_dir=work_dir,
+                    cancellation_token=cancellation_token,
                 ),
                 clock=clock,
             )

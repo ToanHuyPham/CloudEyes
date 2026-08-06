@@ -15,6 +15,7 @@ from typing import Any
 
 from cloudeyes_core.models import Metric, MetricDirection
 
+from ...execution import CancellationToken
 from .config import StorageProfileConfig
 
 _MIB = 1024 * 1024
@@ -41,6 +42,11 @@ def _throughput_mib(total_bytes: int, elapsed_seconds: float) -> float:
     return total_bytes / _MIB / elapsed_seconds
 
 
+def _checkpoint(token: CancellationToken | None) -> None:
+    if token is not None:
+        token.checkpoint()
+
+
 def _percentile(values: list[float], percentile: float) -> float:
     if not values:
         raise ValueError("percentile requires at least one value")
@@ -54,11 +60,19 @@ def _percentile(values: list[float], percentile: float) -> float:
     return ordered[lower] + (ordered[upper] - ordered[lower]) * fraction
 
 
-def _write_file(path: Path, *, file_size: int, block_size: int, fsync: bool) -> None:
+def _write_file(
+    path: Path,
+    *,
+    file_size: int,
+    block_size: int,
+    fsync: bool,
+    cancellation_token: CancellationToken | None = None,
+) -> None:
     block = b"\xa5" * block_size
     remaining = file_size
     with path.open("wb", buffering=0) as stream:
         while remaining:
+            _checkpoint(cancellation_token)
             chunk = block if remaining >= block_size else block[:remaining]
             stream.write(chunk)
             remaining -= len(chunk)
@@ -66,13 +80,19 @@ def _write_file(path: Path, *, file_size: int, block_size: int, fsync: bool) -> 
             os.fsync(stream.fileno())
 
 
-def _warm_up(path: Path, config: StorageProfileConfig) -> None:
+def _warm_up(
+    path: Path,
+    config: StorageProfileConfig,
+    *,
+    cancellation_token: CancellationToken | None = None,
+) -> None:
     if config.warmup_operations == 0:
         return
     block = b"\x5a" * config.random_block_bytes
     slots = max(1, config.file_size_bytes // config.random_block_bytes)
     with path.open("r+b", buffering=0) as stream:
         for index in range(config.warmup_operations):
+            _checkpoint(cancellation_token)
             stream.seek((index % slots) * config.random_block_bytes)
             stream.write(block)
         stream.flush()
@@ -95,14 +115,17 @@ def _run_repetition(
     *,
     repetition: int,
     timer: _Timer,
+    cancellation_token: CancellationToken | None = None,
 ) -> dict[str, Any]:
     sequential_block = b"\xc3" * config.sequential_block_bytes
     random_block = b"\x3c" * config.random_block_bytes
 
+    _checkpoint(cancellation_token)
     remaining = config.file_size_bytes
     write_started = timer()
     with path.open("wb", buffering=0) as stream:
         while remaining:
+            _checkpoint(cancellation_token)
             chunk = (
                 sequential_block
                 if remaining >= config.sequential_block_bytes
@@ -119,6 +142,7 @@ def _run_repetition(
     read_started = timer()
     with path.open("rb", buffering=0) as stream:
         while chunk := stream.read(config.sequential_block_bytes):
+            _checkpoint(cancellation_token)
             bytes_read += len(chunk)
     sequential_read_seconds = _elapsed(read_started, timer)
     if bytes_read != config.file_size_bytes:
@@ -128,6 +152,7 @@ def _run_repetition(
     random_read_started = timer()
     with path.open("rb", buffering=0) as stream:
         for offset in offsets:
+            _checkpoint(cancellation_token)
             stream.seek(offset)
             chunk = stream.read(config.random_block_bytes)
             if len(chunk) != config.random_block_bytes:
@@ -137,6 +162,7 @@ def _run_repetition(
     random_write_started = timer()
     with path.open("r+b", buffering=0) as stream:
         for offset in offsets:
+            _checkpoint(cancellation_token)
             stream.seek(offset)
             stream.write(random_block)
         stream.flush()
@@ -148,6 +174,7 @@ def _run_repetition(
     fsync_latencies_ms: list[float] = []
     with path.open("r+b", buffering=0) as stream:
         for index in range(config.fsync_operations):
+            _checkpoint(cancellation_token)
             stream.seek((index % slots) * config.random_block_bytes)
             stream.write(random_block)
             stream.flush()
@@ -176,9 +203,11 @@ def benchmark_storage_profile(
     config: StorageProfileConfig,
     work_dir: str | Path | None = None,
     timer: _Timer = time.perf_counter,
+    cancellation_token: CancellationToken | None = None,
 ) -> StorageBenchmarkResult:
     """Run a safe temporary-file storage workload and return normalized metrics."""
 
+    _checkpoint(cancellation_token)
     parent = Path(work_dir) if work_dir is not None else Path.cwd()
     parent.mkdir(parents=True, exist_ok=True)
 
@@ -198,11 +227,17 @@ def benchmark_storage_profile(
             file_size=config.file_size_bytes,
             block_size=config.sequential_block_bytes,
             fsync=config.fsync_writes,
+            cancellation_token=cancellation_token,
         )
-        _warm_up(warmup_path, config)
+        _warm_up(
+            warmup_path,
+            config,
+            cancellation_token=cancellation_token,
+        )
         warmup_path.unlink()
 
         for repetition in range(config.repetitions):
+            _checkpoint(cancellation_token)
             path = temporary_path / f"storage-{repetition}.bin"
             runs.append(
                 _run_repetition(
@@ -210,9 +245,11 @@ def benchmark_storage_profile(
                     config,
                     repetition=repetition,
                     timer=timer,
+                    cancellation_token=cancellation_token,
                 )
             )
             path.unlink()
+        _checkpoint(cancellation_token)
 
     sequential_writes = [run["sequential_write_mib_per_second"] for run in runs]
     sequential_reads = [run["sequential_read_mib_per_second"] for run in runs]
