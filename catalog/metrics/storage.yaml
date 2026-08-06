@@ -1,3 +1,13 @@
 name: storage
 version: 1
-status: planned
+metrics:
+  - name: storage.sequential_write.mib_per_second
+    unit: mib_per_second
+    direction: higher_is_better
+    source_profile: general:1.0.0
+    description: Sequential temporary-file write throughput with optional fsync.
+  - name: storage.sequential_read.mib_per_second
+    unit: mib_per_second
+    direction: higher_is_better
+    source_profile: general:1.0.0
+    description: Sequential read throughput of the temporary benchmark file.

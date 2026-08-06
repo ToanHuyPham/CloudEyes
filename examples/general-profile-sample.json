@@ -1,0 +1,99 @@
+{
+  "created_at": "2026-08-06T13:00:00+07:00",
+  "machine": {
+    "architecture": "AMD64",
+    "cpu_count": 4,
+    "machine_type": "virtual_machine",
+    "memory_bytes": 8589934592
+  },
+  "measurements": [
+    {
+      "error": null,
+      "finished_at": "2026-08-06T13:00:01+07:00",
+      "measurement_id": "general-example-cpu",
+      "metrics": [
+        {
+          "direction": "higher_is_better",
+          "name": "compute.cpu.sha256_mib_per_second",
+          "unit": "mib_per_second",
+          "value": 512.5
+        }
+      ],
+      "profile": "general",
+      "protocol_version": "1.0.0",
+      "raw_output_path": null,
+      "started_at": "2026-08-06T13:00:00+07:00",
+      "status": "success",
+      "tool": "python-sha256",
+      "tool_version": "3.13.14"
+    },
+    {
+      "error": null,
+      "finished_at": "2026-08-06T13:00:02+07:00",
+      "measurement_id": "general-example-memory",
+      "metrics": [
+        {
+          "direction": "higher_is_better",
+          "name": "memory.copy.mib_per_second",
+          "unit": "mib_per_second",
+          "value": 8450.25
+        }
+      ],
+      "profile": "general",
+      "protocol_version": "1.0.0",
+      "raw_output_path": null,
+      "started_at": "2026-08-06T13:00:01+07:00",
+      "status": "success",
+      "tool": "python-memory-copy",
+      "tool_version": "3.13.14"
+    },
+    {
+      "error": null,
+      "finished_at": "2026-08-06T13:00:03+07:00",
+      "measurement_id": "general-example-storage",
+      "metrics": [
+        {
+          "direction": "higher_is_better",
+          "name": "storage.sequential_read.mib_per_second",
+          "unit": "mib_per_second",
+          "value": 1250.75
+        },
+        {
+          "direction": "higher_is_better",
+          "name": "storage.sequential_write.mib_per_second",
+          "unit": "mib_per_second",
+          "value": 420.5
+        }
+      ],
+      "profile": "general",
+      "protocol_version": "1.0.0",
+      "raw_output_path": null,
+      "started_at": "2026-08-06T13:00:02+07:00",
+      "status": "success",
+      "tool": "python-sequential-io",
+      "tool_version": "3.13.14"
+    }
+  ],
+  "product": {
+    "plan": "2-vCPU-8GB",
+    "product": "Cloud Server",
+    "region": "hanoi",
+    "zone": "zone-1"
+  },
+  "protocol": {
+    "fingerprint": "f8f41497836a1587563843298bb304f3150f63815ba833fa1a21368273946e10",
+    "profile": "general",
+    "version": "1.0.0"
+  },
+  "provider": {
+    "country_code": "VN",
+    "name": "Example Cloud",
+    "provider_id": "example-cloud"
+  },
+  "quality": {
+    "errors": [],
+    "status": "valid",
+    "warnings": []
+  },
+  "sample_id": "general-example"
+}

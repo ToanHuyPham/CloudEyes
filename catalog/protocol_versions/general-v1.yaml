@@ -1,3 +1,13 @@
-name: general-v1
-version: 1
-status: planned
+name: general
+version: 1.0.0
+status: stable
+implementation: cloudeyes_agent.profiles.general
+execution: offline
+metrics:
+  compute:
+    - compute.cpu.sha256_mib_per_second
+  memory:
+    - memory.copy.mib_per_second
+  storage:
+    - storage.sequential_write.mib_per_second
+    - storage.sequential_read.mib_per_second

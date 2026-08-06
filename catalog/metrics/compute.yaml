@@ -1,3 +1,8 @@
 name: compute
 version: 1
-status: planned
+metrics:
+  - name: compute.cpu.sha256_mib_per_second
+    unit: mib_per_second
+    direction: higher_is_better
+    source_profile: general:1.0.0
+    description: Single-process SHA-256 throughput over a bounded fixed workload.

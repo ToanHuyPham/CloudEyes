@@ -1,3 +1,10 @@
 name: general
-version: 1
-status: planned
+version: 1.0.0
+status: stable
+execution: offline
+privacy: no-hostname-no-addresses
+metrics:
+  - compute.cpu.sha256_mib_per_second
+  - memory.copy.mib_per_second
+  - storage.sequential_write.mib_per_second
+  - storage.sequential_read.mib_per_second

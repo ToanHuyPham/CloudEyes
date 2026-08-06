@@ -1,3 +1,16 @@
-name: general-config
-version: 1
-status: planned
+profile: general
+version: 1.0.0
+cpu:
+  block_bytes: 65536
+  iterations: 1024
+memory:
+  block_bytes: 8388608
+  iterations: 16
+storage:
+  enabled: true
+  block_bytes: 4194304
+  iterations: 4
+  fsync: true
+safety:
+  maximum_storage_bytes: 536870912
+  external_network: false
