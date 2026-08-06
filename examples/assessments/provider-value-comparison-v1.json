@@ -2,9 +2,9 @@
   "analyzed_sample_count": 9,
   "excluded_sample_ids": [],
   "generated_at": "2026-08-06T12:00:00+00:00",
-  "normalized_pricing_evidence_count": 0,
+  "normalized_pricing_evidence_count": 3,
   "peer_group_count": 1,
-  "pricing_quote_count": 0,
+  "pricing_quote_count": 3,
   "provider_count": 3,
   "providers": [
     {
@@ -125,11 +125,13 @@
           "rule_id": "performance.compatible_peer_relative.v1"
         },
         {
-          "code": "value_not_assessed",
-          "evidence_refs": [],
+          "code": "value_low",
+          "evidence_refs": [
+            "value-comparison-93548ddb5d2248ca"
+          ],
           "kind": "limitation",
-          "message": "Value was not assessed because no normalized pricing evidence matched the analyzed cohorts.",
-          "rule_id": "value.normalized_price_required.v1"
+          "message": "Across 1 normalized price-performance metrics at the 5% similarity threshold: 0 ahead, 0 similar, and 1 behind.",
+          "rule_id": "value.compatible_peer_price_performance.v1"
         },
         {
           "code": "universal_score_not_calculated",
@@ -170,7 +172,42 @@
           "unit": "events_per_second"
         }
       ],
-      "pricing_evidence": [],
+      "pricing_evidence": [
+        {
+          "billing_period": "hour",
+          "billing_period_hours": 1.0,
+          "cohort_ids": [
+            "cohort-29a5b067541de1c9"
+          ],
+          "commitment": "on_demand",
+          "confidence": "high",
+          "fx_to_usd": 1.0,
+          "hourly_usd": 0.12,
+          "observed_at": "2026-08-05T00:00:00+00:00",
+          "operating_system": "linux",
+          "plan": "2-vcpu-4gb",
+          "pricing_evidence_id": "pricing-evidence-8f2d13b81e65f600",
+          "product": "Cloud Server",
+          "provider_id": "alpha-cloud",
+          "quote_id": "alpha-cloud-on-demand-linux-2026-08",
+          "region": "hanoi",
+          "sample_ids": [
+            "alpha-cloud-1",
+            "alpha-cloud-2",
+            "alpha-cloud-3"
+          ],
+          "source": {
+            "reference": "example://alpha-cloud/on-demand-linux",
+            "tier": "official_api"
+          },
+          "source_amount": 0.12,
+          "source_currency": "USD",
+          "tax_included": false,
+          "valid_from": "2026-07-01T00:00:00+00:00",
+          "valid_until": null,
+          "zone": "zone-1"
+        }
+      ],
       "provider_id": "alpha-cloud",
       "provider_name": "Alpha Cloud",
       "schema_version": "1.2.0",
@@ -226,14 +263,14 @@
           },
           {
             "dimension": "value",
-            "evidence_refs": [],
-            "level": null,
-            "limitations": [
-              "normalized_pricing_required"
+            "evidence_refs": [
+              "value-comparison-93548ddb5d2248ca"
             ],
-            "rule_id": "value.normalized_price_required.v1",
-            "status": "not_assessed",
-            "summary": "Value was not assessed because no normalized pricing evidence matched the analyzed cohorts."
+            "level": "low",
+            "limitations": [],
+            "rule_id": "value.compatible_peer_price_performance.v1",
+            "status": "assessed",
+            "summary": "Across 1 normalized price-performance metrics at the 5% similarity threshold: 0 ahead, 0 similar, and 1 behind."
           }
         ],
         "profile_count": 1,
@@ -243,7 +280,44 @@
         "sample_count": 3,
         "successful_measurement_ratio": 1.0
       },
-      "value_comparisons": []
+      "value_comparisons": [
+        {
+          "comparison_id": "value-comparison-93548ddb5d2248ca",
+          "confidence": "medium",
+          "index_definition": "metric_per_usd_hour",
+          "metric_direction": "higher_is_better",
+          "metric_name": "compute.cpu.events_per_second",
+          "metric_unit": "events_per_second",
+          "outcome": "behind",
+          "peer_cohort_ids": [
+            "cohort-5f79a4fdc9e76ccd",
+            "cohort-7d6fe530223d3340"
+          ],
+          "peer_group_id": "peer-group-d5cece60b9d4046f",
+          "peer_hourly_usd_median": 0.08499999999999999,
+          "peer_key": "vn|virtual_machine|2|4294967296|x86_64|general|1.0.0|abc123",
+          "peer_pricing_evidence_ids": [
+            "pricing-evidence-193c22b2c7d5b119",
+            "pricing-evidence-1c2a0c1c968c011e"
+          ],
+          "peer_provider_count": 2,
+          "peer_provider_ids": [
+            "beta-cloud",
+            "gamma-cloud"
+          ],
+          "peer_value_index_median": 1208.3333333333335,
+          "profile": "general",
+          "provider_cohort_ids": [
+            "cohort-29a5b067541de1c9"
+          ],
+          "provider_hourly_usd": 0.12,
+          "provider_pricing_evidence_ids": [
+            "pricing-evidence-8f2d13b81e65f600"
+          ],
+          "provider_value_index": 1000.0,
+          "relative_difference_percent": -17.241379310344836
+        }
+      ]
     },
     {
       "analytics_id": "provider-analytics-c5f9f09a732d0798",
@@ -363,11 +437,13 @@
           "rule_id": "performance.compatible_peer_relative.v1"
         },
         {
-          "code": "value_not_assessed",
-          "evidence_refs": [],
-          "kind": "limitation",
-          "message": "Value was not assessed because no normalized pricing evidence matched the analyzed cohorts.",
-          "rule_id": "value.normalized_price_required.v1"
+          "code": "value_high",
+          "evidence_refs": [
+            "value-comparison-c34e9c0506e39d40"
+          ],
+          "kind": "strength",
+          "message": "Across 1 normalized price-performance metrics at the 5% similarity threshold: 1 ahead, 0 similar, and 0 behind.",
+          "rule_id": "value.compatible_peer_price_performance.v1"
         },
         {
           "code": "universal_score_not_calculated",
@@ -408,7 +484,42 @@
           "unit": "events_per_second"
         }
       ],
-      "pricing_evidence": [],
+      "pricing_evidence": [
+        {
+          "billing_period": "hour",
+          "billing_period_hours": 1.0,
+          "cohort_ids": [
+            "cohort-5f79a4fdc9e76ccd"
+          ],
+          "commitment": "on_demand",
+          "confidence": "high",
+          "fx_to_usd": 1.0,
+          "hourly_usd": 0.08,
+          "observed_at": "2026-08-05T00:00:00+00:00",
+          "operating_system": "linux",
+          "plan": "2-vcpu-4gb",
+          "pricing_evidence_id": "pricing-evidence-1c2a0c1c968c011e",
+          "product": "Cloud Server",
+          "provider_id": "beta-cloud",
+          "quote_id": "beta-cloud-on-demand-linux-2026-08",
+          "region": "hanoi",
+          "sample_ids": [
+            "beta-cloud-1",
+            "beta-cloud-2",
+            "beta-cloud-3"
+          ],
+          "source": {
+            "reference": "example://beta-cloud/on-demand-linux",
+            "tier": "official_api"
+          },
+          "source_amount": 0.08,
+          "source_currency": "USD",
+          "tax_included": false,
+          "valid_from": "2026-07-01T00:00:00+00:00",
+          "valid_until": null,
+          "zone": "zone-1"
+        }
+      ],
       "provider_id": "beta-cloud",
       "provider_name": "Beta Cloud",
       "schema_version": "1.2.0",
@@ -464,14 +575,14 @@
           },
           {
             "dimension": "value",
-            "evidence_refs": [],
-            "level": null,
-            "limitations": [
-              "normalized_pricing_required"
+            "evidence_refs": [
+              "value-comparison-c34e9c0506e39d40"
             ],
-            "rule_id": "value.normalized_price_required.v1",
-            "status": "not_assessed",
-            "summary": "Value was not assessed because no normalized pricing evidence matched the analyzed cohorts."
+            "level": "high",
+            "limitations": [],
+            "rule_id": "value.compatible_peer_price_performance.v1",
+            "status": "assessed",
+            "summary": "Across 1 normalized price-performance metrics at the 5% similarity threshold: 1 ahead, 0 similar, and 0 behind."
           }
         ],
         "profile_count": 1,
@@ -481,7 +592,44 @@
         "sample_count": 3,
         "successful_measurement_ratio": 1.0
       },
-      "value_comparisons": []
+      "value_comparisons": [
+        {
+          "comparison_id": "value-comparison-c34e9c0506e39d40",
+          "confidence": "medium",
+          "index_definition": "metric_per_usd_hour",
+          "metric_direction": "higher_is_better",
+          "metric_name": "compute.cpu.events_per_second",
+          "metric_unit": "events_per_second",
+          "outcome": "ahead",
+          "peer_cohort_ids": [
+            "cohort-29a5b067541de1c9",
+            "cohort-7d6fe530223d3340"
+          ],
+          "peer_group_id": "peer-group-d5cece60b9d4046f",
+          "peer_hourly_usd_median": 0.105,
+          "peer_key": "vn|virtual_machine|2|4294967296|x86_64|general|1.0.0|abc123",
+          "peer_pricing_evidence_ids": [
+            "pricing-evidence-193c22b2c7d5b119",
+            "pricing-evidence-8f2d13b81e65f600"
+          ],
+          "peer_provider_count": 2,
+          "peer_provider_ids": [
+            "alpha-cloud",
+            "gamma-cloud"
+          ],
+          "peer_value_index_median": 1083.3333333333335,
+          "profile": "general",
+          "provider_cohort_ids": [
+            "cohort-5f79a4fdc9e76ccd"
+          ],
+          "provider_hourly_usd": 0.08,
+          "provider_pricing_evidence_ids": [
+            "pricing-evidence-1c2a0c1c968c011e"
+          ],
+          "provider_value_index": 1250.0,
+          "relative_difference_percent": 15.384615384615369
+        }
+      ]
     },
     {
       "analytics_id": "provider-analytics-c32c49c4b42e48d8",
@@ -601,11 +749,13 @@
           "rule_id": "performance.compatible_peer_relative.v1"
         },
         {
-          "code": "value_not_assessed",
-          "evidence_refs": [],
-          "kind": "limitation",
-          "message": "Value was not assessed because no normalized pricing evidence matched the analyzed cohorts.",
-          "rule_id": "value.normalized_price_required.v1"
+          "code": "value_medium",
+          "evidence_refs": [
+            "value-comparison-95bb2b54a49bbddb"
+          ],
+          "kind": "observation",
+          "message": "Across 1 normalized price-performance metrics at the 5% similarity threshold: 0 ahead, 1 similar, and 0 behind.",
+          "rule_id": "value.compatible_peer_price_performance.v1"
         },
         {
           "code": "universal_score_not_calculated",
@@ -646,7 +796,42 @@
           "unit": "events_per_second"
         }
       ],
-      "pricing_evidence": [],
+      "pricing_evidence": [
+        {
+          "billing_period": "hour",
+          "billing_period_hours": 1.0,
+          "cohort_ids": [
+            "cohort-7d6fe530223d3340"
+          ],
+          "commitment": "on_demand",
+          "confidence": "high",
+          "fx_to_usd": 1.0,
+          "hourly_usd": 0.09,
+          "observed_at": "2026-08-05T00:00:00+00:00",
+          "operating_system": "linux",
+          "plan": "2-vcpu-4gb",
+          "pricing_evidence_id": "pricing-evidence-193c22b2c7d5b119",
+          "product": "Cloud Server",
+          "provider_id": "gamma-cloud",
+          "quote_id": "gamma-cloud-on-demand-linux-2026-08",
+          "region": "hanoi",
+          "sample_ids": [
+            "gamma-cloud-1",
+            "gamma-cloud-2",
+            "gamma-cloud-3"
+          ],
+          "source": {
+            "reference": "example://gamma-cloud/on-demand-linux",
+            "tier": "official_api"
+          },
+          "source_amount": 0.09,
+          "source_currency": "USD",
+          "tax_included": false,
+          "valid_from": "2026-07-01T00:00:00+00:00",
+          "valid_until": null,
+          "zone": "zone-1"
+        }
+      ],
       "provider_id": "gamma-cloud",
       "provider_name": "Gamma Cloud",
       "schema_version": "1.2.0",
@@ -702,14 +887,14 @@
           },
           {
             "dimension": "value",
-            "evidence_refs": [],
-            "level": null,
-            "limitations": [
-              "normalized_pricing_required"
+            "evidence_refs": [
+              "value-comparison-95bb2b54a49bbddb"
             ],
-            "rule_id": "value.normalized_price_required.v1",
-            "status": "not_assessed",
-            "summary": "Value was not assessed because no normalized pricing evidence matched the analyzed cohorts."
+            "level": "medium",
+            "limitations": [],
+            "rule_id": "value.compatible_peer_price_performance.v1",
+            "status": "assessed",
+            "summary": "Across 1 normalized price-performance metrics at the 5% similarity threshold: 0 ahead, 1 similar, and 0 behind."
           }
         ],
         "profile_count": 1,
@@ -719,11 +904,48 @@
         "sample_count": 3,
         "successful_measurement_ratio": 1.0
       },
-      "value_comparisons": []
+      "value_comparisons": [
+        {
+          "comparison_id": "value-comparison-95bb2b54a49bbddb",
+          "confidence": "medium",
+          "index_definition": "metric_per_usd_hour",
+          "metric_direction": "higher_is_better",
+          "metric_name": "compute.cpu.events_per_second",
+          "metric_unit": "events_per_second",
+          "outcome": "similar",
+          "peer_cohort_ids": [
+            "cohort-29a5b067541de1c9",
+            "cohort-5f79a4fdc9e76ccd"
+          ],
+          "peer_group_id": "peer-group-d5cece60b9d4046f",
+          "peer_hourly_usd_median": 0.1,
+          "peer_key": "vn|virtual_machine|2|4294967296|x86_64|general|1.0.0|abc123",
+          "peer_pricing_evidence_ids": [
+            "pricing-evidence-1c2a0c1c968c011e",
+            "pricing-evidence-8f2d13b81e65f600"
+          ],
+          "peer_provider_count": 2,
+          "peer_provider_ids": [
+            "alpha-cloud",
+            "beta-cloud"
+          ],
+          "peer_value_index_median": 1125.0,
+          "profile": "general",
+          "provider_cohort_ids": [
+            "cohort-7d6fe530223d3340"
+          ],
+          "provider_hourly_usd": 0.09,
+          "provider_pricing_evidence_ids": [
+            "pricing-evidence-193c22b2c7d5b119"
+          ],
+          "provider_value_index": 1166.6666666666667,
+          "relative_difference_percent": 3.7037037037037104
+        }
+      ]
     }
   ],
   "schema_version": "1.2.0",
   "source_sample_count": 9,
   "unmatched_pricing_quote_ids": [],
-  "value_peer_group_count": 0
+  "value_peer_group_count": 1
 }

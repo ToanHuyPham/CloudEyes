@@ -6,6 +6,8 @@ import argparse
 from collections.abc import Sequence
 from pathlib import Path
 
+from cloudeyes_core.models import PricingCommitment, PricingOperatingSystem
+
 from .commands import run_analyze, run_inspect, run_profile
 
 
@@ -139,6 +141,25 @@ def build_parser() -> argparse.ArgumentParser:
         default=[],
         help="expected metric name; repeat to declare multiple metrics",
     )
+    analyze_parser.add_argument(
+        "--pricing",
+        action="append",
+        type=Path,
+        default=[],
+        help="pricing catalog JSON path; repeat to load multiple catalogs",
+    )
+    analyze_parser.add_argument(
+        "--pricing-commitment",
+        choices=tuple(item.value for item in PricingCommitment),
+        default=PricingCommitment.ON_DEMAND.value,
+        help="commercial commitment used for normalized value comparison",
+    )
+    analyze_parser.add_argument(
+        "--pricing-os",
+        choices=tuple(item.value for item in PricingOperatingSystem),
+        default=PricingOperatingSystem.LINUX.value,
+        help="operating-system price family used for normalized value comparison",
+    )
     analyze_parser.add_argument("--compact", action="store_true", help="emit compact JSON")
     return parser
 
@@ -156,6 +177,9 @@ def main(argv: Sequence[str] | None = None) -> int:
             markdown=args.markdown,
             expected_metrics=tuple(args.expected_metric),
             pretty=not args.compact,
+            pricing=tuple(args.pricing),
+            pricing_commitment=PricingCommitment(args.pricing_commitment),
+            pricing_operating_system=PricingOperatingSystem(args.pricing_os),
         )
     if args.command == "run":
         return run_profile(

@@ -1,7 +1,7 @@
 # Provider Analytics v1
 
 Provider Analytics v1 turns validated local samples into deterministic, offline provider reports.
-Schema version 1.1 adds strict compatible peer performance comparisons.
+Schema version 1.2 adds normalized pricing evidence and compatible value comparisons.
 It preserves the CloudEyes separation between measurement, evidence, assessment, and explanation.
 
 ## Input
@@ -23,6 +23,7 @@ The analytics bundle contains one report per provider with:
 - independent evidence, consistency, reliability, performance, and value dimensions;
 - equal-weight compatible peer metric comparisons when strict baselines exist;
 - traceable explanation items with rule IDs and evidence references;
+- normalized pricing evidence and compatible value comparisons when catalogs are supplied;
 - optional Markdown rendering.
 
 CloudEyes deliberately does not calculate a universal provider score.
@@ -63,13 +64,16 @@ fingerprint. It compares one equal-weight value per provider against the median 
 providers and applies a fixed five-percent similarity band. See
 [Compatible Peer Comparison v1](assessment/peer-comparison.md).
 
-Value remains `not_assessed` until normalized pricing evidence exists. Measured throughput alone is
-not converted into an absolute provider verdict.
+Value remains `not_assessed` until normalized pricing evidence and a compatible priced peer
+baseline exist. Normalized Pricing v1 uses explicit offline catalogs and USD-per-hour indexes; see
+[Normalized Pricing v1](normalized-pricing.md). Measured throughput alone is not converted into an
+absolute provider verdict.
 
 ## CLI
 
 ```bash
 python -m cloudeyes_agent analyze data/samples \
+  --pricing data/pricing/catalog.json \
   --expected-metric compute.cpu.integer.single_core.million_operations_per_second \
   --output reports/provider-analytics.json \
   --markdown reports/provider-analytics.md

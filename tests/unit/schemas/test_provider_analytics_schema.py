@@ -70,3 +70,32 @@ def test_provider_analytics_peer_comparison_matches_schema() -> None:
         key=lambda error: tuple(str(item) for item in error.path),
     )
     assert not errors, "\n".join(error.message for error in errors)
+
+
+def test_priced_provider_analytics_matches_schema() -> None:
+    from tests.core_factory import make_price_quote
+
+    samples = (
+        make_sample("alpha-sample", provider_id="alpha", values=(120.0,)),
+        make_sample("beta-sample", provider_id="beta", values=(100.0,)),
+    )
+    pricing = (
+        make_price_quote("alpha-price", "alpha", amount=0.12),
+        make_price_quote("beta-price", "beta", amount=0.08),
+    )
+    result = analyze_provider_analytics(
+        samples,
+        generated_at=datetime(2026, 8, 6, tzinfo=UTC),
+        pricing_quotes=pricing,
+    )
+    schema = json.loads(
+        (ROOT / "schemas" / "provider" / "analytics-v1.schema.json").read_text(encoding="utf-8")
+    )
+
+    errors = sorted(
+        Draft202012Validator(schema, format_checker=FormatChecker()).iter_errors(
+            to_primitive(result)
+        ),
+        key=lambda error: tuple(str(item) for item in error.path),
+    )
+    assert not errors, "\n".join(error.message for error in errors)

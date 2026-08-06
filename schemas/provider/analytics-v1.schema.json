@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://cloudeyes.dev/schemas/provider/analytics-v1.schema.json",
-  "title": "CloudEyes Provider Analytics Bundle v1.1",
+  "title": "CloudEyes Provider Analytics Bundle v1.2",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -12,11 +12,15 @@
     "excluded_sample_ids",
     "provider_count",
     "providers",
-    "peer_group_count"
+    "peer_group_count",
+    "pricing_quote_count",
+    "normalized_pricing_evidence_count",
+    "unmatched_pricing_quote_ids",
+    "value_peer_group_count"
   ],
   "properties": {
     "schema_version": {
-      "const": "1.1.0"
+      "const": "1.2.0"
     },
     "generated_at": {
       "type": "string",
@@ -49,6 +53,26 @@
       }
     },
     "peer_group_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "pricing_quote_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "normalized_pricing_evidence_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "unmatched_pricing_quote_ids": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "value_peer_group_count": {
       "type": "integer",
       "minimum": 0
     }
@@ -270,11 +294,13 @@
         "evidence",
         "scorecard",
         "explanations",
-        "peer_comparisons"
+        "peer_comparisons",
+        "pricing_evidence",
+        "value_comparisons"
       ],
       "properties": {
         "schema_version": {
-          "const": "1.1.0"
+          "const": "1.2.0"
         },
         "analytics_id": {
           "type": "string",
@@ -308,6 +334,18 @@
           "type": "array",
           "items": {
             "$ref": "#/$defs/peerComparison"
+          }
+        },
+        "pricing_evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/pricingEvidence"
+          }
+        },
+        "value_comparisons": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/valueComparison"
           }
         }
       }
@@ -739,6 +777,347 @@
           }
         },
         "peer_cohort_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "pricingSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "tier",
+        "reference"
+      ],
+      "properties": {
+        "tier": {
+          "type": "string",
+          "enum": [
+            "official_api",
+            "official_document",
+            "reseller",
+            "manual"
+          ]
+        },
+        "reference": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "pricingEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "pricing_evidence_id",
+        "quote_id",
+        "provider_id",
+        "product",
+        "plan",
+        "region",
+        "zone",
+        "commitment",
+        "operating_system",
+        "observed_at",
+        "valid_from",
+        "valid_until",
+        "source_amount",
+        "source_currency",
+        "billing_period",
+        "billing_period_hours",
+        "fx_to_usd",
+        "hourly_usd",
+        "tax_included",
+        "source",
+        "confidence",
+        "cohort_ids",
+        "sample_ids"
+      ],
+      "properties": {
+        "pricing_evidence_id": {
+          "type": "string",
+          "pattern": "^pricing-evidence-[0-9a-f]{16}$"
+        },
+        "quote_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "provider_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "product": {
+          "type": "string",
+          "minLength": 1
+        },
+        "plan": {
+          "type": "string",
+          "minLength": 1
+        },
+        "region": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "zone": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "commitment": {
+          "type": "string",
+          "enum": [
+            "on_demand",
+            "reserved",
+            "spot"
+          ]
+        },
+        "operating_system": {
+          "type": "string",
+          "enum": [
+            "linux",
+            "windows",
+            "other"
+          ]
+        },
+        "observed_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "valid_from": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "valid_until": {
+          "oneOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source_amount": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "source_currency": {
+          "type": "string",
+          "pattern": "^[A-Z]{3}$"
+        },
+        "billing_period": {
+          "type": "string",
+          "minLength": 1
+        },
+        "billing_period_hours": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "fx_to_usd": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "hourly_usd": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "tax_included": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "source": {
+          "$ref": "#/$defs/pricingSource"
+        },
+        "confidence": {
+          "type": "string",
+          "enum": [
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        "cohort_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "sample_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "valueComparison": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "comparison_id",
+        "peer_group_id",
+        "peer_key",
+        "profile",
+        "metric_name",
+        "metric_unit",
+        "metric_direction",
+        "index_definition",
+        "provider_hourly_usd",
+        "peer_hourly_usd_median",
+        "provider_value_index",
+        "peer_value_index_median",
+        "relative_difference_percent",
+        "outcome",
+        "confidence",
+        "peer_provider_count",
+        "peer_provider_ids",
+        "provider_cohort_ids",
+        "peer_cohort_ids",
+        "provider_pricing_evidence_ids",
+        "peer_pricing_evidence_ids"
+      ],
+      "properties": {
+        "comparison_id": {
+          "type": "string",
+          "pattern": "^value-comparison-[0-9a-f]{16}$"
+        },
+        "peer_group_id": {
+          "type": "string",
+          "pattern": "^peer-group-[0-9a-f]{16}$"
+        },
+        "peer_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "profile": {
+          "type": "string",
+          "minLength": 1
+        },
+        "metric_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "metric_unit": {
+          "type": "string",
+          "minLength": 1
+        },
+        "metric_direction": {
+          "type": "string",
+          "enum": [
+            "higher_is_better",
+            "lower_is_better"
+          ]
+        },
+        "index_definition": {
+          "type": "string",
+          "enum": [
+            "metric_per_usd_hour",
+            "inverse_metric_usd_hour"
+          ]
+        },
+        "provider_hourly_usd": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "peer_hourly_usd_median": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "provider_value_index": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "peer_value_index_median": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "relative_difference_percent": {
+          "type": "number"
+        },
+        "outcome": {
+          "type": "string",
+          "enum": [
+            "ahead",
+            "similar",
+            "behind"
+          ]
+        },
+        "confidence": {
+          "type": "string",
+          "enum": [
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        "peer_provider_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "peer_provider_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "provider_cohort_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "peer_cohort_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "provider_pricing_evidence_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "peer_pricing_evidence_ids": {
           "type": "array",
           "minItems": 1,
           "uniqueItems": true,

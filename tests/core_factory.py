@@ -10,6 +10,11 @@ from cloudeyes_core.models import (
     MeasurementStatus,
     Metric,
     MetricDirection,
+    PriceQuote,
+    PricingCommitment,
+    PricingOperatingSystem,
+    PricingSource,
+    PricingSourceTier,
     ProductIdentity,
     ProtocolIdentity,
     ProviderIdentity,
@@ -71,4 +76,51 @@ def make_sample(
         protocol=ProtocolIdentity(profile, protocol_version, fingerprint),
         measurements=measurements,
         quality=SampleQuality(quality_status, errors=quality_errors),
+    )
+
+
+def make_price_quote(
+    quote_id: str,
+    provider_id: str,
+    *,
+    amount: float = 0.1,
+    currency: str = "USD",
+    billing_period: str = "hour",
+    billing_period_hours: float = 1.0,
+    fx_to_usd: float = 1.0,
+    product: str = "Cloud Server",
+    plan: str = "2-vcpu-4gb",
+    region: str | None = "hanoi",
+    zone: str | None = "zone-1",
+    observed_at: datetime | None = None,
+    valid_from: datetime | None = None,
+    valid_until: datetime | None = None,
+    commitment: PricingCommitment = PricingCommitment.ON_DEMAND,
+    operating_system: PricingOperatingSystem = PricingOperatingSystem.LINUX,
+    source_tier: PricingSourceTier = PricingSourceTier.OFFICIAL_API,
+) -> PriceQuote:
+    """Build deterministic pricing evidence for tests."""
+
+    return PriceQuote(
+        quote_id=quote_id,
+        provider_id=provider_id,
+        product=product,
+        plan=plan,
+        region=region,
+        zone=zone,
+        observed_at=observed_at or datetime(2026, 8, 5, tzinfo=UTC),
+        valid_from=valid_from or datetime(2026, 7, 1, tzinfo=UTC),
+        valid_until=valid_until,
+        commitment=commitment,
+        operating_system=operating_system,
+        amount=amount,
+        currency=currency,
+        billing_period=billing_period,
+        billing_period_hours=billing_period_hours,
+        fx_to_usd=fx_to_usd,
+        tax_included=False,
+        source=PricingSource(
+            tier=source_tier,
+            reference=f"https://pricing.example/{quote_id}",
+        ),
     )

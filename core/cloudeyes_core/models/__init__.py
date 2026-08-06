@@ -17,6 +17,17 @@ from .coverage import Coverage
 from .identity import MachineIdentity, ProductIdentity, ProviderIdentity
 from .measurement import Measurement, MeasurementStatus
 from .metric import Metric, MetricDirection
+from .pricing import (
+    NormalizedPriceEvidence,
+    PriceQuote,
+    PricingCatalog,
+    PricingCommitment,
+    PricingOperatingSystem,
+    PricingSource,
+    PricingSourceTier,
+    ValueIndexDefinition,
+    ValueMetricComparison,
+)
 from .protocol import ProtocolIdentity
 from .report import CohortReport, ProviderReport
 from .sample import Sample, SampleQuality, SampleQualityStatus
@@ -41,12 +52,21 @@ __all__ = [
     "MetricDirection",
     "PeerComparisonOutcome",
     "PeerMetricComparison",
+    "NormalizedPriceEvidence",
+    "PriceQuote",
+    "PricingCatalog",
+    "PricingCommitment",
+    "PricingOperatingSystem",
+    "PricingSource",
+    "PricingSourceTier",
     "ProductIdentity",
     "ProtocolIdentity",
     "ProviderAnalyticsReport",
     "ProviderIdentity",
     "ProviderReport",
     "ProviderScorecard",
+    "ValueIndexDefinition",
+    "ValueMetricComparison",
     "Sample",
     "SampleQuality",
     "SampleQualityStatus",

@@ -11,10 +11,11 @@ Storage Profile v1, Networking Profile v1, and Compute Profile v1 are complete w
 bounded workloads, raw evidence, explicit safety policies, shared quality rules,
 process-isolated hard deadlines, cooperative cancellation, and deterministic cleanup.
 
-## Phase 4 — Provider analytics — in progress
-Provider Analytics v1 and Compatible Peer Comparison v1 are complete with offline aggregation,
-coverage, consistency, reliability, strict equal-weight peer baselines, multidimensional scorecards,
-traceable explanations, JSON output, and Markdown output. Normalized pricing remains next.
+## Phase 4 — Provider analytics — complete
+Provider Analytics v1, Compatible Peer Comparison v1, and Normalized Pricing v1 are complete with
+offline aggregation, coverage, consistency, reliability, strict equal-weight peer baselines,
+traceable USD-per-hour price evidence, compatible value comparisons, multidimensional scorecards,
+traceable explanations, JSON output, and Markdown output.
 
 ## Phase 5 — Specialized profiles
 Web, database, containers, recovery, media, AI, and big data.

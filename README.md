@@ -32,16 +32,18 @@ python -m cloudeyes_agent run compute \
   --output data/compute-sample.json
 ```
 
-Offline provider analytics:
+Offline provider analytics with optional normalized pricing:
 
 ```bash
 python -m cloudeyes_agent analyze data/samples \
+  --pricing data/pricing/catalog.json \
   --output reports/provider-analytics.json \
   --markdown reports/provider-analytics.md
 ```
 
 Provider Analytics v1 reports independent evidence, consistency, reliability, performance, and
 value dimensions. Compatible Peer Comparison v1 grades performance only when country, machine,
-profile, and protocol identity match exactly across providers. It deliberately does not calculate a
-universal provider score.
+profile, and protocol identity match exactly across providers. Normalized Pricing v1 accepts
+traceable offline price catalogs, converts selected quotes to USD per hour, and grades value only
+inside compatible priced peer groups. It deliberately does not calculate a universal provider score.
 

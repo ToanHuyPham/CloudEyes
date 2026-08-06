@@ -5,7 +5,14 @@ from __future__ import annotations
 from datetime import datetime
 
 from .cohorts import build_cohorts
-from .models import AnalyticsBundle, ProviderReport, Sample
+from .models import (
+    AnalyticsBundle,
+    PriceQuote,
+    PricingCommitment,
+    PricingOperatingSystem,
+    ProviderReport,
+    Sample,
+)
 from .provider import build_analytics_bundle, build_provider_reports
 from .repository import JsonSampleRepository
 from .validation import ensure_valid_sample
@@ -49,6 +56,9 @@ def analyze_provider_analytics(
     *,
     expected_metrics: tuple[str, ...] = (),
     generated_at: datetime | None = None,
+    pricing_quotes: tuple[PriceQuote, ...] = (),
+    pricing_commitment: PricingCommitment = PricingCommitment.ON_DEMAND,
+    pricing_operating_system: PricingOperatingSystem = PricingOperatingSystem.LINUX,
 ) -> AnalyticsBundle:
     """Build deterministic provider analytics from validated local samples."""
 
@@ -56,6 +66,9 @@ def analyze_provider_analytics(
         samples,
         expected_metrics=expected_metrics,
         generated_at=generated_at,
+        pricing_quotes=pricing_quotes,
+        pricing_commitment=pricing_commitment,
+        pricing_operating_system=pricing_operating_system,
     )
 
 
@@ -64,6 +77,9 @@ def analyze_repository_analytics(
     *,
     expected_metrics: tuple[str, ...] = (),
     generated_at: datetime | None = None,
+    pricing_quotes: tuple[PriceQuote, ...] = (),
+    pricing_commitment: PricingCommitment = PricingCommitment.ON_DEMAND,
+    pricing_operating_system: PricingOperatingSystem = PricingOperatingSystem.LINUX,
 ) -> AnalyticsBundle:
     """Load repository samples and build provider analytics."""
 
@@ -71,4 +87,7 @@ def analyze_repository_analytics(
         tuple(repository.iter_samples()),
         expected_metrics=expected_metrics,
         generated_at=generated_at,
+        pricing_quotes=pricing_quotes,
+        pricing_commitment=pricing_commitment,
+        pricing_operating_system=pricing_operating_system,
     )

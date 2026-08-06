@@ -204,3 +204,30 @@
 - Product, plan, region, and zone labels are provider-specific and are not assumed equivalent.
 - A one-peer baseline is allowed but cannot receive high comparison confidence.
 - Relative performance is not a universal provider score and does not include price.
+
+## 2026-08-06 — Normalized Pricing v1
+
+### Completed
+
+- Added versioned offline pricing catalogs with explicit validity, billing-period hours, FX conversion, tax state, source tier, and source reference.
+- Added deterministic quote matching by exact provider/product/plan, optional location scope, full cohort validity, source strength, and observation time.
+- Added USD-per-hour normalization and conservative pricing confidence.
+- Added direction-aware price-performance indexes for higher-is-better and lower-is-better metrics.
+- Added provider-equal compatible value baselines, subject-excluded peer medians, five-percent outcomes, and traceable price/cohort references.
+- Added `--pricing`, `--pricing-commitment`, and `--pricing-os` analytics options.
+- Added analytics schema 1.2, pricing catalog schema 1.0, JSON/Markdown output, examples, and tests.
+
+### Current state
+
+- Phase: Provider analytics
+- Component: Normalized Pricing v1
+- Status: Complete
+- Next component: Web Profile v1
+
+### Explicit limitations
+
+- CloudEyes does not fetch live prices, taxes, discounts, or exchange rates.
+- Catalog authors must provide an explicit billing-period duration and FX multiplier.
+- Value is relative to compatible priced peers and is not an absolute or universal provider score.
+- Reserved and spot quotes are analyzed only when explicitly selected and are never mixed with on-demand quotes.
+

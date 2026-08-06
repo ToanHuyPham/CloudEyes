@@ -1,9 +1,7 @@
-"""normalization price.
-
-Placeholder for the CloudEyes foundation.
-Implementation will be added with tests and documentation.
-"""
+"""Price normalization compatibility helpers."""
 
 from __future__ import annotations
 
-__all__: list[str] = []
+from ..pricing import normalize_hourly_usd
+
+__all__ = ["normalize_hourly_usd"]

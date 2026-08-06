@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Added Normalized Pricing v1 with versioned offline price catalogs, explicit billing-period hours, source tiers, FX-to-USD normalization, and time-bounded cohort matching.
+- Added equal-provider-weight price-performance indexes, compatible value peer comparisons, value scorecard assessment, analytics schema 1.2, CLI pricing options, and Markdown pricing sections.
 - Added Compatible Peer Comparison v1 with strict cross-provider hardware, geography, profile, and protocol matching.
 - Added equal provider weighting, subject-excluded peer medians, direction-aware relative differences, five-percent similarity outcomes, and auditable cohort references.
 - Provider Analytics schema 1.1 now includes peer-group counts and per-provider metric comparisons; performance remains unassessed when no defensible baseline exists.

@@ -61,7 +61,7 @@ def test_higher_is_better_metric_builds_directional_peer_results() -> None:
         generated_at=GENERATED_AT,
     )
 
-    assert bundle.schema_version == "1.1.0"
+    assert bundle.schema_version == "1.2.0"
     assert bundle.peer_group_count == 1
 
     alpha = _provider(bundle, "alpha")

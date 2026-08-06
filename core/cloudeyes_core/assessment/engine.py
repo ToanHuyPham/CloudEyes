@@ -9,9 +9,11 @@ from ..models import (
     AssessmentStatus,
     Cohort,
     DimensionAssessment,
+    NormalizedPriceEvidence,
     PeerMetricComparison,
     ProviderReport,
     ProviderScorecard,
+    ValueMetricComparison,
 )
 from .consistency import assess_consistency
 from .performance import assess_performance
@@ -41,6 +43,8 @@ def build_scorecard(
     report: ProviderReport,
     cohorts: tuple[Cohort, ...],
     peer_comparisons: tuple[PeerMetricComparison, ...] = (),
+    pricing_evidence: tuple[NormalizedPriceEvidence, ...] = (),
+    value_comparisons: tuple[ValueMetricComparison, ...] = (),
 ) -> ProviderScorecard:
     """Build a multidimensional scorecard without a universal provider score."""
 
@@ -52,7 +56,7 @@ def build_scorecard(
         assess_consistency(report),
         assess_reliability(cohorts),
         assess_performance(report, peer_comparisons),
-        assess_value(),
+        assess_value(pricing_evidence, value_comparisons),
     )
     return ProviderScorecard(
         sample_count=report.total_samples,

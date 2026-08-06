@@ -37,7 +37,7 @@ Agent → Measurement → Evidence → Sample → Validation → Cohort → Asse
 
 ## Current status
 
-- Phase: Provider analytics
+- Phase: Specialized profiles
 - Version: 0.1.0-dev
 - Completed profiles: General v1, Storage v1, Networking v1, and Compute v1
 - Raw storage evidence: Atomic local JSON
@@ -46,7 +46,8 @@ Agent → Measurement → Evidence → Sample → Validation → Cohort → Asse
 - Process isolation and cooperative cancellation: complete
 - Provider Analytics v1: complete
 - Compatible Peer Comparison v1: complete
-- Next component: Normalized Pricing v1
+- Normalized Pricing v1: complete
+- Next component: Web Profile v1
 
 ## Implementation order
 
@@ -62,8 +63,9 @@ Agent → Measurement → Evidence → Sample → Validation → Cohort → Asse
 10. Rule-based assessment and explanation — complete v1
 11. JSON and Markdown reports — complete v1
 12. Compatible peer comparison — complete v1
-13. Normalized pricing
-14. API and dashboard
+13. Normalized pricing — complete v1
+14. Specialized profiles
+15. API and dashboard
 
 ## Daily update rule
 

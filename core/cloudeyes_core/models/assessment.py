@@ -8,6 +8,7 @@ from enum import StrEnum
 
 from .comparison import PeerMetricComparison
 from .confidence import ConfidenceLevel
+from .pricing import NormalizedPriceEvidence, ValueMetricComparison
 from .report import ProviderReport
 
 
@@ -175,6 +176,8 @@ class ProviderAnalyticsReport:
     scorecard: ProviderScorecard
     explanations: tuple[ExplanationItem, ...]
     peer_comparisons: tuple[PeerMetricComparison, ...] = field(default_factory=tuple)
+    pricing_evidence: tuple[NormalizedPriceEvidence, ...] = field(default_factory=tuple)
+    value_comparisons: tuple[ValueMetricComparison, ...] = field(default_factory=tuple)
 
     def __post_init__(self) -> None:
         for field_name in ("schema_version", "analytics_id", "provider_id", "provider_name"):
@@ -191,13 +194,33 @@ class ProviderAnalyticsReport:
         if self.generated_at != self.evidence.generated_at:
             raise ValueError("generated_at must match evidence report")
         comparisons = tuple(self.peer_comparisons)
+        pricing_evidence = tuple(self.pricing_evidence)
+        value_comparisons = tuple(self.value_comparisons)
         if any(item.profile not in self.scorecard.profiles for item in comparisons):
             raise ValueError("peer comparison profile must exist in scorecard profiles")
+        if any(item.profile not in self.scorecard.profiles for item in value_comparisons):
+            raise ValueError("value comparison profile must exist in scorecard profiles")
+        if any(
+            item.provider_id.casefold() != self.provider_id.casefold() for item in pricing_evidence
+        ):
+            raise ValueError("pricing evidence provider must match analytics provider")
         comparison_ids = [item.comparison_id for item in comparisons]
+        value_comparison_ids = [item.comparison_id for item in value_comparisons]
+        pricing_ids = [item.pricing_evidence_id for item in pricing_evidence]
         if len(comparison_ids) != len(set(comparison_ids)):
             raise ValueError("peer comparison IDs must be unique per provider")
+        if len(value_comparison_ids) != len(set(value_comparison_ids)):
+            raise ValueError("value comparison IDs must be unique per provider")
+        if len(pricing_ids) != len(set(pricing_ids)):
+            raise ValueError("pricing evidence IDs must be unique per provider")
+        available_pricing_ids = set(pricing_ids)
+        for item in value_comparisons:
+            if not set(item.provider_pricing_evidence_ids).issubset(available_pricing_ids):
+                raise ValueError("value comparison must reference provider pricing evidence")
         object.__setattr__(self, "explanations", tuple(self.explanations))
         object.__setattr__(self, "peer_comparisons", comparisons)
+        object.__setattr__(self, "pricing_evidence", pricing_evidence)
+        object.__setattr__(self, "value_comparisons", value_comparisons)
 
 
 @dataclass(frozen=True, slots=True)
@@ -212,6 +235,10 @@ class AnalyticsBundle:
     provider_count: int
     providers: tuple[ProviderAnalyticsReport, ...]
     peer_group_count: int = 0
+    pricing_quote_count: int = 0
+    normalized_pricing_evidence_count: int = 0
+    unmatched_pricing_quote_ids: tuple[str, ...] = field(default_factory=tuple)
+    value_peer_group_count: int = 0
 
     def __post_init__(self) -> None:
         if not self.schema_version.strip():
@@ -220,8 +247,10 @@ class AnalyticsBundle:
             raise ValueError("generated_at must contain timezone information")
         if self.source_sample_count < 0 or self.analyzed_sample_count < 0:
             raise ValueError("sample counts must not be negative")
-        if self.peer_group_count < 0:
-            raise ValueError("peer_group_count must not be negative")
+        if self.peer_group_count < 0 or self.value_peer_group_count < 0:
+            raise ValueError("peer group counts must not be negative")
+        if self.pricing_quote_count < 0 or self.normalized_pricing_evidence_count < 0:
+            raise ValueError("pricing counts must not be negative")
         if self.analyzed_sample_count > self.source_sample_count:
             raise ValueError("analyzed_sample_count must not exceed source_sample_count")
         providers = tuple(self.providers)
@@ -239,8 +268,38 @@ class AnalyticsBundle:
             for provider in providers
             for comparison in provider.peer_comparisons
         }
+        value_peer_groups = {
+            comparison.peer_group_id
+            for provider in providers
+            for comparison in provider.value_comparisons
+        }
+        pricing_evidence_ids = {
+            evidence.pricing_evidence_id
+            for provider in providers
+            for evidence in provider.pricing_evidence
+        }
+        unmatched_pricing = tuple(
+            sorted(
+                dict.fromkeys(
+                    item.strip() for item in self.unmatched_pricing_quote_ids if item.strip()
+                )
+            )
+        )
         if self.peer_group_count != len(peer_groups):
             raise ValueError("peer_group_count must match provider peer comparisons")
+        if self.value_peer_group_count != len(value_peer_groups):
+            raise ValueError("value_peer_group_count must match provider value comparisons")
+        if self.normalized_pricing_evidence_count != len(pricing_evidence_ids):
+            raise ValueError(
+                "normalized_pricing_evidence_count must match provider pricing evidence"
+            )
+        if self.pricing_quote_count < self.normalized_pricing_evidence_count:
+            raise ValueError("pricing_quote_count must cover normalized pricing evidence")
+        if self.pricing_quote_count != (
+            self.normalized_pricing_evidence_count + len(unmatched_pricing)
+        ):
+            raise ValueError("pricing quote count must equal matched plus unmatched quotes")
         object.__setattr__(self, "schema_version", self.schema_version.strip())
         object.__setattr__(self, "providers", providers)
         object.__setattr__(self, "excluded_sample_ids", excluded)
+        object.__setattr__(self, "unmatched_pricing_quote_ids", unmatched_pricing)

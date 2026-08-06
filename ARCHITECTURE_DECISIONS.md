@@ -91,3 +91,16 @@ cohort evidence but are not treated as cross-provider identifiers. Each provider
 median value to a peer group regardless of sample or cohort count, and the subject provider is
 excluded from its own peer baseline. Unknown provider or country identity is not compared. Relative
 performance remains a separate dimension and is not combined into a universal provider score.
+
+## ADR-016 — Pricing is offline, explicit, time-bounded, and peer-relative
+
+Normalized Pricing v1 does not fetch or infer commercial data during analysis. Operators supply
+versioned catalogs containing source amount, currency, explicit billing-period hours, FX-to-USD
+multiplier, validity interval, commitment, operating-system family, tax state, source tier, and
+source reference. Quotes match exact provider, product, and plan identity; optional region and zone
+fields are explicit wildcards when absent. A quote must cover the complete cohort interval. Equal
+ranked conflicting quotes stop analysis. Price-performance indexes preserve a larger-is-better
+direction and are compared only inside strict compatible peer groups with equal provider weighting.
+Commitment and operating-system families are selected explicitly and never mixed. Value remains an
+independent dimension and is not combined into a universal provider score.
+

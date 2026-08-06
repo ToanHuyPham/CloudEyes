@@ -1,0 +1,74 @@
+{
+  "schema_version": "1.0.0",
+  "quotes": [
+    {
+      "quote_id": "alpha-cloud-on-demand-linux-2026-08",
+      "provider_id": "alpha-cloud",
+      "product": "Cloud Server",
+      "plan": "2-vcpu-4gb",
+      "region": "hanoi",
+      "zone": "zone-1",
+      "observed_at": "2026-08-05T00:00:00+00:00",
+      "valid_from": "2026-07-01T00:00:00+00:00",
+      "valid_until": null,
+      "commitment": "on_demand",
+      "operating_system": "linux",
+      "amount": 0.12,
+      "currency": "USD",
+      "billing_period": "hour",
+      "billing_period_hours": 1.0,
+      "fx_to_usd": 1.0,
+      "tax_included": false,
+      "source": {
+        "tier": "official_api",
+        "reference": "example://alpha-cloud/on-demand-linux"
+      }
+    },
+    {
+      "quote_id": "beta-cloud-on-demand-linux-2026-08",
+      "provider_id": "beta-cloud",
+      "product": "Cloud Server",
+      "plan": "2-vcpu-4gb",
+      "region": "hanoi",
+      "zone": "zone-1",
+      "observed_at": "2026-08-05T00:00:00+00:00",
+      "valid_from": "2026-07-01T00:00:00+00:00",
+      "valid_until": null,
+      "commitment": "on_demand",
+      "operating_system": "linux",
+      "amount": 0.08,
+      "currency": "USD",
+      "billing_period": "hour",
+      "billing_period_hours": 1.0,
+      "fx_to_usd": 1.0,
+      "tax_included": false,
+      "source": {
+        "tier": "official_api",
+        "reference": "example://beta-cloud/on-demand-linux"
+      }
+    },
+    {
+      "quote_id": "gamma-cloud-on-demand-linux-2026-08",
+      "provider_id": "gamma-cloud",
+      "product": "Cloud Server",
+      "plan": "2-vcpu-4gb",
+      "region": "hanoi",
+      "zone": "zone-1",
+      "observed_at": "2026-08-05T00:00:00+00:00",
+      "valid_from": "2026-07-01T00:00:00+00:00",
+      "valid_until": null,
+      "commitment": "on_demand",
+      "operating_system": "linux",
+      "amount": 0.09,
+      "currency": "USD",
+      "billing_period": "hour",
+      "billing_period_hours": 1.0,
+      "fx_to_usd": 1.0,
+      "tax_included": false,
+      "source": {
+        "tier": "official_api",
+        "reference": "example://gamma-cloud/on-demand-linux"
+      }
+    }
+  ]
+}

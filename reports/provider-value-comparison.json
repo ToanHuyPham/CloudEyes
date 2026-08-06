@@ -1,0 +1,951 @@
+{
+  "analyzed_sample_count": 9,
+  "excluded_sample_ids": [],
+  "generated_at": "2026-08-06T10:49:49.705510+00:00",
+  "normalized_pricing_evidence_count": 3,
+  "peer_group_count": 1,
+  "pricing_quote_count": 3,
+  "provider_count": 3,
+  "providers": [
+    {
+      "analytics_id": "provider-analytics-7717952b7894a677",
+      "evidence": {
+        "cohort_count": 1,
+        "cohorts": [
+          {
+            "cohort_id": "cohort-29a5b067541de1c9",
+            "cohort_key": "alpha-cloud|vn|cloud server|2-vcpu-4gb|hanoi|zone-1|virtual_machine|2|4294967296|x86_64|general|1.0.0|abc123",
+            "confidence": {
+              "coverage": "high",
+              "measurement": "high",
+              "statistical": "medium"
+            },
+            "coverage": {
+              "available_metrics": [
+                "compute.cpu.events_per_second"
+              ],
+              "expected_metrics": [],
+              "gaps": [],
+              "observation_days": 3,
+              "plans": [
+                "2-vcpu-4gb"
+              ],
+              "products": [
+                "Cloud Server"
+              ],
+              "regions": [
+                "hanoi"
+              ],
+              "sample_count": 3,
+              "zones": [
+                "zone-1"
+              ]
+            },
+            "ended_at": "2026-08-03T00:00:00+00:00",
+            "metrics": [
+              {
+                "contributing_samples": 3,
+                "direction": "higher_is_better",
+                "name": "compute.cpu.events_per_second",
+                "raw_observations": 3,
+                "statistics": {
+                  "coefficient_of_variation": 0.016666666666666666,
+                  "count": 3,
+                  "maximum": 122.0,
+                  "mean": 120.0,
+                  "median": 120.0,
+                  "minimum": 118.0,
+                  "p10": 118.4,
+                  "p90": 121.6,
+                  "standard_deviation": 2.0
+                },
+                "unit": "events_per_second"
+              }
+            ],
+            "protocol": {
+              "fingerprint": "abc123",
+              "profile": "general",
+              "version": "1.0.0"
+            },
+            "sample_count": 3,
+            "sample_ids": [
+              "alpha-cloud-1",
+              "alpha-cloud-2",
+              "alpha-cloud-3"
+            ],
+            "started_at": "2026-08-01T00:00:00+00:00"
+          }
+        ],
+        "gaps": [],
+        "generated_at": "2026-08-06T10:49:49.705510+00:00",
+        "overall_confidence": "medium",
+        "provider_id": "alpha-cloud",
+        "provider_name": "Alpha Cloud",
+        "report_id": "provider-report-7e13c6c59c38a744",
+        "schema_version": "1.0.0",
+        "total_samples": 3
+      },
+      "explanations": [
+        {
+          "code": "evidence_medium",
+          "evidence_refs": [
+            "cohort-29a5b067541de1c9"
+          ],
+          "kind": "observation",
+          "message": "Evidence confidence is medium; mean expected-metric coverage is 100.0%.",
+          "rule_id": "evidence.minimum_confidence.v1"
+        },
+        {
+          "code": "consistency_high",
+          "evidence_refs": [
+            "cohort-29a5b067541de1c9:compute.cpu.events_per_second"
+          ],
+          "kind": "strength",
+          "message": "Observed metrics were stable; worst coefficient of variation was 0.017.",
+          "rule_id": "consistency.cv.v1"
+        },
+        {
+          "code": "reliability_high",
+          "evidence_refs": [
+            "alpha-cloud-1",
+            "alpha-cloud-2",
+            "alpha-cloud-3"
+          ],
+          "kind": "strength",
+          "message": "Measurement completion was high at 100.0%, with no sample warnings or errors.",
+          "rule_id": "reliability.measurement_completion.v1"
+        },
+        {
+          "code": "performance_high",
+          "evidence_refs": [
+            "peer-comparison-93548ddb5d2248ca"
+          ],
+          "kind": "strength",
+          "message": "Across 1 compatible peer metrics at the 5% similarity threshold: 1 ahead, 0 similar, and 0 behind.",
+          "rule_id": "performance.compatible_peer_relative.v1"
+        },
+        {
+          "code": "value_low",
+          "evidence_refs": [
+            "value-comparison-93548ddb5d2248ca"
+          ],
+          "kind": "limitation",
+          "message": "Across 1 normalized price-performance metrics at the 5% similarity threshold: 0 ahead, 0 similar, and 1 behind.",
+          "rule_id": "value.compatible_peer_price_performance.v1"
+        },
+        {
+          "code": "universal_score_not_calculated",
+          "evidence_refs": [
+            "provider-report-7e13c6c59c38a744"
+          ],
+          "kind": "observation",
+          "message": "CloudEyes reports independent dimensions and does not calculate a universal provider score.",
+          "rule_id": "explanation.no_universal_score.v1"
+        }
+      ],
+      "generated_at": "2026-08-06T10:49:49.705510+00:00",
+      "peer_comparisons": [
+        {
+          "comparison_id": "peer-comparison-93548ddb5d2248ca",
+          "confidence": "medium",
+          "direction": "higher_is_better",
+          "metric_name": "compute.cpu.events_per_second",
+          "outcome": "ahead",
+          "peer_cohort_ids": [
+            "cohort-5f79a4fdc9e76ccd",
+            "cohort-7d6fe530223d3340"
+          ],
+          "peer_group_id": "peer-group-d5cece60b9d4046f",
+          "peer_key": "vn|virtual_machine|2|4294967296|x86_64|general|1.0.0|abc123",
+          "peer_median": 102.5,
+          "peer_provider_count": 2,
+          "peer_provider_ids": [
+            "beta-cloud",
+            "gamma-cloud"
+          ],
+          "profile": "general",
+          "provider_cohort_ids": [
+            "cohort-29a5b067541de1c9"
+          ],
+          "provider_value": 120.0,
+          "relative_difference_percent": 17.073170731707318,
+          "unit": "events_per_second"
+        }
+      ],
+      "pricing_evidence": [
+        {
+          "billing_period": "hour",
+          "billing_period_hours": 1.0,
+          "cohort_ids": [
+            "cohort-29a5b067541de1c9"
+          ],
+          "commitment": "on_demand",
+          "confidence": "high",
+          "fx_to_usd": 1.0,
+          "hourly_usd": 0.12,
+          "observed_at": "2026-08-05T00:00:00+00:00",
+          "operating_system": "linux",
+          "plan": "2-vcpu-4gb",
+          "pricing_evidence_id": "pricing-evidence-8f2d13b81e65f600",
+          "product": "Cloud Server",
+          "provider_id": "alpha-cloud",
+          "quote_id": "alpha-cloud-on-demand-linux-2026-08",
+          "region": "hanoi",
+          "sample_ids": [
+            "alpha-cloud-1",
+            "alpha-cloud-2",
+            "alpha-cloud-3"
+          ],
+          "source": {
+            "reference": "example://alpha-cloud/on-demand-linux",
+            "tier": "official_api"
+          },
+          "source_amount": 0.12,
+          "source_currency": "USD",
+          "tax_included": false,
+          "valid_from": "2026-07-01T00:00:00+00:00",
+          "valid_until": null,
+          "zone": "zone-1"
+        }
+      ],
+      "provider_id": "alpha-cloud",
+      "provider_name": "Alpha Cloud",
+      "schema_version": "1.2.0",
+      "scorecard": {
+        "cohort_count": 1,
+        "coverage_ratio": 1.0,
+        "dimensions": [
+          {
+            "dimension": "evidence",
+            "evidence_refs": [
+              "cohort-29a5b067541de1c9"
+            ],
+            "level": "medium",
+            "limitations": [],
+            "rule_id": "evidence.minimum_confidence.v1",
+            "status": "assessed",
+            "summary": "Evidence confidence is medium; mean expected-metric coverage is 100.0%."
+          },
+          {
+            "dimension": "consistency",
+            "evidence_refs": [
+              "cohort-29a5b067541de1c9:compute.cpu.events_per_second"
+            ],
+            "level": "high",
+            "limitations": [],
+            "rule_id": "consistency.cv.v1",
+            "status": "assessed",
+            "summary": "Observed metrics were stable; worst coefficient of variation was 0.017."
+          },
+          {
+            "dimension": "reliability",
+            "evidence_refs": [
+              "alpha-cloud-1",
+              "alpha-cloud-2",
+              "alpha-cloud-3"
+            ],
+            "level": "high",
+            "limitations": [],
+            "rule_id": "reliability.measurement_completion.v1",
+            "status": "assessed",
+            "summary": "Measurement completion was high at 100.0%, with no sample warnings or errors."
+          },
+          {
+            "dimension": "performance",
+            "evidence_refs": [
+              "peer-comparison-93548ddb5d2248ca"
+            ],
+            "level": "high",
+            "limitations": [],
+            "rule_id": "performance.compatible_peer_relative.v1",
+            "status": "assessed",
+            "summary": "Across 1 compatible peer metrics at the 5% similarity threshold: 1 ahead, 0 similar, and 0 behind."
+          },
+          {
+            "dimension": "value",
+            "evidence_refs": [
+              "value-comparison-93548ddb5d2248ca"
+            ],
+            "level": "low",
+            "limitations": [],
+            "rule_id": "value.compatible_peer_price_performance.v1",
+            "status": "assessed",
+            "summary": "Across 1 normalized price-performance metrics at the 5% similarity threshold: 0 ahead, 0 similar, and 1 behind."
+          }
+        ],
+        "profile_count": 1,
+        "profiles": [
+          "general"
+        ],
+        "sample_count": 3,
+        "successful_measurement_ratio": 1.0
+      },
+      "value_comparisons": [
+        {
+          "comparison_id": "value-comparison-93548ddb5d2248ca",
+          "confidence": "medium",
+          "index_definition": "metric_per_usd_hour",
+          "metric_direction": "higher_is_better",
+          "metric_name": "compute.cpu.events_per_second",
+          "metric_unit": "events_per_second",
+          "outcome": "behind",
+          "peer_cohort_ids": [
+            "cohort-5f79a4fdc9e76ccd",
+            "cohort-7d6fe530223d3340"
+          ],
+          "peer_group_id": "peer-group-d5cece60b9d4046f",
+          "peer_hourly_usd_median": 0.08499999999999999,
+          "peer_key": "vn|virtual_machine|2|4294967296|x86_64|general|1.0.0|abc123",
+          "peer_pricing_evidence_ids": [
+            "pricing-evidence-193c22b2c7d5b119",
+            "pricing-evidence-1c2a0c1c968c011e"
+          ],
+          "peer_provider_count": 2,
+          "peer_provider_ids": [
+            "beta-cloud",
+            "gamma-cloud"
+          ],
+          "peer_value_index_median": 1208.3333333333335,
+          "profile": "general",
+          "provider_cohort_ids": [
+            "cohort-29a5b067541de1c9"
+          ],
+          "provider_hourly_usd": 0.12,
+          "provider_pricing_evidence_ids": [
+            "pricing-evidence-8f2d13b81e65f600"
+          ],
+          "provider_value_index": 1000.0,
+          "relative_difference_percent": -17.241379310344836
+        }
+      ]
+    },
+    {
+      "analytics_id": "provider-analytics-c5f9f09a732d0798",
+      "evidence": {
+        "cohort_count": 1,
+        "cohorts": [
+          {
+            "cohort_id": "cohort-5f79a4fdc9e76ccd",
+            "cohort_key": "beta-cloud|vn|cloud server|2-vcpu-4gb|hanoi|zone-1|virtual_machine|2|4294967296|x86_64|general|1.0.0|abc123",
+            "confidence": {
+              "coverage": "high",
+              "measurement": "high",
+              "statistical": "medium"
+            },
+            "coverage": {
+              "available_metrics": [
+                "compute.cpu.events_per_second"
+              ],
+              "expected_metrics": [],
+              "gaps": [],
+              "observation_days": 3,
+              "plans": [
+                "2-vcpu-4gb"
+              ],
+              "products": [
+                "Cloud Server"
+              ],
+              "regions": [
+                "hanoi"
+              ],
+              "sample_count": 3,
+              "zones": [
+                "zone-1"
+              ]
+            },
+            "ended_at": "2026-08-03T00:00:00+00:00",
+            "metrics": [
+              {
+                "contributing_samples": 3,
+                "direction": "higher_is_better",
+                "name": "compute.cpu.events_per_second",
+                "raw_observations": 3,
+                "statistics": {
+                  "coefficient_of_variation": 0.02,
+                  "count": 3,
+                  "maximum": 102.0,
+                  "mean": 100.0,
+                  "median": 100.0,
+                  "minimum": 98.0,
+                  "p10": 98.4,
+                  "p90": 101.60000000000001,
+                  "standard_deviation": 2.0
+                },
+                "unit": "events_per_second"
+              }
+            ],
+            "protocol": {
+              "fingerprint": "abc123",
+              "profile": "general",
+              "version": "1.0.0"
+            },
+            "sample_count": 3,
+            "sample_ids": [
+              "beta-cloud-1",
+              "beta-cloud-2",
+              "beta-cloud-3"
+            ],
+            "started_at": "2026-08-01T00:00:00+00:00"
+          }
+        ],
+        "gaps": [],
+        "generated_at": "2026-08-06T10:49:49.705510+00:00",
+        "overall_confidence": "medium",
+        "provider_id": "beta-cloud",
+        "provider_name": "Beta Cloud",
+        "report_id": "provider-report-747693c2c74720da",
+        "schema_version": "1.0.0",
+        "total_samples": 3
+      },
+      "explanations": [
+        {
+          "code": "evidence_medium",
+          "evidence_refs": [
+            "cohort-5f79a4fdc9e76ccd"
+          ],
+          "kind": "observation",
+          "message": "Evidence confidence is medium; mean expected-metric coverage is 100.0%.",
+          "rule_id": "evidence.minimum_confidence.v1"
+        },
+        {
+          "code": "consistency_high",
+          "evidence_refs": [
+            "cohort-5f79a4fdc9e76ccd:compute.cpu.events_per_second"
+          ],
+          "kind": "strength",
+          "message": "Observed metrics were stable; worst coefficient of variation was 0.020.",
+          "rule_id": "consistency.cv.v1"
+        },
+        {
+          "code": "reliability_high",
+          "evidence_refs": [
+            "beta-cloud-1",
+            "beta-cloud-2",
+            "beta-cloud-3"
+          ],
+          "kind": "strength",
+          "message": "Measurement completion was high at 100.0%, with no sample warnings or errors.",
+          "rule_id": "reliability.measurement_completion.v1"
+        },
+        {
+          "code": "performance_low",
+          "evidence_refs": [
+            "peer-comparison-c34e9c0506e39d40"
+          ],
+          "kind": "limitation",
+          "message": "Across 1 compatible peer metrics at the 5% similarity threshold: 0 ahead, 0 similar, and 1 behind.",
+          "rule_id": "performance.compatible_peer_relative.v1"
+        },
+        {
+          "code": "value_high",
+          "evidence_refs": [
+            "value-comparison-c34e9c0506e39d40"
+          ],
+          "kind": "strength",
+          "message": "Across 1 normalized price-performance metrics at the 5% similarity threshold: 1 ahead, 0 similar, and 0 behind.",
+          "rule_id": "value.compatible_peer_price_performance.v1"
+        },
+        {
+          "code": "universal_score_not_calculated",
+          "evidence_refs": [
+            "provider-report-747693c2c74720da"
+          ],
+          "kind": "observation",
+          "message": "CloudEyes reports independent dimensions and does not calculate a universal provider score.",
+          "rule_id": "explanation.no_universal_score.v1"
+        }
+      ],
+      "generated_at": "2026-08-06T10:49:49.705510+00:00",
+      "peer_comparisons": [
+        {
+          "comparison_id": "peer-comparison-c34e9c0506e39d40",
+          "confidence": "medium",
+          "direction": "higher_is_better",
+          "metric_name": "compute.cpu.events_per_second",
+          "outcome": "behind",
+          "peer_cohort_ids": [
+            "cohort-29a5b067541de1c9",
+            "cohort-7d6fe530223d3340"
+          ],
+          "peer_group_id": "peer-group-d5cece60b9d4046f",
+          "peer_key": "vn|virtual_machine|2|4294967296|x86_64|general|1.0.0|abc123",
+          "peer_median": 112.5,
+          "peer_provider_count": 2,
+          "peer_provider_ids": [
+            "alpha-cloud",
+            "gamma-cloud"
+          ],
+          "profile": "general",
+          "provider_cohort_ids": [
+            "cohort-5f79a4fdc9e76ccd"
+          ],
+          "provider_value": 100.0,
+          "relative_difference_percent": -11.11111111111111,
+          "unit": "events_per_second"
+        }
+      ],
+      "pricing_evidence": [
+        {
+          "billing_period": "hour",
+          "billing_period_hours": 1.0,
+          "cohort_ids": [
+            "cohort-5f79a4fdc9e76ccd"
+          ],
+          "commitment": "on_demand",
+          "confidence": "high",
+          "fx_to_usd": 1.0,
+          "hourly_usd": 0.08,
+          "observed_at": "2026-08-05T00:00:00+00:00",
+          "operating_system": "linux",
+          "plan": "2-vcpu-4gb",
+          "pricing_evidence_id": "pricing-evidence-1c2a0c1c968c011e",
+          "product": "Cloud Server",
+          "provider_id": "beta-cloud",
+          "quote_id": "beta-cloud-on-demand-linux-2026-08",
+          "region": "hanoi",
+          "sample_ids": [
+            "beta-cloud-1",
+            "beta-cloud-2",
+            "beta-cloud-3"
+          ],
+          "source": {
+            "reference": "example://beta-cloud/on-demand-linux",
+            "tier": "official_api"
+          },
+          "source_amount": 0.08,
+          "source_currency": "USD",
+          "tax_included": false,
+          "valid_from": "2026-07-01T00:00:00+00:00",
+          "valid_until": null,
+          "zone": "zone-1"
+        }
+      ],
+      "provider_id": "beta-cloud",
+      "provider_name": "Beta Cloud",
+      "schema_version": "1.2.0",
+      "scorecard": {
+        "cohort_count": 1,
+        "coverage_ratio": 1.0,
+        "dimensions": [
+          {
+            "dimension": "evidence",
+            "evidence_refs": [
+              "cohort-5f79a4fdc9e76ccd"
+            ],
+            "level": "medium",
+            "limitations": [],
+            "rule_id": "evidence.minimum_confidence.v1",
+            "status": "assessed",
+            "summary": "Evidence confidence is medium; mean expected-metric coverage is 100.0%."
+          },
+          {
+            "dimension": "consistency",
+            "evidence_refs": [
+              "cohort-5f79a4fdc9e76ccd:compute.cpu.events_per_second"
+            ],
+            "level": "high",
+            "limitations": [],
+            "rule_id": "consistency.cv.v1",
+            "status": "assessed",
+            "summary": "Observed metrics were stable; worst coefficient of variation was 0.020."
+          },
+          {
+            "dimension": "reliability",
+            "evidence_refs": [
+              "beta-cloud-1",
+              "beta-cloud-2",
+              "beta-cloud-3"
+            ],
+            "level": "high",
+            "limitations": [],
+            "rule_id": "reliability.measurement_completion.v1",
+            "status": "assessed",
+            "summary": "Measurement completion was high at 100.0%, with no sample warnings or errors."
+          },
+          {
+            "dimension": "performance",
+            "evidence_refs": [
+              "peer-comparison-c34e9c0506e39d40"
+            ],
+            "level": "low",
+            "limitations": [],
+            "rule_id": "performance.compatible_peer_relative.v1",
+            "status": "assessed",
+            "summary": "Across 1 compatible peer metrics at the 5% similarity threshold: 0 ahead, 0 similar, and 1 behind."
+          },
+          {
+            "dimension": "value",
+            "evidence_refs": [
+              "value-comparison-c34e9c0506e39d40"
+            ],
+            "level": "high",
+            "limitations": [],
+            "rule_id": "value.compatible_peer_price_performance.v1",
+            "status": "assessed",
+            "summary": "Across 1 normalized price-performance metrics at the 5% similarity threshold: 1 ahead, 0 similar, and 0 behind."
+          }
+        ],
+        "profile_count": 1,
+        "profiles": [
+          "general"
+        ],
+        "sample_count": 3,
+        "successful_measurement_ratio": 1.0
+      },
+      "value_comparisons": [
+        {
+          "comparison_id": "value-comparison-c34e9c0506e39d40",
+          "confidence": "medium",
+          "index_definition": "metric_per_usd_hour",
+          "metric_direction": "higher_is_better",
+          "metric_name": "compute.cpu.events_per_second",
+          "metric_unit": "events_per_second",
+          "outcome": "ahead",
+          "peer_cohort_ids": [
+            "cohort-29a5b067541de1c9",
+            "cohort-7d6fe530223d3340"
+          ],
+          "peer_group_id": "peer-group-d5cece60b9d4046f",
+          "peer_hourly_usd_median": 0.105,
+          "peer_key": "vn|virtual_machine|2|4294967296|x86_64|general|1.0.0|abc123",
+          "peer_pricing_evidence_ids": [
+            "pricing-evidence-193c22b2c7d5b119",
+            "pricing-evidence-8f2d13b81e65f600"
+          ],
+          "peer_provider_count": 2,
+          "peer_provider_ids": [
+            "alpha-cloud",
+            "gamma-cloud"
+          ],
+          "peer_value_index_median": 1083.3333333333335,
+          "profile": "general",
+          "provider_cohort_ids": [
+            "cohort-5f79a4fdc9e76ccd"
+          ],
+          "provider_hourly_usd": 0.08,
+          "provider_pricing_evidence_ids": [
+            "pricing-evidence-1c2a0c1c968c011e"
+          ],
+          "provider_value_index": 1250.0,
+          "relative_difference_percent": 15.384615384615369
+        }
+      ]
+    },
+    {
+      "analytics_id": "provider-analytics-c32c49c4b42e48d8",
+      "evidence": {
+        "cohort_count": 1,
+        "cohorts": [
+          {
+            "cohort_id": "cohort-7d6fe530223d3340",
+            "cohort_key": "gamma-cloud|vn|cloud server|2-vcpu-4gb|hanoi|zone-1|virtual_machine|2|4294967296|x86_64|general|1.0.0|abc123",
+            "confidence": {
+              "coverage": "high",
+              "measurement": "high",
+              "statistical": "medium"
+            },
+            "coverage": {
+              "available_metrics": [
+                "compute.cpu.events_per_second"
+              ],
+              "expected_metrics": [],
+              "gaps": [],
+              "observation_days": 3,
+              "plans": [
+                "2-vcpu-4gb"
+              ],
+              "products": [
+                "Cloud Server"
+              ],
+              "regions": [
+                "hanoi"
+              ],
+              "sample_count": 3,
+              "zones": [
+                "zone-1"
+              ]
+            },
+            "ended_at": "2026-08-03T00:00:00+00:00",
+            "metrics": [
+              {
+                "contributing_samples": 3,
+                "direction": "higher_is_better",
+                "name": "compute.cpu.events_per_second",
+                "raw_observations": 3,
+                "statistics": {
+                  "coefficient_of_variation": 0.009523809523809525,
+                  "count": 3,
+                  "maximum": 106.0,
+                  "mean": 105.0,
+                  "median": 105.0,
+                  "minimum": 104.0,
+                  "p10": 104.2,
+                  "p90": 105.80000000000001,
+                  "standard_deviation": 1.0
+                },
+                "unit": "events_per_second"
+              }
+            ],
+            "protocol": {
+              "fingerprint": "abc123",
+              "profile": "general",
+              "version": "1.0.0"
+            },
+            "sample_count": 3,
+            "sample_ids": [
+              "gamma-cloud-1",
+              "gamma-cloud-2",
+              "gamma-cloud-3"
+            ],
+            "started_at": "2026-08-01T00:00:00+00:00"
+          }
+        ],
+        "gaps": [],
+        "generated_at": "2026-08-06T10:49:49.705510+00:00",
+        "overall_confidence": "medium",
+        "provider_id": "gamma-cloud",
+        "provider_name": "Gamma Cloud",
+        "report_id": "provider-report-7af761639c3f1b60",
+        "schema_version": "1.0.0",
+        "total_samples": 3
+      },
+      "explanations": [
+        {
+          "code": "evidence_medium",
+          "evidence_refs": [
+            "cohort-7d6fe530223d3340"
+          ],
+          "kind": "observation",
+          "message": "Evidence confidence is medium; mean expected-metric coverage is 100.0%.",
+          "rule_id": "evidence.minimum_confidence.v1"
+        },
+        {
+          "code": "consistency_high",
+          "evidence_refs": [
+            "cohort-7d6fe530223d3340:compute.cpu.events_per_second"
+          ],
+          "kind": "strength",
+          "message": "Observed metrics were stable; worst coefficient of variation was 0.010.",
+          "rule_id": "consistency.cv.v1"
+        },
+        {
+          "code": "reliability_high",
+          "evidence_refs": [
+            "gamma-cloud-1",
+            "gamma-cloud-2",
+            "gamma-cloud-3"
+          ],
+          "kind": "strength",
+          "message": "Measurement completion was high at 100.0%, with no sample warnings or errors.",
+          "rule_id": "reliability.measurement_completion.v1"
+        },
+        {
+          "code": "performance_medium",
+          "evidence_refs": [
+            "peer-comparison-95bb2b54a49bbddb"
+          ],
+          "kind": "observation",
+          "message": "Across 1 compatible peer metrics at the 5% similarity threshold: 0 ahead, 1 similar, and 0 behind.",
+          "rule_id": "performance.compatible_peer_relative.v1"
+        },
+        {
+          "code": "value_medium",
+          "evidence_refs": [
+            "value-comparison-95bb2b54a49bbddb"
+          ],
+          "kind": "observation",
+          "message": "Across 1 normalized price-performance metrics at the 5% similarity threshold: 0 ahead, 1 similar, and 0 behind.",
+          "rule_id": "value.compatible_peer_price_performance.v1"
+        },
+        {
+          "code": "universal_score_not_calculated",
+          "evidence_refs": [
+            "provider-report-7af761639c3f1b60"
+          ],
+          "kind": "observation",
+          "message": "CloudEyes reports independent dimensions and does not calculate a universal provider score.",
+          "rule_id": "explanation.no_universal_score.v1"
+        }
+      ],
+      "generated_at": "2026-08-06T10:49:49.705510+00:00",
+      "peer_comparisons": [
+        {
+          "comparison_id": "peer-comparison-95bb2b54a49bbddb",
+          "confidence": "medium",
+          "direction": "higher_is_better",
+          "metric_name": "compute.cpu.events_per_second",
+          "outcome": "similar",
+          "peer_cohort_ids": [
+            "cohort-29a5b067541de1c9",
+            "cohort-5f79a4fdc9e76ccd"
+          ],
+          "peer_group_id": "peer-group-d5cece60b9d4046f",
+          "peer_key": "vn|virtual_machine|2|4294967296|x86_64|general|1.0.0|abc123",
+          "peer_median": 110.0,
+          "peer_provider_count": 2,
+          "peer_provider_ids": [
+            "alpha-cloud",
+            "beta-cloud"
+          ],
+          "profile": "general",
+          "provider_cohort_ids": [
+            "cohort-7d6fe530223d3340"
+          ],
+          "provider_value": 105.0,
+          "relative_difference_percent": -4.545454545454546,
+          "unit": "events_per_second"
+        }
+      ],
+      "pricing_evidence": [
+        {
+          "billing_period": "hour",
+          "billing_period_hours": 1.0,
+          "cohort_ids": [
+            "cohort-7d6fe530223d3340"
+          ],
+          "commitment": "on_demand",
+          "confidence": "high",
+          "fx_to_usd": 1.0,
+          "hourly_usd": 0.09,
+          "observed_at": "2026-08-05T00:00:00+00:00",
+          "operating_system": "linux",
+          "plan": "2-vcpu-4gb",
+          "pricing_evidence_id": "pricing-evidence-193c22b2c7d5b119",
+          "product": "Cloud Server",
+          "provider_id": "gamma-cloud",
+          "quote_id": "gamma-cloud-on-demand-linux-2026-08",
+          "region": "hanoi",
+          "sample_ids": [
+            "gamma-cloud-1",
+            "gamma-cloud-2",
+            "gamma-cloud-3"
+          ],
+          "source": {
+            "reference": "example://gamma-cloud/on-demand-linux",
+            "tier": "official_api"
+          },
+          "source_amount": 0.09,
+          "source_currency": "USD",
+          "tax_included": false,
+          "valid_from": "2026-07-01T00:00:00+00:00",
+          "valid_until": null,
+          "zone": "zone-1"
+        }
+      ],
+      "provider_id": "gamma-cloud",
+      "provider_name": "Gamma Cloud",
+      "schema_version": "1.2.0",
+      "scorecard": {
+        "cohort_count": 1,
+        "coverage_ratio": 1.0,
+        "dimensions": [
+          {
+            "dimension": "evidence",
+            "evidence_refs": [
+              "cohort-7d6fe530223d3340"
+            ],
+            "level": "medium",
+            "limitations": [],
+            "rule_id": "evidence.minimum_confidence.v1",
+            "status": "assessed",
+            "summary": "Evidence confidence is medium; mean expected-metric coverage is 100.0%."
+          },
+          {
+            "dimension": "consistency",
+            "evidence_refs": [
+              "cohort-7d6fe530223d3340:compute.cpu.events_per_second"
+            ],
+            "level": "high",
+            "limitations": [],
+            "rule_id": "consistency.cv.v1",
+            "status": "assessed",
+            "summary": "Observed metrics were stable; worst coefficient of variation was 0.010."
+          },
+          {
+            "dimension": "reliability",
+            "evidence_refs": [
+              "gamma-cloud-1",
+              "gamma-cloud-2",
+              "gamma-cloud-3"
+            ],
+            "level": "high",
+            "limitations": [],
+            "rule_id": "reliability.measurement_completion.v1",
+            "status": "assessed",
+            "summary": "Measurement completion was high at 100.0%, with no sample warnings or errors."
+          },
+          {
+            "dimension": "performance",
+            "evidence_refs": [
+              "peer-comparison-95bb2b54a49bbddb"
+            ],
+            "level": "medium",
+            "limitations": [],
+            "rule_id": "performance.compatible_peer_relative.v1",
+            "status": "assessed",
+            "summary": "Across 1 compatible peer metrics at the 5% similarity threshold: 0 ahead, 1 similar, and 0 behind."
+          },
+          {
+            "dimension": "value",
+            "evidence_refs": [
+              "value-comparison-95bb2b54a49bbddb"
+            ],
+            "level": "medium",
+            "limitations": [],
+            "rule_id": "value.compatible_peer_price_performance.v1",
+            "status": "assessed",
+            "summary": "Across 1 normalized price-performance metrics at the 5% similarity threshold: 0 ahead, 1 similar, and 0 behind."
+          }
+        ],
+        "profile_count": 1,
+        "profiles": [
+          "general"
+        ],
+        "sample_count": 3,
+        "successful_measurement_ratio": 1.0
+      },
+      "value_comparisons": [
+        {
+          "comparison_id": "value-comparison-95bb2b54a49bbddb",
+          "confidence": "medium",
+          "index_definition": "metric_per_usd_hour",
+          "metric_direction": "higher_is_better",
+          "metric_name": "compute.cpu.events_per_second",
+          "metric_unit": "events_per_second",
+          "outcome": "similar",
+          "peer_cohort_ids": [
+            "cohort-29a5b067541de1c9",
+            "cohort-5f79a4fdc9e76ccd"
+          ],
+          "peer_group_id": "peer-group-d5cece60b9d4046f",
+          "peer_hourly_usd_median": 0.1,
+          "peer_key": "vn|virtual_machine|2|4294967296|x86_64|general|1.0.0|abc123",
+          "peer_pricing_evidence_ids": [
+            "pricing-evidence-1c2a0c1c968c011e",
+            "pricing-evidence-8f2d13b81e65f600"
+          ],
+          "peer_provider_count": 2,
+          "peer_provider_ids": [
+            "alpha-cloud",
+            "beta-cloud"
+          ],
+          "peer_value_index_median": 1125.0,
+          "profile": "general",
+          "provider_cohort_ids": [
+            "cohort-7d6fe530223d3340"
+          ],
+          "provider_hourly_usd": 0.09,
+          "provider_pricing_evidence_ids": [
+            "pricing-evidence-193c22b2c7d5b119"
+          ],
+          "provider_value_index": 1166.6666666666667,
+          "relative_difference_percent": 3.7037037037037104
+        }
+      ]
+    }
+  ],
+  "schema_version": "1.2.0",
+  "source_sample_count": 9,
+  "unmatched_pricing_quote_ids": [],
+  "value_peer_group_count": 1
+}

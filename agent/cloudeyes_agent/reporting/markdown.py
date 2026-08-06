@@ -23,7 +23,10 @@ def render_analytics_markdown(bundle: AnalyticsBundle) -> str:
         f"Source samples: **{bundle.source_sample_count}**  ",
         f"Analyzed samples: **{bundle.analyzed_sample_count}**  ",
         f"Providers: **{bundle.provider_count}**  ",
-        f"Compatible peer groups: **{bundle.peer_group_count}**",
+        f"Compatible peer groups: **{bundle.peer_group_count}**  ",
+        f"Selected pricing quotes: **{bundle.pricing_quote_count}**  ",
+        f"Normalized pricing evidence: **{bundle.normalized_pricing_evidence_count}**  ",
+        f"Priced value peer groups: **{bundle.value_peer_group_count}**",
         "",
     ]
     if bundle.excluded_sample_ids:
@@ -31,6 +34,15 @@ def render_analytics_markdown(bundle: AnalyticsBundle) -> str:
             (
                 "Excluded invalid samples: "
                 + ", ".join(f"`{item}`" for item in bundle.excluded_sample_ids),
+                "",
+            )
+        )
+
+    if bundle.unmatched_pricing_quote_ids:
+        lines.extend(
+            (
+                "Unmatched pricing quotes: "
+                + ", ".join(f"`{item}`" for item in bundle.unmatched_pricing_quote_ids),
                 "",
             )
         )
@@ -78,6 +90,54 @@ def render_analytics_markdown(bundle: AnalyticsBundle) -> str:
                     f"{comparison.profile} | `{comparison.metric_name}` | "
                     f"{comparison.provider_value:.6g} {comparison.unit} | "
                     f"{comparison.peer_median:.6g} {comparison.unit} | "
+                    f"{comparison.relative_difference_percent:+.1f}% | "
+                    f"{comparison.outcome.value} | {comparison.confidence.value} | "
+                    f"{comparison.peer_provider_count} |"
+                )
+
+        if provider.pricing_evidence:
+            lines.extend(
+                [
+                    "",
+                    "### Normalized pricing evidence",
+                    "",
+                    (
+                        "| Quote | Product / plan | Scope | Commitment / OS | "
+                        "Source price | USD/hour | Confidence |"
+                    ),
+                    "|---|---|---|---|---:|---:|---|",
+                ]
+            )
+            for price in provider.pricing_evidence:
+                scope = "/".join(item or "*" for item in (price.region, price.zone))
+                lines.append(
+                    "| "
+                    f"`{price.quote_id}` | {price.product} / {price.plan} | {scope} | "
+                    f"{price.commitment.value} / {price.operating_system.value} | "
+                    f"{price.source_amount:.6g} {price.source_currency} per "
+                    f"{price.billing_period} | {price.hourly_usd:.6g} | "
+                    f"{price.confidence.value} |"
+                )
+
+        if provider.value_comparisons:
+            lines.extend(
+                [
+                    "",
+                    "### Normalized value comparisons",
+                    "",
+                    (
+                        "| Profile | Metric | Provider USD/h | Peer USD/h | "
+                        "Value difference | Outcome | Confidence | Peers |"
+                    ),
+                    "|---|---|---:|---:|---:|---|---|---:|",
+                ]
+            )
+            for comparison in provider.value_comparisons:
+                lines.append(
+                    "| "
+                    f"{comparison.profile} | `{comparison.metric_name}` | "
+                    f"{comparison.provider_hourly_usd:.6g} | "
+                    f"{comparison.peer_hourly_usd_median:.6g} | "
                     f"{comparison.relative_difference_percent:+.1f}% | "
                     f"{comparison.outcome.value} | {comparison.confidence.value} | "
                     f"{comparison.peer_provider_count} |"
