@@ -41,5 +41,7 @@ python -m cloudeyes_agent analyze data/samples \
 ```
 
 Provider Analytics v1 reports independent evidence, consistency, reliability, performance, and
-value dimensions. It deliberately does not calculate a universal provider score.
+value dimensions. Compatible Peer Comparison v1 grades performance only when country, machine,
+profile, and protocol identity match exactly across providers. It deliberately does not calculate a
+universal provider score.
 

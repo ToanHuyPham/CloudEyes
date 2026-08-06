@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://cloudeyes.dev/schemas/provider/analytics-v1.schema.json",
-  "title": "CloudEyes Provider Analytics Bundle v1",
+  "title": "CloudEyes Provider Analytics Bundle v1.1",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -11,11 +11,12 @@
     "analyzed_sample_count",
     "excluded_sample_ids",
     "provider_count",
-    "providers"
+    "providers",
+    "peer_group_count"
   ],
   "properties": {
     "schema_version": {
-      "const": "1.0.0"
+      "const": "1.1.0"
     },
     "generated_at": {
       "type": "string",
@@ -46,6 +47,10 @@
       "items": {
         "$ref": "#/$defs/providerAnalytics"
       }
+    },
+    "peer_group_count": {
+      "type": "integer",
+      "minimum": 0
     }
   },
   "$defs": {
@@ -264,11 +269,12 @@
         "provider_name",
         "evidence",
         "scorecard",
-        "explanations"
+        "explanations",
+        "peer_comparisons"
       ],
       "properties": {
         "schema_version": {
-          "const": "1.0.0"
+          "const": "1.1.0"
         },
         "analytics_id": {
           "type": "string",
@@ -296,6 +302,12 @@
           "type": "array",
           "items": {
             "$ref": "#/$defs/explanation"
+          }
+        },
+        "peer_comparisons": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/peerComparison"
           }
         }
       }
@@ -622,6 +634,117 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "peerComparison": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "comparison_id",
+        "peer_group_id",
+        "peer_key",
+        "profile",
+        "metric_name",
+        "unit",
+        "direction",
+        "provider_value",
+        "peer_median",
+        "relative_difference_percent",
+        "outcome",
+        "confidence",
+        "peer_provider_count",
+        "peer_provider_ids",
+        "provider_cohort_ids",
+        "peer_cohort_ids"
+      ],
+      "properties": {
+        "comparison_id": {
+          "type": "string",
+          "pattern": "^peer-comparison-[0-9a-f]{16}$"
+        },
+        "peer_group_id": {
+          "type": "string",
+          "pattern": "^peer-group-[0-9a-f]{16}$"
+        },
+        "peer_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "profile": {
+          "type": "string",
+          "minLength": 1
+        },
+        "metric_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1
+        },
+        "direction": {
+          "type": "string",
+          "enum": [
+            "higher_is_better",
+            "lower_is_better"
+          ]
+        },
+        "provider_value": {
+          "type": "number"
+        },
+        "peer_median": {
+          "type": "number"
+        },
+        "relative_difference_percent": {
+          "type": "number"
+        },
+        "outcome": {
+          "type": "string",
+          "enum": [
+            "ahead",
+            "similar",
+            "behind"
+          ]
+        },
+        "confidence": {
+          "type": "string",
+          "enum": [
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        "peer_provider_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "peer_provider_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "provider_cohort_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "peer_cohort_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
           }
         }
       }

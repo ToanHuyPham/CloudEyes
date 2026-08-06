@@ -11,6 +11,7 @@ from .assessment import (
     ProviderScorecard,
 )
 from .cohort import Cohort, CohortKey
+from .comparison import PeerComparisonOutcome, PeerMetricComparison
 from .confidence import Confidence, ConfidenceLevel
 from .coverage import Coverage
 from .identity import MachineIdentity, ProductIdentity, ProviderIdentity
@@ -38,6 +39,8 @@ __all__ = [
     "MeasurementStatus",
     "Metric",
     "MetricDirection",
+    "PeerComparisonOutcome",
+    "PeerMetricComparison",
     "ProductIdentity",
     "ProtocolIdentity",
     "ProviderAnalyticsReport",

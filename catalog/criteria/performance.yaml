@@ -1,3 +1,30 @@
 name: performance
 version: 1
-status: planned
+status: implemented
+rule_id: performance.compatible_peer_relative.v1
+fallback_rule_id: performance.compatible_peer_required.v1
+compatibility:
+  exact_fields:
+    - country_code
+    - machine_type
+    - cpu_count
+    - memory_bytes
+    - architecture
+    - profile
+    - protocol_version
+    - protocol_fingerprint
+  excluded_provider_specific_labels:
+    - product
+    - plan
+    - region
+    - zone
+minimum_total_providers: 2
+provider_weighting: equal
+peer_baseline: median_excluding_subject
+similarity_threshold_percent: 5.0
+outcomes:
+  ahead: relative_difference_percent >= 5.0
+  similar: -5.0 < relative_difference_percent < 5.0
+  behind: relative_difference_percent <= -5.0
+neutral_metrics: excluded
+unknown_provider_or_country: excluded

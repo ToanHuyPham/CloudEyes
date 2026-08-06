@@ -45,7 +45,8 @@ Agent → Measurement → Evidence → Sample → Validation → Cohort → Asse
 - Shared measurement reliability policies: complete
 - Process isolation and cooperative cancellation: complete
 - Provider Analytics v1: complete
-- Next component: Compatible Peer Comparison v1
+- Compatible Peer Comparison v1: complete
+- Next component: Normalized Pricing v1
 
 ## Implementation order
 
@@ -60,8 +61,9 @@ Agent → Measurement → Evidence → Sample → Validation → Cohort → Asse
 9. Provider aggregation — complete v1
 10. Rule-based assessment and explanation — complete v1
 11. JSON and Markdown reports — complete v1
-12. Compatible peer comparison and normalized pricing
-13. API and dashboard
+12. Compatible peer comparison — complete v1
+13. Normalized pricing
+14. API and dashboard
 
 ## Daily update rule
 

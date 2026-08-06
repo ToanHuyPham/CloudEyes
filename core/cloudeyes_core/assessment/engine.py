@@ -9,6 +9,7 @@ from ..models import (
     AssessmentStatus,
     Cohort,
     DimensionAssessment,
+    PeerMetricComparison,
     ProviderReport,
     ProviderScorecard,
 )
@@ -36,7 +37,11 @@ def _evidence_dimension(report: ProviderReport) -> DimensionAssessment:
     )
 
 
-def build_scorecard(report: ProviderReport, cohorts: tuple[Cohort, ...]) -> ProviderScorecard:
+def build_scorecard(
+    report: ProviderReport,
+    cohorts: tuple[Cohort, ...],
+    peer_comparisons: tuple[PeerMetricComparison, ...] = (),
+) -> ProviderScorecard:
     """Build a multidimensional scorecard without a universal provider score."""
 
     coverage_ratios = [item.coverage.metric_ratio for item in report.cohorts]
@@ -46,7 +51,7 @@ def build_scorecard(report: ProviderReport, cohorts: tuple[Cohort, ...]) -> Prov
         _evidence_dimension(report),
         assess_consistency(report),
         assess_reliability(cohorts),
-        assess_performance(report),
+        assess_performance(report, peer_comparisons),
         assess_value(),
     )
     return ProviderScorecard(

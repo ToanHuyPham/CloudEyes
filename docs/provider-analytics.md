@@ -1,6 +1,7 @@
 # Provider Analytics v1
 
 Provider Analytics v1 turns validated local samples into deterministic, offline provider reports.
+Schema version 1.1 adds strict compatible peer performance comparisons.
 It preserves the CloudEyes separation between measurement, evidence, assessment, and explanation.
 
 ## Input
@@ -20,6 +21,7 @@ The analytics bundle contains one report per provider with:
 - expected-metric coverage and explicit evidence gaps;
 - measurement, statistical, and coverage confidence;
 - independent evidence, consistency, reliability, performance, and value dimensions;
+- equal-weight compatible peer metric comparisons when strict baselines exist;
 - traceable explanation items with rule IDs and evidence references;
 - optional Markdown rendering.
 
@@ -55,9 +57,14 @@ It must not be interpreted as provider uptime or SLA compliance.
 
 ### Performance and value
 
-Performance remains `not_assessed` until a compatible peer baseline is supplied. Value remains
-`not_assessed` until normalized pricing evidence exists. Measured throughput alone is not converted
-into an absolute provider verdict.
+Performance remains `not_assessed` until a strict compatible peer baseline exists. Compatible Peer
+Comparison v1 requires the same country, hardware identity, profile, protocol version, and protocol
+fingerprint. It compares one equal-weight value per provider against the median of the other
+providers and applies a fixed five-percent similarity band. See
+[Compatible Peer Comparison v1](assessment/peer-comparison.md).
+
+Value remains `not_assessed` until normalized pricing evidence exists. Measured throughput alone is
+not converted into an absolute provider verdict.
 
 ## CLI
 

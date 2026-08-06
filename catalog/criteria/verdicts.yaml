@@ -4,7 +4,9 @@ status: implemented
 universal_provider_score: prohibited
 performance:
   status_without_compatible_peer: not_assessed
-  rule_id: performance.compatible_peer_required.v1
+  fallback_rule_id: performance.compatible_peer_required.v1
+  assessed_rule_id: performance.compatible_peer_relative.v1
+  universal_metric_aggregation: prohibited
 value:
   status_without_normalized_price: not_assessed
   rule_id: value.normalized_price_required.v1

@@ -1,0 +1,53 @@
+{
+  "created_at": "2026-08-03T00:00:00+00:00",
+  "machine": {
+    "architecture": "x86_64",
+    "cpu_count": 2,
+    "machine_type": "virtual_machine",
+    "memory_bytes": 4294967296
+  },
+  "measurements": [
+    {
+      "error": null,
+      "finished_at": "2026-08-03T00:00:10+00:00",
+      "measurement_id": "gamma-cloud-3-cpu-0",
+      "metrics": [
+        {
+          "direction": "higher_is_better",
+          "name": "compute.cpu.events_per_second",
+          "unit": "events_per_second",
+          "value": 106.0
+        }
+      ],
+      "profile": "general",
+      "protocol_version": "1.0.0",
+      "raw_output_path": null,
+      "started_at": "2026-08-03T00:00:00+00:00",
+      "status": "success",
+      "tool": "sysbench",
+      "tool_version": "1.0.20"
+    }
+  ],
+  "product": {
+    "plan": "2-vcpu-4gb",
+    "product": "Cloud Server",
+    "region": "hanoi",
+    "zone": "zone-1"
+  },
+  "protocol": {
+    "fingerprint": "abc123",
+    "profile": "general",
+    "version": "1.0.0"
+  },
+  "provider": {
+    "country_code": "VN",
+    "name": "Gamma Cloud",
+    "provider_id": "gamma-cloud"
+  },
+  "quality": {
+    "errors": [],
+    "status": "valid",
+    "warnings": []
+  },
+  "sample_id": "gamma-cloud-3"
+}

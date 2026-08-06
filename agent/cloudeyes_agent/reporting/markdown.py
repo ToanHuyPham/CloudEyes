@@ -22,7 +22,8 @@ def render_analytics_markdown(bundle: AnalyticsBundle) -> str:
         "",
         f"Source samples: **{bundle.source_sample_count}**  ",
         f"Analyzed samples: **{bundle.analyzed_sample_count}**  ",
-        f"Providers: **{bundle.provider_count}**",
+        f"Providers: **{bundle.provider_count}**  ",
+        f"Compatible peer groups: **{bundle.peer_group_count}**",
         "",
     ]
     if bundle.excluded_sample_ids:
@@ -57,6 +58,30 @@ def render_analytics_markdown(bundle: AnalyticsBundle) -> str:
             lines.append(
                 f"| {item.dimension.value} | {_level(item)} | `{item.rule_id}` | {summary} |"
             )
+
+        if provider.peer_comparisons:
+            lines.extend(
+                [
+                    "",
+                    "### Compatible peer comparisons",
+                    "",
+                    (
+                        "| Profile | Metric | Provider | Peer median | Difference | "
+                        "Outcome | Confidence | Peers |"
+                    ),
+                    "|---|---|---:|---:|---:|---|---|---:|",
+                ]
+            )
+            for comparison in provider.peer_comparisons:
+                lines.append(
+                    "| "
+                    f"{comparison.profile} | `{comparison.metric_name}` | "
+                    f"{comparison.provider_value:.6g} {comparison.unit} | "
+                    f"{comparison.peer_median:.6g} {comparison.unit} | "
+                    f"{comparison.relative_difference_percent:+.1f}% | "
+                    f"{comparison.outcome.value} | {comparison.confidence.value} | "
+                    f"{comparison.peer_provider_count} |"
+                )
 
         lines.extend(["", "### Cohorts", ""])
         for cohort in provider.evidence.cohorts:

@@ -17,9 +17,10 @@ from ..models import (
     SampleQualityStatus,
 )
 from ..validation import ensure_valid_sample
+from .comparison import build_peer_comparisons
 from .report import build_provider_reports
 
-ANALYTICS_SCHEMA_VERSION = "1.0.0"
+ANALYTICS_SCHEMA_VERSION = "1.1.0"
 
 
 def _analytics_id(provider_id: str, report_id: str) -> str:
@@ -64,12 +65,15 @@ def build_analytics_bundle(
     for cohort in cohorts:
         cohorts_by_provider[cohort.key.provider_id].append(cohort)
 
+    comparisons_by_provider = build_peer_comparisons(cohorts, reports)
+
     analytics_reports: list[ProviderAnalyticsReport] = []
     for report in reports:
         provider_cohorts = tuple(
             sorted(cohorts_by_provider[report.provider_id], key=lambda item: item.key.value)
         )
-        scorecard = build_scorecard(report, provider_cohorts)
+        peer_comparisons = comparisons_by_provider.get(report.provider_id, ())
+        scorecard = build_scorecard(report, provider_cohorts, peer_comparisons)
         analytics_reports.append(
             ProviderAnalyticsReport(
                 schema_version=ANALYTICS_SCHEMA_VERSION,
@@ -80,6 +84,7 @@ def build_analytics_bundle(
                 evidence=report,
                 scorecard=scorecard,
                 explanations=build_explanations(report, scorecard),
+                peer_comparisons=peer_comparisons,
             )
         )
 
@@ -92,4 +97,11 @@ def build_analytics_bundle(
         excluded_sample_ids=excluded_ids,
         provider_count=len(analytics_reports),
         providers=tuple(analytics_reports),
+        peer_group_count=len(
+            {
+                item.peer_group_id
+                for provider in analytics_reports
+                for item in provider.peer_comparisons
+            }
+        ),
     )

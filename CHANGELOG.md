@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Added Compatible Peer Comparison v1 with strict cross-provider hardware, geography, profile, and protocol matching.
+- Added equal provider weighting, subject-excluded peer medians, direction-aware relative differences, five-percent similarity outcomes, and auditable cohort references.
+- Provider Analytics schema 1.1 now includes peer-group counts and per-provider metric comparisons; performance remains unassessed when no defensible baseline exists.
 - Added offline Provider Analytics v1 with deterministic provider aggregation, multidimensional scorecards, traceable explanations, and JSON/Markdown output.
 - Added `cloudeyes analyze` for local sample files and directories.
 - Added strict Provider Analytics v1 schema and explicit guards against universal scores, peer-free performance grading, and price-free value grading.

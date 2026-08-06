@@ -41,3 +41,32 @@ def test_provider_analytics_matches_schema() -> None:
         key=lambda error: tuple(str(item) for item in error.path),
     )
     assert not errors, "\n".join(error.message for error in errors)
+
+
+def test_provider_analytics_peer_comparison_matches_schema() -> None:
+    samples = (
+        make_sample(
+            "alpha-sample",
+            provider_id="alpha",
+            provider_name="Alpha Cloud",
+            values=(120.0,),
+        ),
+        make_sample(
+            "beta-sample",
+            provider_id="beta",
+            provider_name="Beta Cloud",
+            values=(100.0,),
+        ),
+    )
+    result = analyze_provider_analytics(samples, generated_at=datetime(2026, 8, 6, tzinfo=UTC))
+    schema = json.loads(
+        (ROOT / "schemas" / "provider" / "analytics-v1.schema.json").read_text(encoding="utf-8")
+    )
+
+    errors = sorted(
+        Draft202012Validator(schema, format_checker=FormatChecker()).iter_errors(
+            to_primitive(result)
+        ),
+        key=lambda error: tuple(str(item) for item in error.path),
+    )
+    assert not errors, "\n".join(error.message for error in errors)

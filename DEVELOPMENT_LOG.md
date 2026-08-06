@@ -178,3 +178,29 @@
 - Reliability describes benchmark completion and sample quality, not provider uptime.
 - Performance and value remain unassessed without compatible peer and pricing evidence.
 
+
+
+## 2026-08-06 — Compatible Peer Comparison v1
+
+### Completed
+
+- Added strict cross-provider peer keys using country, exact machine identity, profile, protocol version, and protocol fingerprint.
+- Added provider-equal aggregation so sample-rich providers do not dominate the baseline.
+- Added subject-excluded peer medians and direction-adjusted relative performance.
+- Added ahead, similar, and behind outcomes using a fixed five-percent band.
+- Added per-comparison confidence, provider/cohort evidence references, JSON schema 1.1, and Markdown rendering.
+- Connected compatible comparisons to the performance scorecard while retaining `not_assessed` when no baseline exists.
+
+### Current state
+
+- Phase: Provider analytics
+- Component: Compatible Peer Comparison v1
+- Status: Complete
+- Next component: Normalized Pricing v1
+
+### Explicit limitations
+
+- Hardware values are exact; approximate memory-size bucketing is intentionally not performed.
+- Product, plan, region, and zone labels are provider-specific and are not assumed equivalent.
+- A one-peer baseline is allowed but cannot receive high comparison confidence.
+- Relative performance is not a universal provider score and does not include price.

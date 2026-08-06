@@ -82,3 +82,12 @@ score. Performance is not graded without a compatible peer baseline, value is no
 normalized pricing evidence, and benchmark completion must not be presented as provider uptime.
 Every explanation carries a versioned rule ID and evidence references.
 
+
+## ADR-015 — Peer comparison is strict and provider-equal
+
+Compatible Peer Comparison v1 matches country, exact machine identity, profile, protocol version,
+and protocol fingerprint. Provider-specific product, plan, region, and zone labels are retained as
+cohort evidence but are not treated as cross-provider identifiers. Each provider contributes one
+median value to a peer group regardless of sample or cohort count, and the subject provider is
+excluded from its own peer baseline. Unknown provider or country identity is not compared. Relative
+performance remains a separate dimension and is not combined into a universal provider score.

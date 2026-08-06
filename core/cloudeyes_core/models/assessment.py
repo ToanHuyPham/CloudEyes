@@ -6,6 +6,7 @@ from dataclasses import dataclass, field
 from datetime import datetime
 from enum import StrEnum
 
+from .comparison import PeerMetricComparison
 from .confidence import ConfidenceLevel
 from .report import ProviderReport
 
@@ -173,6 +174,7 @@ class ProviderAnalyticsReport:
     evidence: ProviderReport
     scorecard: ProviderScorecard
     explanations: tuple[ExplanationItem, ...]
+    peer_comparisons: tuple[PeerMetricComparison, ...] = field(default_factory=tuple)
 
     def __post_init__(self) -> None:
         for field_name in ("schema_version", "analytics_id", "provider_id", "provider_name"):
@@ -188,7 +190,14 @@ class ProviderAnalyticsReport:
             raise ValueError("provider_name must match evidence report")
         if self.generated_at != self.evidence.generated_at:
             raise ValueError("generated_at must match evidence report")
+        comparisons = tuple(self.peer_comparisons)
+        if any(item.profile not in self.scorecard.profiles for item in comparisons):
+            raise ValueError("peer comparison profile must exist in scorecard profiles")
+        comparison_ids = [item.comparison_id for item in comparisons]
+        if len(comparison_ids) != len(set(comparison_ids)):
+            raise ValueError("peer comparison IDs must be unique per provider")
         object.__setattr__(self, "explanations", tuple(self.explanations))
+        object.__setattr__(self, "peer_comparisons", comparisons)
 
 
 @dataclass(frozen=True, slots=True)
@@ -202,6 +211,7 @@ class AnalyticsBundle:
     excluded_sample_ids: tuple[str, ...]
     provider_count: int
     providers: tuple[ProviderAnalyticsReport, ...]
+    peer_group_count: int = 0
 
     def __post_init__(self) -> None:
         if not self.schema_version.strip():
@@ -210,6 +220,8 @@ class AnalyticsBundle:
             raise ValueError("generated_at must contain timezone information")
         if self.source_sample_count < 0 or self.analyzed_sample_count < 0:
             raise ValueError("sample counts must not be negative")
+        if self.peer_group_count < 0:
+            raise ValueError("peer_group_count must not be negative")
         if self.analyzed_sample_count > self.source_sample_count:
             raise ValueError("analyzed_sample_count must not exceed source_sample_count")
         providers = tuple(self.providers)
@@ -222,6 +234,13 @@ class AnalyticsBundle:
             raise ValueError("source sample count must equal analyzed plus excluded samples")
         if any(item.generated_at != self.generated_at for item in providers):
             raise ValueError("provider generated_at values must match bundle")
+        peer_groups = {
+            comparison.peer_group_id
+            for provider in providers
+            for comparison in provider.peer_comparisons
+        }
+        if self.peer_group_count != len(peer_groups):
+            raise ValueError("peer_group_count must match provider peer comparisons")
         object.__setattr__(self, "schema_version", self.schema_version.strip())
         object.__setattr__(self, "providers", providers)
         object.__setattr__(self, "excluded_sample_ids", excluded)
