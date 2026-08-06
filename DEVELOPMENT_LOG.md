@@ -5,32 +5,32 @@
 ### Completed
 
 - Finalized the long-term architecture.
-- Rebuilt the repository as a smaller v1.1 foundation.
-- Added project guidance, architecture decisions, roadmap, schemas, and test boundaries.
+- Created the CloudEyes v1.1 foundation.
+- Added core identity models.
+- Added metric and measurement models.
+- Added protocol and sample models.
+- Added JSON serialization.
+- Added sample validation.
+- Added initial JSON schemas.
+- Added cohort keys and sample compatibility rules.
+- Added cohort grouping.
+
+### Tests
+
+- Core model tests.
+- Serialization tests.
+- Sample validation tests.
+- Cohort compatibility tests.
+- Cohort grouping tests.
 
 ### Current state
 
 - Phase: Foundation
-- Functional implementation: Not started
-- Next task: Define identifiers, metrics, measurements, protocols, and samples.
+- Current component: Core cohort model
+- Next task: Statistical aggregation of cohort metrics.
 
-### Future entry format
+### Known limitations
 
-```text
-## YYYY-MM-DD
-
-Completed:
-- ...
-
-Tests:
-- ...
-
-Decisions:
-- ...
-
-Known issues:
-- ...
-
-Next:
-- ...
-```
+- No hardware discovery yet.
+- No benchmark tools are executed yet.
+- No provider-level verdict is generated yet.
