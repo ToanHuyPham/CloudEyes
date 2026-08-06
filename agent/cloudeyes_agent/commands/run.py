@@ -24,6 +24,7 @@ from ..profiles.networking import (
     run_networking_profile,
 )
 from ..profiles.storage import StorageProfileConfig, run_storage_profile
+from ..profiles.web import WebProfileConfig, run_web_profile
 
 
 def _general_sample(
@@ -140,6 +141,65 @@ def _networking_sample(
     )
 
 
+def _web_sample(
+    *,
+    quick: bool,
+    raw_output_dir: Path,
+    target_url: str | None,
+    network_scope: str,
+    verify_tls: bool,
+    request_count: int | None,
+    concurrency: int | None,
+    max_response_bytes: int | None,
+    provider_id: str | None,
+    provider_name: str | None,
+    country_code: str | None,
+    product: str | None,
+    plan: str | None,
+    region: str | None,
+    zone: str | None,
+    cancellation_token: CancellationToken | None = None,
+) -> Sample:
+    resolved_target = target_url or "https://example.com/"
+    scope = NetworkScope(network_scope)
+    config = (
+        WebProfileConfig.quick(
+            target_url=resolved_target,
+            scope=scope,
+            verify_tls=verify_tls,
+        )
+        if quick
+        else WebProfileConfig(
+            target_url=resolved_target,
+            scope=scope,
+            verify_tls=verify_tls,
+        )
+    )
+    changes: dict[str, int] = {}
+    if request_count is not None:
+        changes["request_count"] = request_count
+        if concurrency is None and config.concurrency > request_count:
+            changes["concurrency"] = request_count
+    if concurrency is not None:
+        changes["concurrency"] = concurrency
+    if max_response_bytes is not None:
+        changes["max_response_bytes"] = max_response_bytes
+    if changes:
+        config = replace(config, **changes)
+    return run_web_profile(
+        config=config,
+        raw_output_dir=raw_output_dir,
+        provider_id=provider_id,
+        provider_name=provider_name,
+        country_code=country_code,
+        product=product,
+        plan=plan,
+        region=region,
+        zone=zone,
+        cancellation_token=cancellation_token,
+    )
+
+
 def _compute_sample(
     *,
     quick: bool,
@@ -179,6 +239,7 @@ PROFILE_TIMEOUT_SECONDS = {
     "networking": 180.0,
     "compute": 600.0,
     "storage": 900.0,
+    "web": 180.0,
 }
 
 
@@ -195,6 +256,9 @@ def _execute_profile(
     verify_tls: bool,
     enable_ping: bool,
     workers: int | None,
+    request_count: int | None,
+    concurrency: int | None,
+    max_response_bytes: int | None,
     provider_id: str | None,
     provider_name: str | None,
     country_code: str | None,
@@ -253,6 +317,26 @@ def _execute_profile(
             zone=zone,
             cancellation_token=cancellation_token,
         )
+    if profile == "web":
+        raw_output_dir = output.parent / "raw" if output is not None else Path("data/raw")
+        return _web_sample(
+            quick=quick,
+            raw_output_dir=raw_output_dir,
+            target_url=target_url,
+            network_scope=network_scope,
+            verify_tls=verify_tls,
+            request_count=request_count,
+            concurrency=concurrency,
+            max_response_bytes=max_response_bytes,
+            provider_id=provider_id,
+            provider_name=provider_name,
+            country_code=country_code,
+            product=product,
+            plan=plan,
+            region=region,
+            zone=zone,
+            cancellation_token=cancellation_token,
+        )
     if profile == "compute":
         raw_output_dir = output.parent / "raw" if output is not None else Path("data/raw")
         return _compute_sample(
@@ -294,6 +378,9 @@ def run_profile(
     verify_tls: bool = True,
     enable_ping: bool = True,
     workers: int | None = None,
+    request_count: int | None = None,
+    concurrency: int | None = None,
+    max_response_bytes: int | None = None,
     isolated: bool = True,
     timeout_seconds: float | None = None,
 ) -> int:
@@ -302,8 +389,18 @@ def run_profile(
     if profile != "general" and not include_storage:
         print("--no-storage is only valid for the general profile")
         return 4
+    if profile == "web" and target_url is None:
+        print("--target is required for the web profile")
+        return 4
     if profile != "compute" and workers is not None:
         print("--workers is only valid for the compute profile")
+        return 4
+    if profile != "web" and any(
+        value is not None for value in (request_count, concurrency, max_response_bytes)
+    ):
+        print(
+            "--requests, --concurrency, and --max-response-bytes are only valid for the web profile"
+        )
         return 4
     if timeout_seconds is not None and timeout_seconds <= 0:
         print("--timeout-seconds must be greater than zero")
@@ -332,6 +429,9 @@ def run_profile(
         "verify_tls": verify_tls,
         "enable_ping": enable_ping,
         "workers": workers,
+        "request_count": request_count,
+        "concurrency": concurrency,
+        "max_response_bytes": max_response_bytes,
         "provider_id": provider_id,
         "provider_name": provider_name,
         "country_code": country_code,

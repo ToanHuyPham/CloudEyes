@@ -147,6 +147,53 @@ def test_run_networking_passes_endpoint_options(tmp_path, monkeypatch, capsys) -
     assert captured["raw_output_dir"] == output.parent / "raw"
 
 
+def test_run_web_passes_bounded_workload_options(tmp_path, monkeypatch, capsys) -> None:
+    sample = make_sample(profile="web")
+    captured: dict[str, object] = {}
+
+    def fake_web_profile(**kwargs):
+        captured.update(kwargs)
+        return sample
+
+    monkeypatch.setattr(run_command, "run_web_profile", fake_web_profile)
+    output = tmp_path / "web-sample.json"
+
+    exit_code = cli.main(
+        (
+            "run",
+            "web",
+            "--quick",
+            "--no-isolation",
+            "--target",
+            "http://10.0.0.10:8080/health?secret=not-recorded",
+            "--scope",
+            "private",
+            "--requests",
+            "8",
+            "--concurrency",
+            "4",
+            "--max-response-bytes",
+            "4096",
+            "--output",
+            str(output),
+            "--compact",
+        )
+    )
+
+    printed = json.loads(capsys.readouterr().out)
+    written = json.loads(output.read_text(encoding="utf-8"))
+
+    assert exit_code == 0
+    assert printed == written
+    config = captured["config"]
+    assert config.target_url.endswith("secret=not-recorded")
+    assert config.scope.value == "private"
+    assert config.request_count == 8
+    assert config.concurrency == 4
+    assert config.max_response_bytes == 4096
+    assert captured["raw_output_dir"] == output.parent / "raw"
+
+
 def test_run_compute_passes_worker_count(tmp_path, monkeypatch, capsys) -> None:
     sample = make_sample(profile="compute")
     captured: dict[str, object] = {}
@@ -186,6 +233,20 @@ def test_workers_option_is_rejected_for_non_compute_profile(capsys) -> None:
 
     assert exit_code == 4
     assert "only valid for the compute profile" in capsys.readouterr().out
+
+
+def test_web_profile_requires_an_explicit_target(capsys) -> None:
+    exit_code = cli.main(("run", "web", "--quick", "--no-isolation"))
+
+    assert exit_code == 4
+    assert "--target is required" in capsys.readouterr().out
+
+
+def test_web_workload_options_are_rejected_for_other_profiles(capsys) -> None:
+    exit_code = cli.main(("run", "general", "--quick", "--no-isolation", "--requests", "5"))
+
+    assert exit_code == 4
+    assert "only valid for the web profile" in capsys.readouterr().out
 
 
 def test_workers_option_rejects_out_of_range_value() -> None:

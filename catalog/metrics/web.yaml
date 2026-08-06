@@ -1,0 +1,36 @@
+name: web
+version: 1
+status: implemented
+metrics:
+  web.http.successful_requests_per_second:
+    unit: requests_per_second
+    direction: higher_is_better
+    description: Successful bounded HTTP GET responses divided by concurrent workload duration.
+  web.http.error_rate.percent:
+    unit: percent
+    direction: lower_is_better
+    description: Percentage of bounded HTTP GET requests without a 2xx response.
+  web.http.ttfb.p50_milliseconds:
+    unit: milliseconds
+    direction: lower_is_better
+    description: Median time from request start to response headers for successful requests.
+  web.http.ttfb.p95_milliseconds:
+    unit: milliseconds
+    direction: lower_is_better
+    description: 95th-percentile time from request start to response headers.
+  web.http.total_latency.p50_milliseconds:
+    unit: milliseconds
+    direction: lower_is_better
+    description: Median request-to-bounded-response completion latency.
+  web.http.total_latency.p95_milliseconds:
+    unit: milliseconds
+    direction: lower_is_better
+    description: 95th-percentile request-to-bounded-response completion latency.
+  web.http.total_latency.p99_milliseconds:
+    unit: milliseconds
+    direction: lower_is_better
+    description: 99th-percentile request-to-bounded-response completion latency.
+  web.http.response_throughput.mib_per_second:
+    unit: mib_per_second
+    direction: higher_is_better
+    description: Aggregate bounded successful response bytes divided by workload duration.

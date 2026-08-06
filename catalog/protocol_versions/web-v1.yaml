@@ -1,3 +1,25 @@
 name: web-v1
-version: 1
-status: planned
+profile: web
+version: 1.0.0
+status: implemented
+compatibility_key:
+  - protocol_fingerprint
+  - target_origin
+  - target_path_sha256
+  - scope
+  - request_count
+  - concurrency
+  - warmup_requests
+  - timeout_seconds
+  - max_response_bytes
+  - verify_tls
+rules:
+  - compare only samples with matching protocol fingerprints and endpoint identity
+  - do not compare public and private target scopes as one cohort
+  - interpret non-2xx responses as request failures
+  - preserve concurrency and response bounds as compatibility dimensions
+limitations:
+  - results include DNS, connection, TLS, server processing, and bounded response transfer time
+  - endpoint application state and route conditions can change independently of the tested provider
+  - each request uses a fresh connection in protocol version 1.0.0
+  - response bodies and query strings are not retained

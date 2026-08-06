@@ -231,3 +231,27 @@
 - Value is relative to compatible priced peers and is not an absolute or universal provider score.
 - Reserved and spot quotes are analyzed only when explicitly selected and are never mixed with on-demand quotes.
 
+## 2026-08-06 — Web Profile v1
+
+### Completed
+
+- Added a bounded concurrent HTTP GET workload for one explicit endpoint.
+- Added successful request rate, HTTP error rate, TTFB p50/p95, total latency p50/p95/p99, and bounded response throughput.
+- Reused explicit public/private address-scope policy and TLS verification controls.
+- Added per-request privacy-safe raw evidence without query strings, response bodies, credentials, or resolved addresses.
+- Added `cloudeyes run web`, request/concurrency/response limits, process isolation, cancellation, examples, catalog entries, and tests.
+
+### Current state
+
+- Phase: Specialized profiles
+- Component: Web Profile v1
+- Status: Complete
+- Next component: Database Profile v1
+
+### Explicit limitations
+
+- Protocol 1.0.0 uses a fresh connection for each request, so timing includes transport setup.
+- Results describe the selected endpoint and workload only, not an entire provider or application.
+- Application state, route conditions, caching, and rate limits can change independently of the tested VM.
+- CloudEyes does not follow redirects or send authentication material in Web Profile v1.
+

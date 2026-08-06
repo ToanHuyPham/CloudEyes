@@ -11,6 +11,7 @@ from cloudeyes_agent.profiles.networking import (
     run_networking_profile,
 )
 from cloudeyes_agent.profiles.storage import StorageProfileConfig, run_storage_profile
+from cloudeyes_agent.profiles.web import WebProfileConfig, run_web_profile
 
 from tests.unit.agent.test_discovery_models import make_result
 
@@ -22,6 +23,7 @@ from tests.unit.agent.test_discovery_models import make_result
         (run_storage_profile, StorageProfileConfig.quick()),
         (run_networking_profile, NetworkingProfileConfig.quick()),
         (run_compute_profile, ComputeProfileConfig.quick(workers=1)),
+        (run_web_profile, WebProfileConfig.quick()),
     ),
 )
 def test_profile_propagates_pre_requested_cancellation(runner, config) -> None:

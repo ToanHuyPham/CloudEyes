@@ -11,14 +11,35 @@ from cloudeyes_core.models import PricingCommitment, PricingOperatingSystem
 from .commands import run_analyze, run_inspect, run_profile
 
 
-def _worker_count(value: str) -> int:
+def _bounded_integer(name: str, value: str, *, minimum: int, maximum: int) -> int:
     try:
-        workers = int(value)
+        parsed = int(value)
     except ValueError as exc:
-        raise argparse.ArgumentTypeError("workers must be an integer") from exc
-    if not 0 <= workers <= 64:
-        raise argparse.ArgumentTypeError("workers must be between 0 and 64")
-    return workers
+        raise argparse.ArgumentTypeError(f"{name} must be an integer") from exc
+    if not minimum <= parsed <= maximum:
+        raise argparse.ArgumentTypeError(f"{name} must be between {minimum} and {maximum}")
+    return parsed
+
+
+def _worker_count(value: str) -> int:
+    return _bounded_integer("workers", value, minimum=0, maximum=64)
+
+
+def _web_request_count(value: str) -> int:
+    return _bounded_integer("requests", value, minimum=1, maximum=1_000)
+
+
+def _web_concurrency(value: str) -> int:
+    return _bounded_integer("concurrency", value, minimum=1, maximum=64)
+
+
+def _web_response_bytes(value: str) -> int:
+    return _bounded_integer(
+        "max-response-bytes",
+        value,
+        minimum=1_024,
+        maximum=16 * 1024 * 1024,
+    )
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -50,7 +71,9 @@ def build_parser() -> argparse.ArgumentParser:
         "run",
         help="run a bounded measurement profile",
     )
-    run_parser.add_argument("profile", choices=("general", "storage", "networking", "compute"))
+    run_parser.add_argument(
+        "profile", choices=("general", "storage", "networking", "compute", "web")
+    )
     run_parser.add_argument("--output", type=Path, help="optional sample JSON output path")
     run_parser.add_argument("--quick", action="store_true", help="use the CI-sized workload")
     run_parser.add_argument(
@@ -83,7 +106,7 @@ def build_parser() -> argparse.ArgumentParser:
     run_parser.add_argument("--zone")
     run_parser.add_argument(
         "--target",
-        help="HTTP(S) endpoint for the networking profile",
+        help="HTTP(S) endpoint; required for the web profile",
     )
     run_parser.add_argument(
         "--upload-target",
@@ -109,6 +132,22 @@ def build_parser() -> argparse.ArgumentParser:
         "--workers",
         type=_worker_count,
         help="compute worker processes; 0 selects the bounded automatic count",
+    )
+    run_parser.add_argument(
+        "--requests",
+        dest="request_count",
+        type=_web_request_count,
+        help="bounded GET request count for the web profile",
+    )
+    run_parser.add_argument(
+        "--concurrency",
+        type=_web_concurrency,
+        help="maximum concurrent GET requests for the web profile",
+    )
+    run_parser.add_argument(
+        "--max-response-bytes",
+        type=_web_response_bytes,
+        help="maximum response bytes read per web request",
     )
     run_parser.add_argument(
         "--timeout-seconds",
@@ -204,6 +243,9 @@ def main(argv: Sequence[str] | None = None) -> int:
             verify_tls=not args.insecure,
             enable_ping=not args.no_ping,
             workers=args.workers,
+            request_count=args.request_count,
+            concurrency=args.concurrency,
+            max_response_bytes=args.max_response_bytes,
             isolated=not args.no_isolation,
             timeout_seconds=args.timeout_seconds,
         )

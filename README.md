@@ -12,6 +12,7 @@ Implemented Agent profiles:
 - Storage Profile v1
 - Networking Profile v1
 - Compute Profile v1
+- Web Profile v1
 
 Example controlled networking run:
 
@@ -30,6 +31,16 @@ Example bounded compute run:
 python -m cloudeyes_agent run compute \
   --workers 4 \
   --output data/compute-sample.json
+```
+
+Example bounded web-service run:
+
+```bash
+python -m cloudeyes_agent run web \
+  --target https://example.com/ \
+  --requests 40 \
+  --concurrency 4 \
+  --output data/web-sample.json
 ```
 
 Offline provider analytics with optional normalized pricing:

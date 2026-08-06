@@ -1,3 +1,15 @@
 name: web
-version: 1
-status: planned
+version: 1.0.0
+status: implemented
+tool: python-web-profile
+method: bounded-concurrent-http-get
+metrics:
+  - web.http.successful_requests_per_second
+  - web.http.error_rate.percent
+  - web.http.ttfb.p50_milliseconds
+  - web.http.ttfb.p95_milliseconds
+  - web.http.total_latency.p50_milliseconds
+  - web.http.total_latency.p95_milliseconds
+  - web.http.total_latency.p99_milliseconds
+  - web.http.response_throughput.mib_per_second
+raw_evidence: required_for_cli_runs

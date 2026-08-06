@@ -104,3 +104,15 @@ direction and are compared only inside strict compatible peer groups with equal 
 Commitment and operating-system families are selected explicitly and never mixed. Value remains an
 independent dimension and is not combined into a universal provider score.
 
+## ADR-017 — Web v1 is bounded, unauthenticated, and endpoint-specific
+
+Web Profile v1 sends GET requests only to an explicitly selected HTTP or HTTPS endpoint. URLs with
+embedded credentials are rejected, and the agent does not send cookies, authorization headers, or
+request bodies. Public scope rejects non-public address classes; private targets require explicit
+operator selection. Requests connect directly to an address that passed scope validation, avoiding
+a second DNS resolution between validation and connection. Request count, concurrency, response bytes, socket timeout, aggregate bounded
+traffic, and process duration are limited. Raw evidence stores the target origin and a path digest,
+but never the query string, response body, credentials, or resolved addresses. Protocol 1.0.0 uses
+a fresh connection per request and therefore treats connection setup as part of observed web-service
+latency. Results are comparable only when endpoint identity and all workload bounds match.
+
