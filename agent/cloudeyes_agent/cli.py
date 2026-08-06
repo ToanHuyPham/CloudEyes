@@ -47,6 +47,16 @@ def build_parser() -> argparse.ArgumentParser:
         help="skip the temporary-file storage benchmark",
     )
     run_parser.add_argument("--compact", action="store_true", help="emit compact JSON")
+    run_parser.add_argument(
+        "--install-deps",
+        action="store_true",
+        help="install missing OS packages before the benchmark",
+    )
+    run_parser.add_argument(
+        "--yes",
+        action="store_true",
+        help="approve dependency installation without prompting",
+    )
     run_parser.add_argument("--provider-id")
     run_parser.add_argument("--provider-name")
     run_parser.add_argument("--country-code")
@@ -77,5 +87,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             plan=args.plan,
             region=args.region,
             zone=args.zone,
+            install_deps=args.install_deps,
+            assume_yes=args.yes,
         )
     raise AssertionError(f"unsupported command: {args.command}")

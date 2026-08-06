@@ -8,6 +8,7 @@ from pathlib import Path
 from cloudeyes_agent.profiles.general import GeneralProfileConfig, run_general_profile
 from cloudeyes_core.serialization import to_primitive
 from jsonschema import Draft202012Validator, FormatChecker
+
 from tests.unit.agent.test_discovery_models import make_result
 
 ROOT = Path(__file__).resolve().parents[3]

@@ -8,6 +8,7 @@ from pathlib import Path
 from cloudeyes_core.models import SampleQualityStatus
 from cloudeyes_core.serialization import dump, dumps
 
+from ..bootstrap import RuntimeDependencyError, ensure_runtime_dependencies
 from ..profiles.general import GeneralProfileConfig, run_general_profile
 
 
@@ -25,11 +26,23 @@ def run_profile(
     plan: str | None,
     region: str | None,
     zone: str | None,
+    install_deps: bool = False,
+    assume_yes: bool = False,
 ) -> int:
     """Execute one supported profile and emit a Core sample as JSON."""
 
     if profile != "general":
         raise ValueError(f"unsupported profile: {profile}")
+
+    if install_deps:
+        try:
+            ensure_runtime_dependencies(
+                auto_install=True,
+                assume_yes=assume_yes,
+            )
+        except RuntimeDependencyError as exc:
+            print(f"CloudEyes dependency installation failed: {exc}")
+            return 3
 
     config = (
         GeneralProfileConfig.quick(include_storage=include_storage)

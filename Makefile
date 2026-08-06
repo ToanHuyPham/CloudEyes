@@ -6,3 +6,9 @@ test:
 
 lint:
 	python -m ruff check .
+
+bootstrap:
+	./scripts/install.sh
+
+bootstrap-windows:
+	powershell -ExecutionPolicy Bypass -File scripts/install.ps1

@@ -1,0 +1,63 @@
+name: Installation matrix
+
+on:
+  push:
+    paths:
+      - "scripts/install.sh"
+      - "scripts/install.ps1"
+      - "docs/installation.md"
+      - ".github/workflows/install-matrix.yml"
+      - "pyproject.toml"
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  linux-install:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        image:
+          - ubuntu:22.04
+          - debian:12
+          - rockylinux:9
+          - almalinux:9
+          - opensuse/leap:15.6
+          - alpine:3.20
+    container: ${{ matrix.image }}
+    steps:
+      - name: Install Git for checkout
+        shell: sh
+        run: |
+          if command -v apt-get >/dev/null; then apt-get update && apt-get install -y git
+          elif command -v dnf >/dev/null; then dnf install -y git
+          elif command -v zypper >/dev/null; then zypper -n install git
+          elif command -v apk >/dev/null; then apk add --no-cache git bash
+          fi
+      - uses: actions/checkout@v4
+      - name: Bootstrap CloudEyes
+        shell: bash
+        run: ./scripts/install.sh
+      - name: Verify
+        shell: bash
+        run: |
+          .venv/bin/python -m pytest
+          .venv/bin/python -m cloudeyes_agent inspect >/tmp/discovery.json
+          .venv/bin/python -m json.tool /tmp/discovery.json >/dev/null
+
+  windows-install:
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v4
+      - name: Bootstrap CloudEyes
+        shell: pwsh
+        run: .\scripts\install.ps1
+      - name: Verify
+        shell: pwsh
+        run: |
+          .\.venv\Scripts\python.exe -m pytest
+          .\.venv\Scripts\python.exe -m cloudeyes_agent inspect | Out-File discovery.json
+          Get-Content discovery.json | ConvertFrom-Json | Out-Null

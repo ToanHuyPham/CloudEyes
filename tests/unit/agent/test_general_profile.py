@@ -6,7 +6,6 @@ from collections.abc import Callable
 from datetime import UTC, datetime
 
 import pytest
-
 from cloudeyes_agent.profiles.general import (
     GeneralProfileConfig,
     benchmark_cpu,
@@ -17,6 +16,7 @@ from cloudeyes_agent.profiles.general import (
 from cloudeyes_agent.profiles.general import profile as profile_module
 from cloudeyes_core.models import Metric, MetricDirection, SampleQualityStatus
 from cloudeyes_core.validation import validate_sample
+
 from tests.unit.agent.test_discovery_models import make_result
 
 
