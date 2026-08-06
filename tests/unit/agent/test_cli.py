@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 
+import pytest
 from cloudeyes_agent import cli
 from cloudeyes_agent.commands import inspect as inspect_command
 from cloudeyes_agent.commands import run as run_command
@@ -139,3 +140,50 @@ def test_run_networking_passes_endpoint_options(tmp_path, monkeypatch, capsys) -
     assert config.scope.value == "private"
     assert config.ping_count == 0
     assert captured["raw_output_dir"] == output.parent / "raw"
+
+
+def test_run_compute_passes_worker_count(tmp_path, monkeypatch, capsys) -> None:
+    sample = make_sample(profile="compute")
+    captured: dict[str, object] = {}
+
+    def fake_compute_profile(**kwargs):
+        captured.update(kwargs)
+        return sample
+
+    monkeypatch.setattr(run_command, "run_compute_profile", fake_compute_profile)
+    output = tmp_path / "compute-sample.json"
+
+    exit_code = cli.main(
+        (
+            "run",
+            "compute",
+            "--quick",
+            "--workers",
+            "3",
+            "--output",
+            str(output),
+            "--compact",
+        )
+    )
+
+    printed = json.loads(capsys.readouterr().out)
+    written = json.loads(output.read_text(encoding="utf-8"))
+
+    assert exit_code == 0
+    assert printed == written
+    assert captured["config"].workers == 3
+    assert captured["raw_output_dir"] == output.parent / "raw"
+
+
+def test_workers_option_is_rejected_for_non_compute_profile(capsys) -> None:
+    exit_code = cli.main(("run", "general", "--quick", "--workers", "2"))
+
+    assert exit_code == 4
+    assert "only valid for the compute profile" in capsys.readouterr().out
+
+
+def test_workers_option_rejects_out_of_range_value() -> None:
+    with pytest.raises(SystemExit) as error:
+        cli.main(("run", "compute", "--workers", "65"))
+
+    assert error.value.code == 2

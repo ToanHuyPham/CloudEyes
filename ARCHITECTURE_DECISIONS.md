@@ -48,3 +48,12 @@ Public scope rejects private, loopback, link-local, multicast, unspecified, and
 reserved addresses. Private scope permits controlled private and loopback tests
 but still blocks link-local metadata addresses and unsafe address classes.
 
+
+
+## ADR-011 — Compute v1 is bounded and runtime-aware
+
+Compute Profile v1 uses deterministic Python standard-library workloads so it remains
+portable and offline. The default automatic worker count is capped at four processes;
+users must explicitly request a larger count. Raw evidence records the Python implementation,
+version, resolved worker count, repetitions, and verification checksums. Results are not
+presented as native instruction throughput or FLOPS.

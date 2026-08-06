@@ -1,0 +1,83 @@
+{
+  "configuration": {
+    "compression_block_bytes": 262144,
+    "compression_iterations": 2,
+    "compression_level": 6,
+    "floating_point_iterations": 20000,
+    "integer_iterations": 25000,
+    "max_auto_workers": 2,
+    "repetitions": 2,
+    "sha256_block_bytes": 262144,
+    "sha256_iterations": 4,
+    "version": "1.0.0",
+    "warmup_iterations": 500,
+    "worker_timeout_seconds": 30.0,
+    "workers": 2
+  },
+  "engine": "python-standard-library",
+  "execution": {
+    "aggregation": "median",
+    "logical_cpu_count": 5,
+    "resolved_workers": 2
+  },
+  "limitations": [
+    "Results include Python interpreter and standard-library implementation effects.",
+    "Multi-core throughput uses worker processes and includes coordination overhead.",
+    "CPU frequency, host contention, and thermal state can change between runs."
+  ],
+  "profile": "compute",
+  "python": {
+    "implementation": "CPython",
+    "version": "3.13.5"
+  },
+  "sample_id": "compute-example",
+  "samples": {
+    "compression_mib_per_second": [
+      33.852357678143086,
+      43.79908728109804
+    ],
+    "floating_point_iterations_per_second": [
+      9833736.112250691,
+      10572797.145249184
+    ],
+    "integer_multi_iterations_per_second": [
+      3212452.5969985807,
+      4413568.686858065
+    ],
+    "integer_single_iterations_per_second": [
+      3215295.133175749,
+      3323713.6194822043
+    ],
+    "sha256_mib_per_second": [
+      961.3591312052197,
+      1270.1025480649141
+    ]
+  },
+  "schema_version": "1.0.0",
+  "verification": {
+    "compression_checksums": [
+      0,
+      0
+    ],
+    "compression_output_bytes": [
+      524460,
+      524460
+    ],
+    "floating_point_checksums": [
+      33644.1137077244,
+      33664.191835056205
+    ],
+    "integer_multi_checksums": [
+      5260591312859813138,
+      3906094011025498331
+    ],
+    "integer_single_checksums": [
+      15510677864800023816,
+      4178782489248051989
+    ],
+    "sha256_checksums": [
+      "e4636dde66c84a49becd92b8372e4ac04e4ab9e442d611bf9b440a79c2fd4bef",
+      "e4636dde66c84a49becd92b8372e4ac04e4ab9e442d611bf9b440a79c2fd4bef"
+    ]
+  }
+}

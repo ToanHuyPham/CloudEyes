@@ -1,0 +1,18 @@
+name: compute-v1
+profile: compute
+version: 1.0.0
+status: implemented
+compatibility_key:
+  - protocol_fingerprint
+  - python_implementation
+  - python_major_minor
+  - resolved_workers
+rules:
+  - compare only samples with matching protocol fingerprints
+  - compare Python implementations and major-minor versions explicitly
+  - compare multi-core and efficiency metrics only when resolved worker counts match
+  - retain single-core metrics when multi-process execution is unavailable
+limitations:
+  - results include interpreter and standard-library implementation effects
+  - process coordination overhead is part of multi-core throughput
+  - CPU frequency, contention, and thermal state can affect results

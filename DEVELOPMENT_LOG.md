@@ -87,3 +87,30 @@
 - HTTP throughput includes application, TCP, and optional TLS overhead.
 - ICMP loss may not match TCP or HTTP behavior when networks filter ping.
 
+
+
+## 2026-08-06 — Compute Profile v1 completed
+
+### Completed
+
+- Bounded deterministic integer and floating-point CPU workloads.
+- Single-process SHA-256 and zlib compression throughput.
+- Multi-process integer throughput, scaling ratio, and worker efficiency.
+- Warm-up, repetitions, median aggregation, and verification checksums.
+- Default automatic worker cap of four with explicit `--workers` override.
+- Privacy-safe atomic raw evidence JSON.
+- `cloudeyes run compute` CLI support.
+- Metric catalog, protocol version, examples, documentation, and tests.
+
+### Current state
+
+- Phase: Reliable measurements
+- Component: Compute Profile v1
+- Status: Complete
+- Next component: Shared timeout and sample-quality policies
+
+### Explicit limitations
+
+- Results include Python interpreter and standard-library implementation effects.
+- Multi-core throughput includes worker-process coordination overhead.
+- CPU frequency, host contention, and thermal state can change results.

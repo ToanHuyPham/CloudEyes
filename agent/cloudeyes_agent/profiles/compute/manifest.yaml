@@ -1,0 +1,24 @@
+name: compute
+version: 1.0.0
+status: implemented
+implementation: cloudeyes_agent.profiles.compute
+engine: python-standard-library
+execution: offline
+metrics:
+  - compute.integer.single_core.iterations_per_second
+  - compute.integer.multi_core.iterations_per_second
+  - compute.floating_point.single_core.iterations_per_second
+  - compute.sha256.single_core.mib_per_second
+  - compute.compression.single_core.mib_per_second
+  - compute.concurrency.scaling_ratio
+  - compute.concurrency.worker_efficiency_percent
+safety:
+  default_auto_worker_cap: 4
+  maximum_workers: 64
+  bounded_workloads: true
+  external_commands: false
+  temporary_files: false
+limitations:
+  - results include Python interpreter and standard-library implementation effects
+  - multi-core results include process coordination overhead
+  - host contention, CPU frequency, and thermal state can affect results

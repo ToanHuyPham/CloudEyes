@@ -1,0 +1,13 @@
+version: 1.0.0
+repetitions: 3
+warmup_iterations: 5000
+integer_iterations: 350000
+floating_point_iterations: 300000
+sha256_block_bytes: 1048576
+sha256_iterations: 64
+compression_block_bytes: 1048576
+compression_iterations: 16
+compression_level: 6
+workers: 0
+max_auto_workers: 4
+worker_timeout_seconds: 60.0

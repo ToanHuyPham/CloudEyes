@@ -1,0 +1,89 @@
+{
+  "created_at": "2026-08-06T08:00:01+00:00",
+  "machine": {
+    "architecture": "AMD64",
+    "cpu_count": 8,
+    "machine_type": "virtual_machine",
+    "memory_bytes": 17179869184
+  },
+  "measurements": [
+    {
+      "error": null,
+      "finished_at": "2026-08-06T08:00:01+00:00",
+      "measurement_id": "compute-example-compute",
+      "metrics": [
+        {
+          "direction": "higher_is_better",
+          "name": "compute.integer.single_core.iterations_per_second",
+          "unit": "iterations_per_second",
+          "value": 3269504.376328977
+        },
+        {
+          "direction": "higher_is_better",
+          "name": "compute.integer.multi_core.iterations_per_second",
+          "unit": "iterations_per_second",
+          "value": 3813010.641928323
+        },
+        {
+          "direction": "higher_is_better",
+          "name": "compute.floating_point.single_core.iterations_per_second",
+          "unit": "iterations_per_second",
+          "value": 10203266.628749937
+        },
+        {
+          "direction": "higher_is_better",
+          "name": "compute.sha256.single_core.mib_per_second",
+          "unit": "mib_per_second",
+          "value": 1115.7308396350668
+        },
+        {
+          "direction": "higher_is_better",
+          "name": "compute.compression.single_core.mib_per_second",
+          "unit": "mib_per_second",
+          "value": 38.825722479620566
+        },
+        {
+          "direction": "higher_is_better",
+          "name": "compute.concurrency.scaling_ratio",
+          "unit": "ratio",
+          "value": 1.1662350628842402
+        },
+        {
+          "direction": "higher_is_better",
+          "name": "compute.concurrency.worker_efficiency_percent",
+          "unit": "percent",
+          "value": 58.311753144212005
+        }
+      ],
+      "profile": "compute",
+      "protocol_version": "1.0.0",
+      "raw_output_path": "examples/raw/compute-example-compute.json",
+      "started_at": "2026-08-06T08:00:00+00:00",
+      "status": "success",
+      "tool": "python-compute-profile",
+      "tool_version": "3.13.5"
+    }
+  ],
+  "product": {
+    "plan": "general-purpose",
+    "product": "Cloud VM",
+    "region": "southeast-asia",
+    "zone": "zone-1"
+  },
+  "protocol": {
+    "fingerprint": "22328ce59ccba262412ff91ccfbb15c618b6bbadb3c58feab11726208d6f97a0",
+    "profile": "compute",
+    "version": "1.0.0"
+  },
+  "provider": {
+    "country_code": "VN",
+    "name": "Microsoft Azure",
+    "provider_id": "azure"
+  },
+  "quality": {
+    "errors": [],
+    "status": "valid",
+    "warnings": []
+  },
+  "sample_id": "compute-example"
+}

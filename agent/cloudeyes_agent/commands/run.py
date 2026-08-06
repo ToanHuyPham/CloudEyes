@@ -9,6 +9,7 @@ from cloudeyes_core.models import Sample, SampleQualityStatus
 from cloudeyes_core.serialization import dump, dumps
 
 from ..bootstrap import RuntimeDependencyError, ensure_runtime_dependencies
+from ..profiles.compute import ComputeProfileConfig, run_compute_profile
 from ..profiles.general import GeneralProfileConfig, run_general_profile
 from ..profiles.networking import (
     NetworkingProfileConfig,
@@ -126,6 +127,38 @@ def _networking_sample(
     )
 
 
+def _compute_sample(
+    *,
+    quick: bool,
+    workers: int | None,
+    raw_output_dir: Path,
+    provider_id: str | None,
+    provider_name: str | None,
+    country_code: str | None,
+    product: str | None,
+    plan: str | None,
+    region: str | None,
+    zone: str | None,
+) -> Sample:
+    selected_workers = 0 if workers is None else workers
+    config = (
+        ComputeProfileConfig.quick(workers=selected_workers)
+        if quick
+        else replace(ComputeProfileConfig(), workers=selected_workers)
+    )
+    return run_compute_profile(
+        config=config,
+        raw_output_dir=raw_output_dir,
+        provider_id=provider_id,
+        provider_name=provider_name,
+        country_code=country_code,
+        product=product,
+        plan=plan,
+        region=region,
+        zone=zone,
+    )
+
+
 def run_profile(
     *,
     profile: str,
@@ -148,11 +181,16 @@ def run_profile(
     network_scope: str = "public",
     verify_tls: bool = True,
     enable_ping: bool = True,
+    workers: int | None = None,
 ) -> int:
     """Execute one supported profile and emit a Core sample as JSON."""
 
     if profile != "general" and not include_storage:
         print("--no-storage is only valid for the general profile")
+        return 4
+
+    if profile != "compute" and workers is not None:
+        print("--workers is only valid for the compute profile")
         return 4
 
     if install_deps:
@@ -204,6 +242,20 @@ def run_profile(
             network_scope=network_scope,
             verify_tls=verify_tls,
             enable_ping=enable_ping,
+            provider_id=provider_id,
+            provider_name=provider_name,
+            country_code=country_code,
+            product=product,
+            plan=plan,
+            region=region,
+            zone=zone,
+        )
+    elif profile == "compute":
+        raw_output_dir = output.parent / "raw" if output is not None else Path("data/raw")
+        sample = _compute_sample(
+            quick=quick,
+            workers=workers,
+            raw_output_dir=raw_output_dir,
             provider_id=provider_id,
             provider_name=provider_name,
             country_code=country_code,

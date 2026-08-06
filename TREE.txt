@@ -55,6 +55,14 @@ CloudEyes-v1.1-Foundation/
 │   │   │   │   ├── manifest.yaml
 │   │   │   │   ├── profile.py
 │   │   │   │   └── README.md
+│   │   │   ├── compute/
+│   │   │   │   ├── __init__.py
+│   │   │   │   ├── benchmarks.py
+│   │   │   │   ├── config.py
+│   │   │   │   ├── config.yaml
+│   │   │   │   ├── manifest.yaml
+│   │   │   │   ├── profile.py
+│   │   │   │   └── README.md
 │   │   │   ├── containers/
 │   │   │   │   ├── config.yaml
 │   │   │   │   ├── manifest.yaml
@@ -181,6 +189,7 @@ CloudEyes-v1.1-Foundation/
 │   ├── protocol_versions/
 │   │   ├── ai-v1.yaml
 │   │   ├── bigdata-v1.yaml
+│   │   ├── compute-v1.yaml
 │   │   ├── containers-v1.yaml
 │   │   ├── database-v1.yaml
 │   │   ├── general-v1.yaml

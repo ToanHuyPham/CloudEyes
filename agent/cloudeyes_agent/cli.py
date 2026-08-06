@@ -9,6 +9,16 @@ from pathlib import Path
 from .commands import run_inspect, run_profile
 
 
+def _worker_count(value: str) -> int:
+    try:
+        workers = int(value)
+    except ValueError as exc:
+        raise argparse.ArgumentTypeError("workers must be an integer") from exc
+    if not 0 <= workers <= 64:
+        raise argparse.ArgumentTypeError("workers must be between 0 and 64")
+    return workers
+
+
 def build_parser() -> argparse.ArgumentParser:
     """Build the public command-line parser."""
 
@@ -38,7 +48,7 @@ def build_parser() -> argparse.ArgumentParser:
         "run",
         help="run a bounded measurement profile",
     )
-    run_parser.add_argument("profile", choices=("general", "storage", "networking"))
+    run_parser.add_argument("profile", choices=("general", "storage", "networking", "compute"))
     run_parser.add_argument("--output", type=Path, help="optional sample JSON output path")
     run_parser.add_argument("--quick", action="store_true", help="use the CI-sized workload")
     run_parser.add_argument(
@@ -93,6 +103,11 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="skip optional ICMP packet-loss sampling",
     )
+    run_parser.add_argument(
+        "--workers",
+        type=_worker_count,
+        help="compute worker processes; 0 selects the bounded automatic count",
+    )
     return parser
 
 
@@ -124,5 +139,6 @@ def main(argv: Sequence[str] | None = None) -> int:
             network_scope=args.scope,
             verify_tls=not args.insecure,
             enable_ping=not args.no_ping,
+            workers=args.workers,
         )
     raise AssertionError(f"unsupported command: {args.command}")

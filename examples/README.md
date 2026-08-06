@@ -9,3 +9,9 @@ Profile examples:
 - `networking-profile-sample.json`
 - `raw/storage-example-storage.json`
 - `raw/networking-example-networking.json`
+
+
+## Compute Profile v1
+
+- `compute-profile-sample.json` — complete Core Sample example.
+- `raw/compute-example-compute.json` — corresponding privacy-safe raw evidence.

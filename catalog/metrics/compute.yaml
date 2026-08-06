@@ -1,8 +1,44 @@
 name: compute
 version: 1
+status: implemented
 metrics:
   - name: compute.cpu.sha256_mib_per_second
     unit: mib_per_second
     direction: higher_is_better
     source_profile: general:1.0.0
     description: Single-process SHA-256 throughput over a bounded fixed workload.
+  - name: compute.integer.single_core.iterations_per_second
+    unit: iterations_per_second
+    direction: higher_is_better
+    source_profile: compute:1.0.0
+    description: Median throughput of the deterministic scalar integer-mixing kernel.
+  - name: compute.integer.multi_core.iterations_per_second
+    unit: iterations_per_second
+    direction: higher_is_better
+    source_profile: compute:1.0.0
+    description: Median aggregate integer-kernel throughput across resolved worker processes.
+  - name: compute.floating_point.single_core.iterations_per_second
+    unit: iterations_per_second
+    direction: higher_is_better
+    source_profile: compute:1.0.0
+    description: Median throughput of the deterministic scalar floating-point kernel.
+  - name: compute.sha256.single_core.mib_per_second
+    unit: mib_per_second
+    direction: higher_is_better
+    source_profile: compute:1.0.0
+    description: Median single-process SHA-256 throughput over a fixed byte stream.
+  - name: compute.compression.single_core.mib_per_second
+    unit: mib_per_second
+    direction: higher_is_better
+    source_profile: compute:1.0.0
+    description: Median single-process zlib compression throughput over deterministic data.
+  - name: compute.concurrency.scaling_ratio
+    unit: ratio
+    direction: higher_is_better
+    source_profile: compute:1.0.0
+    description: Multi-core integer throughput divided by single-core integer throughput.
+  - name: compute.concurrency.worker_efficiency_percent
+    unit: percent
+    direction: higher_is_better
+    source_profile: compute:1.0.0
+    description: Scaling ratio divided by resolved workers, expressed as a percentage.
