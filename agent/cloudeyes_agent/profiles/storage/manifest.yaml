@@ -1,3 +1,19 @@
 name: storage
-version: 1
-status: planned
+version: 1.0.0
+status: implemented
+engine: python-standard-library
+safety:
+  temporary_files_only: true
+  maximum_file_size_bytes: 1073741824
+  maximum_estimated_io_bytes: 8589934592
+metrics:
+  - storage.sequential_write.fsync_mib_per_second
+  - storage.sequential_read.cached_mib_per_second
+  - storage.random_read.cached_iops
+  - storage.random_write.fsync_batch_iops
+  - storage.fsync.p50_milliseconds
+  - storage.fsync.p95_milliseconds
+limitations:
+  - read measurements may use the operating-system page cache
+  - queue depth is one
+  - results represent only the selected filesystem path

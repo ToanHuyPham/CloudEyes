@@ -1,13 +1,15 @@
 # Roadmap
 
-## Phase 1 — Foundation
+## Phase 1 — Foundation — complete
 Models, schemas, protocol contracts, documentation, and tests.
 
-## Phase 2 — Agent MVP
-Discovery, general profile, raw-output storage, sample creation, and local reports.
+## Phase 2 — Agent MVP — complete
+Discovery, general profile, raw-output storage, sample creation, and local JSON output.
 
-## Phase 3 — Reliable measurements
-Storage, networking, sample quality, warm-up, repetitions, safety, and timeout policies.
+## Phase 3 — Reliable measurements — in progress
+Storage Profile v1 is complete with warm-up, repetitions, safety limits, raw evidence,
+and explicit cache limitations. Networking Profile v1 is next, followed by shared
+timeout and sample-quality policies.
 
 ## Phase 4 — Provider analytics
 Cohorts, compatibility, coverage, consistency, pricing, assessment, and explanation.

@@ -1,0 +1,83 @@
+{
+  "created_at": "2026-08-06T13:30:00+00:00",
+  "machine": {
+    "architecture": "AMD64",
+    "cpu_count": 8,
+    "machine_type": "virtual_machine",
+    "memory_bytes": 17179869184
+  },
+  "measurements": [
+    {
+      "error": null,
+      "finished_at": "2026-08-06T13:30:00+00:00",
+      "measurement_id": "storage-example-storage",
+      "metrics": [
+        {
+          "direction": "higher_is_better",
+          "name": "storage.sequential_write.fsync_mib_per_second",
+          "unit": "mib_per_second",
+          "value": 453.3513631027075
+        },
+        {
+          "direction": "higher_is_better",
+          "name": "storage.sequential_read.cached_mib_per_second",
+          "unit": "mib_per_second",
+          "value": 1148.5970103152392
+        },
+        {
+          "direction": "higher_is_better",
+          "name": "storage.random_read.cached_iops",
+          "unit": "operations_per_second",
+          "value": 564446.0741855482
+        },
+        {
+          "direction": "higher_is_better",
+          "name": "storage.random_write.fsync_batch_iops",
+          "unit": "operations_per_second",
+          "value": 14027.231237544316
+        },
+        {
+          "direction": "lower_is_better",
+          "name": "storage.fsync.p50_milliseconds",
+          "unit": "milliseconds",
+          "value": 0.2916710000135936
+        },
+        {
+          "direction": "lower_is_better",
+          "name": "storage.fsync.p95_milliseconds",
+          "unit": "milliseconds",
+          "value": 0.6735796994689736
+        }
+      ],
+      "profile": "storage",
+      "protocol_version": "1.0.0",
+      "raw_output_path": "examples/raw/storage-example-storage.json",
+      "started_at": "2026-08-06T13:30:00+00:00",
+      "status": "success",
+      "tool": "python-storage-profile",
+      "tool_version": "3.13.5"
+    }
+  ],
+  "product": {
+    "plan": "balanced",
+    "product": "Persistent Disk",
+    "region": "asia-southeast1",
+    "zone": "asia-southeast1-a"
+  },
+  "protocol": {
+    "fingerprint": "6f06fe72cd0e81f0185630c9a8549696f3a36a3f76cf10d93be5d8eec7138a41",
+    "profile": "storage",
+    "version": "1.0.0"
+  },
+  "provider": {
+    "country_code": "VN",
+    "name": "Microsoft Azure",
+    "provider_id": "azure"
+  },
+  "quality": {
+    "errors": [],
+    "status": "valid",
+    "warnings": []
+  },
+  "sample_id": "storage-example"
+}

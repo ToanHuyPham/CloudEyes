@@ -38,7 +38,7 @@ def build_parser() -> argparse.ArgumentParser:
         "run",
         help="run a bounded measurement profile",
     )
-    run_parser.add_argument("profile", choices=("general",))
+    run_parser.add_argument("profile", choices=("general", "storage"))
     run_parser.add_argument("--output", type=Path, help="optional sample JSON output path")
     run_parser.add_argument("--quick", action="store_true", help="use the CI-sized workload")
     run_parser.add_argument(
@@ -47,6 +47,11 @@ def build_parser() -> argparse.ArgumentParser:
         help="skip the temporary-file storage benchmark",
     )
     run_parser.add_argument("--compact", action="store_true", help="emit compact JSON")
+    run_parser.add_argument(
+        "--work-dir",
+        type=Path,
+        help="filesystem path used for temporary benchmark data",
+    )
     run_parser.add_argument(
         "--install-deps",
         action="store_true",
@@ -89,5 +94,6 @@ def main(argv: Sequence[str] | None = None) -> int:
             zone=args.zone,
             install_deps=args.install_deps,
             assume_yes=args.yes,
+            work_dir=args.work_dir,
         )
     raise AssertionError(f"unsupported command: {args.command}")

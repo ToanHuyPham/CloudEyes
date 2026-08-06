@@ -11,3 +11,33 @@ metrics:
     direction: higher_is_better
     source_profile: general:1.0.0
     description: Sequential read throughput of the temporary benchmark file.
+  - name: storage.sequential_write.fsync_mib_per_second
+    unit: mib_per_second
+    direction: higher_is_better
+    source_profile: storage:1.0.0
+    description: Median sequential write throughput with final flush and fsync.
+  - name: storage.sequential_read.cached_mib_per_second
+    unit: mib_per_second
+    direction: higher_is_better
+    source_profile: storage:1.0.0
+    description: Median sequential read throughput that may use the operating-system page cache.
+  - name: storage.random_read.cached_iops
+    unit: operations_per_second
+    direction: higher_is_better
+    source_profile: storage:1.0.0
+    description: Median single-process queue-depth-one random read operations per second.
+  - name: storage.random_write.fsync_batch_iops
+    unit: operations_per_second
+    direction: higher_is_better
+    source_profile: storage:1.0.0
+    description: Median random write operations per second with one final batch fsync.
+  - name: storage.fsync.p50_milliseconds
+    unit: milliseconds
+    direction: lower_is_better
+    source_profile: storage:1.0.0
+    description: Median latency of an individual flush and fsync operation.
+  - name: storage.fsync.p95_milliseconds
+    unit: milliseconds
+    direction: lower_is_better
+    source_profile: storage:1.0.0
+    description: 95th-percentile latency of an individual flush and fsync operation.

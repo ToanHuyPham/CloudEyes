@@ -1,3 +1,19 @@
-name: storage-v1
-version: 1
-status: planned
+name: storage
+version: 1.0.0
+status: implemented
+implementation: cloudeyes_agent.profiles.storage
+workload:
+  temporary_files_only: true
+  default_file_size_bytes: 67108864
+  default_repetitions: 3
+  default_random_block_bytes: 4096
+  default_random_operations: 2048
+  queue_depth: 1
+aggregation:
+  throughput_and_iops: median_across_repetitions
+  fsync_latency: p50_and_p95_across_all_operations
+compatibility:
+  requires_equal_protocol_fingerprint: true
+limitations:
+  - read measurements may use the operating-system page cache
+  - results represent only the selected filesystem path

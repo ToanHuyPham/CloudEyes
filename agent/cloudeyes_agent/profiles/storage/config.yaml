@@ -1,3 +1,11 @@
-name: storage-config
-version: 1
-status: planned
+name: storage
+version: 1.0.0
+file_size_bytes: 67108864
+sequential_block_bytes: 1048576
+random_block_bytes: 4096
+random_operations: 2048
+fsync_operations: 16
+repetitions: 3
+warmup_operations: 16
+fsync_writes: true
+random_seed: 20260806

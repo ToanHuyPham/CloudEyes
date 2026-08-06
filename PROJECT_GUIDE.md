@@ -37,21 +37,23 @@ Agent → Measurement → Evidence → Sample → Validation → Cohort → Asse
 
 ## Current status
 
-- Phase: Foundation
+- Phase: Reliable measurements
 - Version: 0.1.0-dev
-- Functional benchmark logic: Not implemented
+- Completed profiles: General v1 and Storage v1
+- Raw storage evidence: Atomic local JSON
 - Platform: Skeleton only
+- Next component: Networking Profile v1
 
 ## Implementation order
 
-1. Core data models and schemas
-2. Agent discovery
-3. General profile
-4. Sample builder and validator
-5. Storage profile
-6. Networking profile
-7. Cohort builder
-8. Provider aggregation
+1. Core data models and schemas — complete
+2. Agent discovery — complete
+3. General profile — complete
+4. Sample builder and validator — complete
+5. Storage profile — complete
+6. Networking profile — next
+7. Cohort builder — complete foundation, expand after reliable measurements
+8. Provider aggregation — complete foundation, expand after reliable measurements
 9. Rule-based assessment and explanation
 10. JSON and Markdown reports
 11. API and dashboard

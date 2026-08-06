@@ -1,9 +1,5 @@
-"""Storage.
+"""Local storage helpers used by CloudEyes Agent profiles."""
 
-Placeholder for the CloudEyes foundation.
-Implementation will be added with tests and documentation.
-"""
+from .raw_output import load_raw_output, write_raw_output
 
-from __future__ import annotations
-
-__all__: list[str] = []
+__all__ = ["load_raw_output", "write_raw_output"]

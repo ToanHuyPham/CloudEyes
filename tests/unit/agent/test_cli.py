@@ -1,4 +1,4 @@
-"""Tests for the Agent inspect command."""
+"""Tests for the CloudEyes Agent command-line interface."""
 
 from __future__ import annotations
 
@@ -6,7 +6,9 @@ import json
 
 from cloudeyes_agent import cli
 from cloudeyes_agent.commands import inspect as inspect_command
+from cloudeyes_agent.commands import run as run_command
 
+from tests.core_factory import make_sample
 from tests.unit.agent.test_discovery_models import make_result
 
 
@@ -35,10 +37,6 @@ def test_compact_output_has_no_indentation(monkeypatch, capsys) -> None:
 
 
 def test_run_general_writes_core_sample(tmp_path, monkeypatch, capsys) -> None:
-    from cloudeyes_agent.commands import run as run_command
-
-    from tests.core_factory import make_sample
-
     monkeypatch.setattr(run_command, "run_general_profile", lambda **_: make_sample())
     output = tmp_path / "sample.json"
 
@@ -60,3 +58,42 @@ def test_run_general_writes_core_sample(tmp_path, monkeypatch, capsys) -> None:
     assert exit_code == 0
     assert printed == written
     assert written["protocol"]["profile"] == "general"
+
+
+def test_run_storage_writes_sample_and_selects_work_dir(
+    tmp_path,
+    monkeypatch,
+    capsys,
+) -> None:
+    sample = make_sample()
+    captured: dict[str, object] = {}
+
+    def fake_storage_profile(**kwargs):
+        captured.update(kwargs)
+        return sample
+
+    monkeypatch.setattr(run_command, "run_storage_profile", fake_storage_profile)
+    output = tmp_path / "storage-sample.json"
+    work_dir = tmp_path / "benchmark-target"
+
+    exit_code = cli.main(
+        (
+            "run",
+            "storage",
+            "--quick",
+            "--work-dir",
+            str(work_dir),
+            "--output",
+            str(output),
+            "--compact",
+        )
+    )
+
+    printed = json.loads(capsys.readouterr().out)
+    written = json.loads(output.read_text(encoding="utf-8"))
+
+    assert exit_code == 0
+    assert printed == written
+    assert output.exists()
+    assert captured["work_dir"] == work_dir
+    assert captured["raw_output_dir"] == output.parent / "raw"

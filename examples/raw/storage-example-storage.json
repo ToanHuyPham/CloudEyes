@@ -1,0 +1,49 @@
+{
+  "aggregates": {
+    "fsync_p50_milliseconds": 0.2916710000135936,
+    "fsync_p95_milliseconds": 0.6735796994689736,
+    "random_read_iops": 564446.0741855482,
+    "random_write_iops": 14027.231237544316,
+    "sequential_read_mib_per_second": 1148.5970103152392,
+    "sequential_write_mib_per_second": 453.3513631027075
+  },
+  "configuration": {
+    "file_size_bytes": 8388608,
+    "fsync_operations": 3,
+    "fsync_writes": true,
+    "random_block_bytes": 4096,
+    "random_operations": 128,
+    "random_seed": 20260806,
+    "repetitions": 1,
+    "sequential_block_bytes": 1048576,
+    "version": "1.0.0",
+    "warmup_operations": 4
+  },
+  "filesystem": {
+    "free_bytes_before_run": 41808633856,
+    "work_directory": "data"
+  },
+  "limitations": [
+    "sequential read and random read may use operating-system page cache",
+    "results describe the tested filesystem path, not every provider storage product",
+    "random I/O is single-process and queue-depth one"
+  ],
+  "profile": "storage",
+  "protocol_version": "1.0.0",
+  "runs": [
+    {
+      "fsync_latencies_ms": [
+        0.7160139994084602,
+        0.2916710000135936,
+        0.2653759984241333
+      ],
+      "random_read_iops": 564446.0741855482,
+      "random_write_iops": 14027.231237544316,
+      "repetition": 0,
+      "sequential_read_mib_per_second": 1148.5970103152392,
+      "sequential_write_mib_per_second": 453.3513631027075
+    }
+  ],
+  "sample_id": "storage-example",
+  "schema_version": "1.0.0"
+}
