@@ -87,3 +87,14 @@ profile, and protocol identity match exactly across providers. Normalized Pricin
 traceable offline price catalogs, converts selected quotes to USD per hour, and grades value only
 inside compatible priced peer groups. It deliberately does not calculate a universal provider score.
 
+## Backend Ingestion and Validation v1
+
+Verified result bundles can be accepted by the local platform service:
+
+```bash
+export CLOUDEYES_INGEST_TOKEN='replace-with-a-long-random-token'
+cloudeyes-ingestion serve --host 127.0.0.1 --port 8080 --data-dir data/platform
+```
+
+See `docs/backend-ingestion.md` for the request contract, persistence model, and deployment limits.
+

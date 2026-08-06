@@ -1,9 +1,5 @@
-"""ingestion pipeline.
+"""Compatibility export for Backend Ingestion v1."""
 
-Placeholder for the CloudEyes foundation.
-Implementation will be added with tests and documentation.
-"""
+from cloudeyes_platform.ingestion import MEDIA_TYPE, IngestionPipeline
 
-from __future__ import annotations
-
-__all__: list[str] = []
+__all__ = ["MEDIA_TYPE", "IngestionPipeline"]

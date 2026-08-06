@@ -309,3 +309,28 @@
   are platform responsibilities outside this module.
 - Anonymous mode must be explicitly selected and accepted by the configured collector.
 
+## 2026-08-06 — Backend Ingestion and Validation v1 completed
+
+### Completed
+
+- Added `cloudeyes-ingestion serve` with a loopback-safe default bind and bearer-token authentication.
+- Added bounded request streaming with a 128 MiB limit and exact CloudEyes bundle media type.
+- Re-verified bundle structure, checksums, manifest identity, and canonical sample semantics at the server boundary.
+- Added SHA-256 idempotency, deterministic submission identities, whole-bundle deduplication, and duplicate-sample rejection.
+- Added SQLite persistence for submissions, canonical samples, and evidence indexes.
+- Added immutable content-addressed bundle storage and metadata-only quarantine by default.
+- Added accepted/duplicate receipt schema, health reporting, documentation, unit tests, schema tests, and loopback HTTP integration tests.
+
+### Current state
+
+- Phase: Platform
+- Component: Backend Ingestion and Validation v1
+- Status: Complete
+- Next component: Reporting and Dashboard v1
+
+### Explicit limitations
+
+- The v1 service is single-node and uses local SQLite plus filesystem storage.
+- The built-in server does not terminate TLS and should remain on loopback or behind a TLS reverse proxy.
+- Background aggregation workers, moderation, public read APIs, and dashboards are not part of this module.
+

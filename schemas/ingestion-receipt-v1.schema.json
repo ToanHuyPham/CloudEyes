@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cloudeyes.dev/schemas/ingestion-receipt-v1.schema.json",
+  "title": "CloudEyes Ingestion Receipt v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "bundle_id",
+    "bundle_sha256",
+    "duplicate_of",
+    "file_count",
+    "received_at",
+    "sample_count",
+    "schema_version",
+    "status",
+    "submission_id",
+    "warnings"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "submission_id": {
+      "type": "string",
+      "pattern": "^submission-[0-9a-f]{24}$"
+    },
+    "status": {"enum": ["accepted", "duplicate"]},
+    "received_at": {"type": "string", "format": "date-time"},
+    "bundle_id": {"type": "string", "minLength": 1, "maxLength": 256},
+    "bundle_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "sample_count": {"type": "integer", "minimum": 1, "maximum": 1000},
+    "file_count": {"type": "integer", "minimum": 1, "maximum": 2100},
+    "warnings": {
+      "type": "array",
+      "items": {"type": "string"},
+      "uniqueItems": true
+    },
+    "duplicate_of": {
+      "type": ["string", "null"],
+      "pattern": "^submission-[0-9a-f]{24}$"
+    }
+  }
+}

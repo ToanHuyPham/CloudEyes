@@ -1,9 +1,5 @@
-"""api errors.
+"""Compatibility exports for client-safe platform errors."""
 
-Placeholder for the CloudEyes foundation.
-Implementation will be added with tests and documentation.
-"""
+from cloudeyes_platform.errors import ConfigurationError, IngestionError
 
-from __future__ import annotations
-
-__all__: list[str] = []
+__all__ = ["ConfigurationError", "IngestionError"]

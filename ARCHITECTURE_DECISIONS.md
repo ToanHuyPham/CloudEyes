@@ -144,3 +144,19 @@ and sends the bundle digest as an idempotency key. Plain HTTP is restricted to e
 private or loopback test endpoints. Receipts contain endpoint, status, bundle identity, and response
 digest, but never credentials or response bodies.
 
+## ADR-020 — Ingestion repeats verification and persists immutable bundle evidence
+
+The central platform never trusts client-side verification. Every request must declare the exact
+CloudEyes bundle media type, bundle ID, SHA-256 digest, and an idempotency key equal to that digest.
+The server bounds the request body before reading it, streams it to private temporary storage, and
+runs the complete bundle verifier again before persistence. Whole-bundle replays return the original
+submission identity; a different bundle that reuses an existing sample ID is rejected rather than
+replacing or silently merging evidence.
+
+Accepted ZIP bytes are stored immutably under their content digest. SQLite records submission,
+canonical sample, and evidence indexes in a single transaction with unique constraints on bundle
+digests, idempotency keys, and sample IDs. Invalid bundle metadata is quarantined without retaining
+authorization headers. Rejected payload bytes are not retained by default because unverified archives
+may contain sensitive material. Backend Ingestion v1 remains single-node; distributed queues, object
+storage, moderation, aggregation workers, and public APIs are separate platform stages.
+

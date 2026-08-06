@@ -1,9 +1,5 @@
-"""repository database.
+"""Compatibility export for SQLite ingestion persistence."""
 
-Placeholder for the CloudEyes foundation.
-Implementation will be added with tests and documentation.
-"""
+from cloudeyes_platform.repository import IngestionRepository
 
-from __future__ import annotations
-
-__all__: list[str] = []
+__all__ = ["IngestionRepository"]

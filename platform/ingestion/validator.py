@@ -1,9 +1,5 @@
-"""ingestion validator.
+"""Bundle verification remains authoritative at the ingestion boundary."""
 
-Placeholder for the CloudEyes foundation.
-Implementation will be added with tests and documentation.
-"""
+from cloudeyes_agent.bundle.verification import BundleVerificationError, verify_bundle
 
-from __future__ import annotations
-
-__all__: list[str] = []
+__all__ = ["BundleVerificationError", "verify_bundle"]

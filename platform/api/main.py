@@ -1,9 +1,5 @@
-"""api main.
+"""Compatibility export for the implemented CloudEyes ingestion HTTP server."""
 
-Placeholder for the CloudEyes foundation.
-Implementation will be added with tests and documentation.
-"""
+from cloudeyes_platform.server import IngestionApplication, create_server, handler_class
 
-from __future__ import annotations
-
-__all__: list[str] = []
+__all__ = ["IngestionApplication", "create_server", "handler_class"]

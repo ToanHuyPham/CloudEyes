@@ -1,9 +1,6 @@
-"""api dependencies.
+"""Compatibility exports for ingestion configuration and application state."""
 
-Placeholder for the CloudEyes foundation.
-Implementation will be added with tests and documentation.
-"""
+from cloudeyes_platform.config import IngestionConfig
+from cloudeyes_platform.server import TokenAuthenticator
 
-from __future__ import annotations
-
-__all__: list[str] = []
+__all__ = ["IngestionConfig", "TokenAuthenticator"]

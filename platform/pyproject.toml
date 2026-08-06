@@ -3,17 +3,28 @@ requires = ["setuptools>=69", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "cloudeyes"
+name = "cloudeyes-platform"
 version = "0.1.0.dev0"
-description = "Evidence-based cloud provider assessment framework"
+description = "CloudEyes bundle ingestion and persistence service"
 requires-python = ">=3.11"
 readme = "README.md"
 license = { text = "Apache-2.0" }
 dependencies = []
 
+[project.scripts]
+cloudeyes-ingestion = "cloudeyes_platform.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["cloudeyes_platform*"]
+
 [tool.pytest.ini_options]
-testpaths = ["tests"]
+testpaths = ["../tests"]
+pythonpath = ["../core", "../agent", "."]
 
 [tool.ruff]
 line-length = 100
 target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]

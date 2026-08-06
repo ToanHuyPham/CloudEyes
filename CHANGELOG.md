@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Added Backend Ingestion and Validation v1 with bounded HTTP uploads, repeated bundle verification, SHA-256 idempotency, duplicate-sample rejection, and privacy-conscious quarantine metadata.
+- Added SQLite submission/sample/evidence persistence, immutable content-addressed bundle storage, bearer-token authentication, health reporting, receipt schema, CLI service entry point, documentation, and tests.
 - Added Result Bundle and Submission v1 with canonical sample packaging, raw-evidence redaction, per-file SHA-256 manifests, atomic ZIP creation, and offline verification.
 - Added explicit authenticated or anonymous submission, HTTPS-by-default endpoint policy, private-only HTTP testing, redirect refusal, response limits, idempotency headers, receipts, CLI commands, schemas, documentation, and tests.
 - Added Database Profile v1 with bounded temporary SQLite connection, point-read, durable insert/update, and concurrent mixed workloads.

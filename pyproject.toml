@@ -20,18 +20,19 @@ dev = [
 
 [project.scripts]
 cloudeyes = "cloudeyes_agent.cli:main"
+cloudeyes-ingestion = "cloudeyes_platform.cli:main"
 
 [tool.setuptools.package-dir]
 cloudeyes_core = "core/cloudeyes_core"
 cloudeyes_agent = "agent/cloudeyes_agent"
 
 [tool.setuptools.packages.find]
-where = ["core", "agent"]
-include = ["cloudeyes_core*", "cloudeyes_agent*"]
+where = ["core", "agent", "platform"]
+include = ["cloudeyes_core*", "cloudeyes_agent*", "cloudeyes_platform*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-pythonpath = ["core", "agent"]
+pythonpath = ["core", "agent", "platform"]
 addopts = "-q"
 
 [tool.ruff]

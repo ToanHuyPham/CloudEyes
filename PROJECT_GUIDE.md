@@ -41,7 +41,7 @@ Agent → Measurement → Evidence → Sample → Validation → Bundle → Subm
 - Version: 0.1.0-dev
 - Completed profiles: General v1, Storage v1, Networking v1, Compute v1, Web v1, and Database v1
 - Raw storage evidence: Atomic local JSON
-- Platform: Skeleton only
+- Platform: Backend Ingestion and Validation v1 complete; workers and dashboard pending
 - Shared measurement reliability policies: complete
 - Process isolation and cooperative cancellation: complete
 - Provider Analytics v1: complete
@@ -50,7 +50,8 @@ Agent → Measurement → Evidence → Sample → Validation → Bundle → Subm
 - Web Profile v1: complete
 - Database Profile v1: complete
 - Result Bundle and Submission v1: complete
-- Next component: Backend Ingestion and Validation v1
+- Backend Ingestion and Validation v1: complete
+- Next component: Reporting and Dashboard v1
 
 ## Implementation order
 
@@ -70,8 +71,8 @@ Agent → Measurement → Evidence → Sample → Validation → Bundle → Subm
 14. Web Profile v1 — complete
 15. Database Profile v1 — complete
 16. Result Bundle and Submission v1 — complete
-17. Backend Ingestion and Validation v1
-18. API and dashboard
+17. Backend Ingestion and Validation v1 — complete
+18. Reporting and Dashboard v1
 
 ## Daily update rule
 

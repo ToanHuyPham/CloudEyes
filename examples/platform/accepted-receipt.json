@@ -1,0 +1,12 @@
+{
+  "bundle_id": "bundle-0123456789abcdef01234567",
+  "bundle_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+  "duplicate_of": null,
+  "file_count": 2,
+  "received_at": "2026-08-06T12:00:00+00:00",
+  "sample_count": 1,
+  "schema_version": "1.0.0",
+  "status": "accepted",
+  "submission_id": "submission-000000000000000000000000",
+  "warnings": []
+}
