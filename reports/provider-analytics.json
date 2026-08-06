@@ -1,0 +1,1204 @@
+{
+  "analyzed_sample_count": 4,
+  "excluded_sample_ids": [],
+  "generated_at": "2026-08-06T09:39:32.462937+00:00",
+  "provider_count": 3,
+  "providers": [
+    {
+      "analytics_id": "provider-analytics-c788700a35f3cbbf",
+      "evidence": {
+        "cohort_count": 2,
+        "cohorts": [
+          {
+            "cohort_id": "cohort-07049731e59bf16a",
+            "cohort_key": "azure|vn|cloud vm|general-purpose|southeast-asia|zone-1|virtual_machine|8|17179869184|amd64|compute|1.0.0|22328ce59ccba262412ff91ccfbb15c618b6bbadb3c58feab11726208d6f97a0",
+            "confidence": {
+              "coverage": "high",
+              "measurement": "high",
+              "statistical": "low"
+            },
+            "coverage": {
+              "available_metrics": [
+                "compute.compression.single_core.mib_per_second",
+                "compute.concurrency.scaling_ratio",
+                "compute.concurrency.worker_efficiency_percent",
+                "compute.floating_point.single_core.iterations_per_second",
+                "compute.integer.multi_core.iterations_per_second",
+                "compute.integer.single_core.iterations_per_second",
+                "compute.sha256.single_core.mib_per_second"
+              ],
+              "expected_metrics": [],
+              "gaps": [
+                "insufficient_samples",
+                "short_observation_period"
+              ],
+              "observation_days": 1,
+              "plans": [
+                "general-purpose"
+              ],
+              "products": [
+                "Cloud VM"
+              ],
+              "regions": [
+                "southeast-asia"
+              ],
+              "sample_count": 1,
+              "zones": [
+                "zone-1"
+              ]
+            },
+            "ended_at": "2026-08-06T08:00:01+00:00",
+            "metrics": [
+              {
+                "contributing_samples": 1,
+                "direction": "higher_is_better",
+                "name": "compute.compression.single_core.mib_per_second",
+                "raw_observations": 1,
+                "statistics": {
+                  "coefficient_of_variation": 0.0,
+                  "count": 1,
+                  "maximum": 38.825722479620566,
+                  "mean": 38.825722479620566,
+                  "median": 38.825722479620566,
+                  "minimum": 38.825722479620566,
+                  "p10": 38.825722479620566,
+                  "p90": 38.825722479620566,
+                  "standard_deviation": 0.0
+                },
+                "unit": "mib_per_second"
+              },
+              {
+                "contributing_samples": 1,
+                "direction": "higher_is_better",
+                "name": "compute.concurrency.scaling_ratio",
+                "raw_observations": 1,
+                "statistics": {
+                  "coefficient_of_variation": 0.0,
+                  "count": 1,
+                  "maximum": 1.1662350628842402,
+                  "mean": 1.1662350628842402,
+                  "median": 1.1662350628842402,
+                  "minimum": 1.1662350628842402,
+                  "p10": 1.1662350628842402,
+                  "p90": 1.1662350628842402,
+                  "standard_deviation": 0.0
+                },
+                "unit": "ratio"
+              },
+              {
+                "contributing_samples": 1,
+                "direction": "higher_is_better",
+                "name": "compute.concurrency.worker_efficiency_percent",
+                "raw_observations": 1,
+                "statistics": {
+                  "coefficient_of_variation": 0.0,
+                  "count": 1,
+                  "maximum": 58.311753144212005,
+                  "mean": 58.311753144212005,
+                  "median": 58.311753144212005,
+                  "minimum": 58.311753144212005,
+                  "p10": 58.311753144212005,
+                  "p90": 58.311753144212005,
+                  "standard_deviation": 0.0
+                },
+                "unit": "percent"
+              },
+              {
+                "contributing_samples": 1,
+                "direction": "higher_is_better",
+                "name": "compute.floating_point.single_core.iterations_per_second",
+                "raw_observations": 1,
+                "statistics": {
+                  "coefficient_of_variation": 0.0,
+                  "count": 1,
+                  "maximum": 10203266.628749937,
+                  "mean": 10203266.628749937,
+                  "median": 10203266.628749937,
+                  "minimum": 10203266.628749937,
+                  "p10": 10203266.628749937,
+                  "p90": 10203266.628749937,
+                  "standard_deviation": 0.0
+                },
+                "unit": "iterations_per_second"
+              },
+              {
+                "contributing_samples": 1,
+                "direction": "higher_is_better",
+                "name": "compute.integer.multi_core.iterations_per_second",
+                "raw_observations": 1,
+                "statistics": {
+                  "coefficient_of_variation": 0.0,
+                  "count": 1,
+                  "maximum": 3813010.641928323,
+                  "mean": 3813010.641928323,
+                  "median": 3813010.641928323,
+                  "minimum": 3813010.641928323,
+                  "p10": 3813010.641928323,
+                  "p90": 3813010.641928323,
+                  "standard_deviation": 0.0
+                },
+                "unit": "iterations_per_second"
+              },
+              {
+                "contributing_samples": 1,
+                "direction": "higher_is_better",
+                "name": "compute.integer.single_core.iterations_per_second",
+                "raw_observations": 1,
+                "statistics": {
+                  "coefficient_of_variation": 0.0,
+                  "count": 1,
+                  "maximum": 3269504.376328977,
+                  "mean": 3269504.376328977,
+                  "median": 3269504.376328977,
+                  "minimum": 3269504.376328977,
+                  "p10": 3269504.376328977,
+                  "p90": 3269504.376328977,
+                  "standard_deviation": 0.0
+                },
+                "unit": "iterations_per_second"
+              },
+              {
+                "contributing_samples": 1,
+                "direction": "higher_is_better",
+                "name": "compute.sha256.single_core.mib_per_second",
+                "raw_observations": 1,
+                "statistics": {
+                  "coefficient_of_variation": 0.0,
+                  "count": 1,
+                  "maximum": 1115.7308396350668,
+                  "mean": 1115.7308396350668,
+                  "median": 1115.7308396350668,
+                  "minimum": 1115.7308396350668,
+                  "p10": 1115.7308396350668,
+                  "p90": 1115.7308396350668,
+                  "standard_deviation": 0.0
+                },
+                "unit": "mib_per_second"
+              }
+            ],
+            "protocol": {
+              "fingerprint": "22328ce59ccba262412ff91ccfbb15c618b6bbadb3c58feab11726208d6f97a0",
+              "profile": "compute",
+              "version": "1.0.0"
+            },
+            "sample_count": 1,
+            "sample_ids": [
+              "compute-example"
+            ],
+            "started_at": "2026-08-06T08:00:01+00:00"
+          },
+          {
+            "cohort_id": "cohort-871d3af8c7e9c0e8",
+            "cohort_key": "azure|vn|persistent disk|balanced|asia-southeast1|asia-southeast1-a|virtual_machine|8|17179869184|amd64|storage|1.0.0|6f06fe72cd0e81f0185630c9a8549696f3a36a3f76cf10d93be5d8eec7138a41",
+            "confidence": {
+              "coverage": "high",
+              "measurement": "high",
+              "statistical": "low"
+            },
+            "coverage": {
+              "available_metrics": [
+                "storage.fsync.p50_milliseconds",
+                "storage.fsync.p95_milliseconds",
+                "storage.random_read.cached_iops",
+                "storage.random_write.fsync_batch_iops",
+                "storage.sequential_read.cached_mib_per_second",
+                "storage.sequential_write.fsync_mib_per_second"
+              ],
+              "expected_metrics": [],
+              "gaps": [
+                "insufficient_samples",
+                "short_observation_period"
+              ],
+              "observation_days": 1,
+              "plans": [
+                "balanced"
+              ],
+              "products": [
+                "Persistent Disk"
+              ],
+              "regions": [
+                "asia-southeast1"
+              ],
+              "sample_count": 1,
+              "zones": [
+                "asia-southeast1-a"
+              ]
+            },
+            "ended_at": "2026-08-06T13:30:00+00:00",
+            "metrics": [
+              {
+                "contributing_samples": 1,
+                "direction": "lower_is_better",
+                "name": "storage.fsync.p50_milliseconds",
+                "raw_observations": 1,
+                "statistics": {
+                  "coefficient_of_variation": 0.0,
+                  "count": 1,
+                  "maximum": 0.2916710000135936,
+                  "mean": 0.2916710000135936,
+                  "median": 0.2916710000135936,
+                  "minimum": 0.2916710000135936,
+                  "p10": 0.2916710000135936,
+                  "p90": 0.2916710000135936,
+                  "standard_deviation": 0.0
+                },
+                "unit": "milliseconds"
+              },
+              {
+                "contributing_samples": 1,
+                "direction": "lower_is_better",
+                "name": "storage.fsync.p95_milliseconds",
+                "raw_observations": 1,
+                "statistics": {
+                  "coefficient_of_variation": 0.0,
+                  "count": 1,
+                  "maximum": 0.6735796994689736,
+                  "mean": 0.6735796994689736,
+                  "median": 0.6735796994689736,
+                  "minimum": 0.6735796994689736,
+                  "p10": 0.6735796994689736,
+                  "p90": 0.6735796994689736,
+                  "standard_deviation": 0.0
+                },
+                "unit": "milliseconds"
+              },
+              {
+                "contributing_samples": 1,
+                "direction": "higher_is_better",
+                "name": "storage.random_read.cached_iops",
+                "raw_observations": 1,
+                "statistics": {
+                  "coefficient_of_variation": 0.0,
+                  "count": 1,
+                  "maximum": 564446.0741855482,
+                  "mean": 564446.0741855482,
+                  "median": 564446.0741855482,
+                  "minimum": 564446.0741855482,
+                  "p10": 564446.0741855482,
+                  "p90": 564446.0741855482,
+                  "standard_deviation": 0.0
+                },
+                "unit": "operations_per_second"
+              },
+              {
+                "contributing_samples": 1,
+                "direction": "higher_is_better",
+                "name": "storage.random_write.fsync_batch_iops",
+                "raw_observations": 1,
+                "statistics": {
+                  "coefficient_of_variation": 0.0,
+                  "count": 1,
+                  "maximum": 14027.231237544316,
+                  "mean": 14027.231237544316,
+                  "median": 14027.231237544316,
+                  "minimum": 14027.231237544316,
+                  "p10": 14027.231237544316,
+                  "p90": 14027.231237544316,
+                  "standard_deviation": 0.0
+                },
+                "unit": "operations_per_second"
+              },
+              {
+                "contributing_samples": 1,
+                "direction": "higher_is_better",
+                "name": "storage.sequential_read.cached_mib_per_second",
+                "raw_observations": 1,
+                "statistics": {
+                  "coefficient_of_variation": 0.0,
+                  "count": 1,
+                  "maximum": 1148.5970103152392,
+                  "mean": 1148.5970103152392,
+                  "median": 1148.5970103152392,
+                  "minimum": 1148.5970103152392,
+                  "p10": 1148.5970103152392,
+                  "p90": 1148.5970103152392,
+                  "standard_deviation": 0.0
+                },
+                "unit": "mib_per_second"
+              },
+              {
+                "contributing_samples": 1,
+                "direction": "higher_is_better",
+                "name": "storage.sequential_write.fsync_mib_per_second",
+                "raw_observations": 1,
+                "statistics": {
+                  "coefficient_of_variation": 0.0,
+                  "count": 1,
+                  "maximum": 453.3513631027075,
+                  "mean": 453.3513631027075,
+                  "median": 453.3513631027075,
+                  "minimum": 453.3513631027075,
+                  "p10": 453.3513631027075,
+                  "p90": 453.3513631027075,
+                  "standard_deviation": 0.0
+                },
+                "unit": "mib_per_second"
+              }
+            ],
+            "protocol": {
+              "fingerprint": "6f06fe72cd0e81f0185630c9a8549696f3a36a3f76cf10d93be5d8eec7138a41",
+              "profile": "storage",
+              "version": "1.0.0"
+            },
+            "sample_count": 1,
+            "sample_ids": [
+              "storage-example"
+            ],
+            "started_at": "2026-08-06T13:30:00+00:00"
+          }
+        ],
+        "gaps": [
+          "insufficient_samples",
+          "short_observation_period"
+        ],
+        "generated_at": "2026-08-06T09:39:32.462937+00:00",
+        "overall_confidence": "low",
+        "provider_id": "azure",
+        "provider_name": "Microsoft Azure",
+        "report_id": "provider-report-e36e750cbec92029",
+        "schema_version": "1.0.0",
+        "total_samples": 2
+      },
+      "explanations": [
+        {
+          "code": "evidence_low",
+          "evidence_refs": [
+            "cohort-07049731e59bf16a",
+            "cohort-871d3af8c7e9c0e8"
+          ],
+          "kind": "limitation",
+          "message": "Evidence confidence is low; mean expected-metric coverage is 100.0%.",
+          "rule_id": "evidence.minimum_confidence.v1"
+        },
+        {
+          "code": "consistency_low",
+          "evidence_refs": [
+            "cohort-07049731e59bf16a",
+            "cohort-871d3af8c7e9c0e8"
+          ],
+          "kind": "limitation",
+          "message": "No metric had enough finite variation data for a stable consistency result.",
+          "rule_id": "consistency.cv.v1"
+        },
+        {
+          "code": "reliability_high",
+          "evidence_refs": [
+            "compute-example",
+            "storage-example"
+          ],
+          "kind": "strength",
+          "message": "Measurement completion was high at 100.0%, with no sample warnings or errors.",
+          "rule_id": "reliability.measurement_completion.v1"
+        },
+        {
+          "code": "performance_not_assessed",
+          "evidence_refs": [
+            "cohort-07049731e59bf16a",
+            "cohort-871d3af8c7e9c0e8"
+          ],
+          "kind": "limitation",
+          "message": "Performance was measured but not graded because no compatible peer baseline was supplied.",
+          "rule_id": "performance.compatible_peer_required.v1"
+        },
+        {
+          "code": "value_not_assessed",
+          "evidence_refs": [],
+          "kind": "limitation",
+          "message": "Value was not assessed because the samples do not contain normalized pricing evidence.",
+          "rule_id": "value.normalized_price_required.v1"
+        },
+        {
+          "code": "coverage_gap:insufficient_samples",
+          "evidence_refs": [
+            "cohort-07049731e59bf16a",
+            "cohort-871d3af8c7e9c0e8"
+          ],
+          "kind": "limitation",
+          "message": "Evidence gap recorded: insufficient_samples.",
+          "rule_id": "explanation.coverage_gap.v1"
+        },
+        {
+          "code": "coverage_gap:short_observation_period",
+          "evidence_refs": [
+            "cohort-07049731e59bf16a",
+            "cohort-871d3af8c7e9c0e8"
+          ],
+          "kind": "limitation",
+          "message": "Evidence gap recorded: short_observation_period.",
+          "rule_id": "explanation.coverage_gap.v1"
+        },
+        {
+          "code": "universal_score_not_calculated",
+          "evidence_refs": [
+            "provider-report-e36e750cbec92029"
+          ],
+          "kind": "observation",
+          "message": "CloudEyes reports independent dimensions and does not calculate a universal provider score.",
+          "rule_id": "explanation.no_universal_score.v1"
+        }
+      ],
+      "generated_at": "2026-08-06T09:39:32.462937+00:00",
+      "provider_id": "azure",
+      "provider_name": "Microsoft Azure",
+      "schema_version": "1.0.0",
+      "scorecard": {
+        "cohort_count": 2,
+        "coverage_ratio": 1.0,
+        "dimensions": [
+          {
+            "dimension": "evidence",
+            "evidence_refs": [
+              "cohort-07049731e59bf16a",
+              "cohort-871d3af8c7e9c0e8"
+            ],
+            "level": "low",
+            "limitations": [
+              "insufficient_samples",
+              "short_observation_period"
+            ],
+            "rule_id": "evidence.minimum_confidence.v1",
+            "status": "assessed",
+            "summary": "Evidence confidence is low; mean expected-metric coverage is 100.0%."
+          },
+          {
+            "dimension": "consistency",
+            "evidence_refs": [
+              "cohort-07049731e59bf16a",
+              "cohort-871d3af8c7e9c0e8"
+            ],
+            "level": "low",
+            "limitations": [
+              "coefficient_of_variation_unavailable"
+            ],
+            "rule_id": "consistency.cv.v1",
+            "status": "assessed",
+            "summary": "No metric had enough finite variation data for a stable consistency result."
+          },
+          {
+            "dimension": "reliability",
+            "evidence_refs": [
+              "compute-example",
+              "storage-example"
+            ],
+            "level": "high",
+            "limitations": [],
+            "rule_id": "reliability.measurement_completion.v1",
+            "status": "assessed",
+            "summary": "Measurement completion was high at 100.0%, with no sample warnings or errors."
+          },
+          {
+            "dimension": "performance",
+            "evidence_refs": [
+              "cohort-07049731e59bf16a",
+              "cohort-871d3af8c7e9c0e8"
+            ],
+            "level": null,
+            "limitations": [
+              "compatible_peer_baseline_required"
+            ],
+            "rule_id": "performance.compatible_peer_required.v1",
+            "status": "not_assessed",
+            "summary": "Performance was measured but not graded because no compatible peer baseline was supplied."
+          },
+          {
+            "dimension": "value",
+            "evidence_refs": [],
+            "level": null,
+            "limitations": [
+              "normalized_pricing_required"
+            ],
+            "rule_id": "value.normalized_price_required.v1",
+            "status": "not_assessed",
+            "summary": "Value was not assessed because the samples do not contain normalized pricing evidence."
+          }
+        ],
+        "profile_count": 2,
+        "profiles": [
+          "compute",
+          "storage"
+        ],
+        "sample_count": 2,
+        "successful_measurement_ratio": 1.0
+      }
+    },
+    {
+      "analytics_id": "provider-analytics-496b64aa10518df6",
+      "evidence": {
+        "cohort_count": 1,
+        "cohorts": [
+          {
+            "cohort_id": "cohort-cf93abc552c6ada5",
+            "cohort_key": "example-cloud|vn|cloud server|2-vcpu-8gb|hanoi|zone-1|virtual_machine|4|8589934592|amd64|general|1.0.0|f8f41497836a1587563843298bb304f3150f63815ba833fa1a21368273946e10",
+            "confidence": {
+              "coverage": "high",
+              "measurement": "high",
+              "statistical": "low"
+            },
+            "coverage": {
+              "available_metrics": [
+                "compute.cpu.sha256_mib_per_second",
+                "memory.copy.mib_per_second",
+                "storage.sequential_read.mib_per_second",
+                "storage.sequential_write.mib_per_second"
+              ],
+              "expected_metrics": [],
+              "gaps": [
+                "insufficient_samples",
+                "short_observation_period"
+              ],
+              "observation_days": 1,
+              "plans": [
+                "2-vCPU-8GB"
+              ],
+              "products": [
+                "Cloud Server"
+              ],
+              "regions": [
+                "hanoi"
+              ],
+              "sample_count": 1,
+              "zones": [
+                "zone-1"
+              ]
+            },
+            "ended_at": "2026-08-06T13:00:00+07:00",
+            "metrics": [
+              {
+                "contributing_samples": 1,
+                "direction": "higher_is_better",
+                "name": "compute.cpu.sha256_mib_per_second",
+                "raw_observations": 1,
+                "statistics": {
+                  "coefficient_of_variation": 0.0,
+                  "count": 1,
+                  "maximum": 512.5,
+                  "mean": 512.5,
+                  "median": 512.5,
+                  "minimum": 512.5,
+                  "p10": 512.5,
+                  "p90": 512.5,
+                  "standard_deviation": 0.0
+                },
+                "unit": "mib_per_second"
+              },
+              {
+                "contributing_samples": 1,
+                "direction": "higher_is_better",
+                "name": "memory.copy.mib_per_second",
+                "raw_observations": 1,
+                "statistics": {
+                  "coefficient_of_variation": 0.0,
+                  "count": 1,
+                  "maximum": 8450.25,
+                  "mean": 8450.25,
+                  "median": 8450.25,
+                  "minimum": 8450.25,
+                  "p10": 8450.25,
+                  "p90": 8450.25,
+                  "standard_deviation": 0.0
+                },
+                "unit": "mib_per_second"
+              },
+              {
+                "contributing_samples": 1,
+                "direction": "higher_is_better",
+                "name": "storage.sequential_read.mib_per_second",
+                "raw_observations": 1,
+                "statistics": {
+                  "coefficient_of_variation": 0.0,
+                  "count": 1,
+                  "maximum": 1250.75,
+                  "mean": 1250.75,
+                  "median": 1250.75,
+                  "minimum": 1250.75,
+                  "p10": 1250.75,
+                  "p90": 1250.75,
+                  "standard_deviation": 0.0
+                },
+                "unit": "mib_per_second"
+              },
+              {
+                "contributing_samples": 1,
+                "direction": "higher_is_better",
+                "name": "storage.sequential_write.mib_per_second",
+                "raw_observations": 1,
+                "statistics": {
+                  "coefficient_of_variation": 0.0,
+                  "count": 1,
+                  "maximum": 420.5,
+                  "mean": 420.5,
+                  "median": 420.5,
+                  "minimum": 420.5,
+                  "p10": 420.5,
+                  "p90": 420.5,
+                  "standard_deviation": 0.0
+                },
+                "unit": "mib_per_second"
+              }
+            ],
+            "protocol": {
+              "fingerprint": "f8f41497836a1587563843298bb304f3150f63815ba833fa1a21368273946e10",
+              "profile": "general",
+              "version": "1.0.0"
+            },
+            "sample_count": 1,
+            "sample_ids": [
+              "general-example"
+            ],
+            "started_at": "2026-08-06T13:00:00+07:00"
+          }
+        ],
+        "gaps": [
+          "insufficient_samples",
+          "short_observation_period"
+        ],
+        "generated_at": "2026-08-06T09:39:32.462937+00:00",
+        "overall_confidence": "low",
+        "provider_id": "example-cloud",
+        "provider_name": "Example Cloud",
+        "report_id": "provider-report-7ff3c6234c7e9779",
+        "schema_version": "1.0.0",
+        "total_samples": 1
+      },
+      "explanations": [
+        {
+          "code": "evidence_low",
+          "evidence_refs": [
+            "cohort-cf93abc552c6ada5"
+          ],
+          "kind": "limitation",
+          "message": "Evidence confidence is low; mean expected-metric coverage is 100.0%.",
+          "rule_id": "evidence.minimum_confidence.v1"
+        },
+        {
+          "code": "consistency_low",
+          "evidence_refs": [
+            "cohort-cf93abc552c6ada5"
+          ],
+          "kind": "limitation",
+          "message": "No metric had enough finite variation data for a stable consistency result.",
+          "rule_id": "consistency.cv.v1"
+        },
+        {
+          "code": "reliability_high",
+          "evidence_refs": [
+            "general-example"
+          ],
+          "kind": "strength",
+          "message": "Measurement completion was high at 100.0%, with no sample warnings or errors.",
+          "rule_id": "reliability.measurement_completion.v1"
+        },
+        {
+          "code": "performance_not_assessed",
+          "evidence_refs": [
+            "cohort-cf93abc552c6ada5"
+          ],
+          "kind": "limitation",
+          "message": "Performance was measured but not graded because no compatible peer baseline was supplied.",
+          "rule_id": "performance.compatible_peer_required.v1"
+        },
+        {
+          "code": "value_not_assessed",
+          "evidence_refs": [],
+          "kind": "limitation",
+          "message": "Value was not assessed because the samples do not contain normalized pricing evidence.",
+          "rule_id": "value.normalized_price_required.v1"
+        },
+        {
+          "code": "coverage_gap:insufficient_samples",
+          "evidence_refs": [
+            "cohort-cf93abc552c6ada5"
+          ],
+          "kind": "limitation",
+          "message": "Evidence gap recorded: insufficient_samples.",
+          "rule_id": "explanation.coverage_gap.v1"
+        },
+        {
+          "code": "coverage_gap:short_observation_period",
+          "evidence_refs": [
+            "cohort-cf93abc552c6ada5"
+          ],
+          "kind": "limitation",
+          "message": "Evidence gap recorded: short_observation_period.",
+          "rule_id": "explanation.coverage_gap.v1"
+        },
+        {
+          "code": "universal_score_not_calculated",
+          "evidence_refs": [
+            "provider-report-7ff3c6234c7e9779"
+          ],
+          "kind": "observation",
+          "message": "CloudEyes reports independent dimensions and does not calculate a universal provider score.",
+          "rule_id": "explanation.no_universal_score.v1"
+        }
+      ],
+      "generated_at": "2026-08-06T09:39:32.462937+00:00",
+      "provider_id": "example-cloud",
+      "provider_name": "Example Cloud",
+      "schema_version": "1.0.0",
+      "scorecard": {
+        "cohort_count": 1,
+        "coverage_ratio": 1.0,
+        "dimensions": [
+          {
+            "dimension": "evidence",
+            "evidence_refs": [
+              "cohort-cf93abc552c6ada5"
+            ],
+            "level": "low",
+            "limitations": [
+              "insufficient_samples",
+              "short_observation_period"
+            ],
+            "rule_id": "evidence.minimum_confidence.v1",
+            "status": "assessed",
+            "summary": "Evidence confidence is low; mean expected-metric coverage is 100.0%."
+          },
+          {
+            "dimension": "consistency",
+            "evidence_refs": [
+              "cohort-cf93abc552c6ada5"
+            ],
+            "level": "low",
+            "limitations": [
+              "coefficient_of_variation_unavailable"
+            ],
+            "rule_id": "consistency.cv.v1",
+            "status": "assessed",
+            "summary": "No metric had enough finite variation data for a stable consistency result."
+          },
+          {
+            "dimension": "reliability",
+            "evidence_refs": [
+              "general-example"
+            ],
+            "level": "high",
+            "limitations": [],
+            "rule_id": "reliability.measurement_completion.v1",
+            "status": "assessed",
+            "summary": "Measurement completion was high at 100.0%, with no sample warnings or errors."
+          },
+          {
+            "dimension": "performance",
+            "evidence_refs": [
+              "cohort-cf93abc552c6ada5"
+            ],
+            "level": null,
+            "limitations": [
+              "compatible_peer_baseline_required"
+            ],
+            "rule_id": "performance.compatible_peer_required.v1",
+            "status": "not_assessed",
+            "summary": "Performance was measured but not graded because no compatible peer baseline was supplied."
+          },
+          {
+            "dimension": "value",
+            "evidence_refs": [],
+            "level": null,
+            "limitations": [
+              "normalized_pricing_required"
+            ],
+            "rule_id": "value.normalized_price_required.v1",
+            "status": "not_assessed",
+            "summary": "Value was not assessed because the samples do not contain normalized pricing evidence."
+          }
+        ],
+        "profile_count": 1,
+        "profiles": [
+          "general"
+        ],
+        "sample_count": 1,
+        "successful_measurement_ratio": 1.0
+      }
+    },
+    {
+      "analytics_id": "provider-analytics-8d440760dc2af3ba",
+      "evidence": {
+        "cohort_count": 1,
+        "cohorts": [
+          {
+            "cohort_id": "cohort-6617c3158b7a0d8d",
+            "cohort_key": "gcp|vn|compute engine|n2-standard-4|asia-southeast1|asia-southeast1-a|virtual_machine|4|17179869184|x86_64|networking|1.0.0|6a6e890bb4799e6bee4b99ad83521fe1e112e74679d5b992e15a3598019fd3ca",
+            "confidence": {
+              "coverage": "high",
+              "measurement": "high",
+              "statistical": "low"
+            },
+            "coverage": {
+              "available_metrics": [
+                "network.dns.lookup.p50_milliseconds",
+                "network.dns.lookup.p95_milliseconds",
+                "network.download.mib_per_second",
+                "network.http.request_loss_percent",
+                "network.http.ttfb.p50_milliseconds",
+                "network.http.ttfb.p95_milliseconds",
+                "network.tcp.connect.p50_milliseconds",
+                "network.tcp.connect.p95_milliseconds",
+                "network.upload.mib_per_second"
+              ],
+              "expected_metrics": [],
+              "gaps": [
+                "insufficient_samples",
+                "short_observation_period"
+              ],
+              "observation_days": 1,
+              "plans": [
+                "n2-standard-4"
+              ],
+              "products": [
+                "Compute Engine"
+              ],
+              "regions": [
+                "asia-southeast1"
+              ],
+              "sample_count": 1,
+              "zones": [
+                "asia-southeast1-a"
+              ]
+            },
+            "ended_at": "2026-08-06T07:30:00+00:00",
+            "metrics": [
+              {
+                "contributing_samples": 1,
+                "direction": "lower_is_better",
+                "name": "network.dns.lookup.p50_milliseconds",
+                "raw_observations": 1,
+                "statistics": {
+                  "coefficient_of_variation": 0.0,
+                  "count": 1,
+                  "maximum": 0.42,
+                  "mean": 0.42,
+                  "median": 0.42,
+                  "minimum": 0.42,
+                  "p10": 0.42,
+                  "p90": 0.42,
+                  "standard_deviation": 0.0
+                },
+                "unit": "milliseconds"
+              },
+              {
+                "contributing_samples": 1,
+                "direction": "lower_is_better",
+                "name": "network.dns.lookup.p95_milliseconds",
+                "raw_observations": 1,
+                "statistics": {
+                  "coefficient_of_variation": 0.0,
+                  "count": 1,
+                  "maximum": 0.61,
+                  "mean": 0.61,
+                  "median": 0.61,
+                  "minimum": 0.61,
+                  "p10": 0.61,
+                  "p90": 0.61,
+                  "standard_deviation": 0.0
+                },
+                "unit": "milliseconds"
+              },
+              {
+                "contributing_samples": 1,
+                "direction": "higher_is_better",
+                "name": "network.download.mib_per_second",
+                "raw_observations": 1,
+                "statistics": {
+                  "coefficient_of_variation": 0.0,
+                  "count": 1,
+                  "maximum": 412.75,
+                  "mean": 412.75,
+                  "median": 412.75,
+                  "minimum": 412.75,
+                  "p10": 412.75,
+                  "p90": 412.75,
+                  "standard_deviation": 0.0
+                },
+                "unit": "mib_per_second"
+              },
+              {
+                "contributing_samples": 1,
+                "direction": "lower_is_better",
+                "name": "network.http.request_loss_percent",
+                "raw_observations": 1,
+                "statistics": {
+                  "coefficient_of_variation": null,
+                  "count": 1,
+                  "maximum": 0.0,
+                  "mean": 0.0,
+                  "median": 0.0,
+                  "minimum": 0.0,
+                  "p10": 0.0,
+                  "p90": 0.0,
+                  "standard_deviation": 0.0
+                },
+                "unit": "percent"
+              },
+              {
+                "contributing_samples": 1,
+                "direction": "lower_is_better",
+                "name": "network.http.ttfb.p50_milliseconds",
+                "raw_observations": 1,
+                "statistics": {
+                  "coefficient_of_variation": 0.0,
+                  "count": 1,
+                  "maximum": 3.76,
+                  "mean": 3.76,
+                  "median": 3.76,
+                  "minimum": 3.76,
+                  "p10": 3.76,
+                  "p90": 3.76,
+                  "standard_deviation": 0.0
+                },
+                "unit": "milliseconds"
+              },
+              {
+                "contributing_samples": 1,
+                "direction": "lower_is_better",
+                "name": "network.http.ttfb.p95_milliseconds",
+                "raw_observations": 1,
+                "statistics": {
+                  "coefficient_of_variation": 0.0,
+                  "count": 1,
+                  "maximum": 4.12,
+                  "mean": 4.12,
+                  "median": 4.12,
+                  "minimum": 4.12,
+                  "p10": 4.12,
+                  "p90": 4.12,
+                  "standard_deviation": 0.0
+                },
+                "unit": "milliseconds"
+              },
+              {
+                "contributing_samples": 1,
+                "direction": "lower_is_better",
+                "name": "network.tcp.connect.p50_milliseconds",
+                "raw_observations": 1,
+                "statistics": {
+                  "coefficient_of_variation": 0.0,
+                  "count": 1,
+                  "maximum": 1.84,
+                  "mean": 1.84,
+                  "median": 1.84,
+                  "minimum": 1.84,
+                  "p10": 1.84,
+                  "p90": 1.84,
+                  "standard_deviation": 0.0
+                },
+                "unit": "milliseconds"
+              },
+              {
+                "contributing_samples": 1,
+                "direction": "lower_is_better",
+                "name": "network.tcp.connect.p95_milliseconds",
+                "raw_observations": 1,
+                "statistics": {
+                  "coefficient_of_variation": 0.0,
+                  "count": 1,
+                  "maximum": 2.11,
+                  "mean": 2.11,
+                  "median": 2.11,
+                  "minimum": 2.11,
+                  "p10": 2.11,
+                  "p90": 2.11,
+                  "standard_deviation": 0.0
+                },
+                "unit": "milliseconds"
+              },
+              {
+                "contributing_samples": 1,
+                "direction": "higher_is_better",
+                "name": "network.upload.mib_per_second",
+                "raw_observations": 1,
+                "statistics": {
+                  "coefficient_of_variation": 0.0,
+                  "count": 1,
+                  "maximum": 286.4,
+                  "mean": 286.4,
+                  "median": 286.4,
+                  "minimum": 286.4,
+                  "p10": 286.4,
+                  "p90": 286.4,
+                  "standard_deviation": 0.0
+                },
+                "unit": "mib_per_second"
+              }
+            ],
+            "protocol": {
+              "fingerprint": "6a6e890bb4799e6bee4b99ad83521fe1e112e74679d5b992e15a3598019fd3ca",
+              "profile": "networking",
+              "version": "1.0.0"
+            },
+            "sample_count": 1,
+            "sample_ids": [
+              "networking-example"
+            ],
+            "started_at": "2026-08-06T07:30:00+00:00"
+          }
+        ],
+        "gaps": [
+          "insufficient_samples",
+          "short_observation_period"
+        ],
+        "generated_at": "2026-08-06T09:39:32.462937+00:00",
+        "overall_confidence": "low",
+        "provider_id": "gcp",
+        "provider_name": "Google Cloud",
+        "report_id": "provider-report-662a30e063bfc6f0",
+        "schema_version": "1.0.0",
+        "total_samples": 1
+      },
+      "explanations": [
+        {
+          "code": "evidence_low",
+          "evidence_refs": [
+            "cohort-6617c3158b7a0d8d"
+          ],
+          "kind": "limitation",
+          "message": "Evidence confidence is low; mean expected-metric coverage is 100.0%.",
+          "rule_id": "evidence.minimum_confidence.v1"
+        },
+        {
+          "code": "consistency_low",
+          "evidence_refs": [
+            "cohort-6617c3158b7a0d8d"
+          ],
+          "kind": "limitation",
+          "message": "No metric had enough finite variation data for a stable consistency result.",
+          "rule_id": "consistency.cv.v1"
+        },
+        {
+          "code": "reliability_medium",
+          "evidence_refs": [
+            "networking-example"
+          ],
+          "kind": "observation",
+          "message": "Measurement completion was 100.0%; some samples contained quality warnings.",
+          "rule_id": "reliability.measurement_completion.v1"
+        },
+        {
+          "code": "performance_not_assessed",
+          "evidence_refs": [
+            "cohort-6617c3158b7a0d8d"
+          ],
+          "kind": "limitation",
+          "message": "Performance was measured but not graded because no compatible peer baseline was supplied.",
+          "rule_id": "performance.compatible_peer_required.v1"
+        },
+        {
+          "code": "value_not_assessed",
+          "evidence_refs": [],
+          "kind": "limitation",
+          "message": "Value was not assessed because the samples do not contain normalized pricing evidence.",
+          "rule_id": "value.normalized_price_required.v1"
+        },
+        {
+          "code": "coverage_gap:insufficient_samples",
+          "evidence_refs": [
+            "cohort-6617c3158b7a0d8d"
+          ],
+          "kind": "limitation",
+          "message": "Evidence gap recorded: insufficient_samples.",
+          "rule_id": "explanation.coverage_gap.v1"
+        },
+        {
+          "code": "coverage_gap:short_observation_period",
+          "evidence_refs": [
+            "cohort-6617c3158b7a0d8d"
+          ],
+          "kind": "limitation",
+          "message": "Evidence gap recorded: short_observation_period.",
+          "rule_id": "explanation.coverage_gap.v1"
+        },
+        {
+          "code": "universal_score_not_calculated",
+          "evidence_refs": [
+            "provider-report-662a30e063bfc6f0"
+          ],
+          "kind": "observation",
+          "message": "CloudEyes reports independent dimensions and does not calculate a universal provider score.",
+          "rule_id": "explanation.no_universal_score.v1"
+        }
+      ],
+      "generated_at": "2026-08-06T09:39:32.462937+00:00",
+      "provider_id": "gcp",
+      "provider_name": "Google Cloud",
+      "schema_version": "1.0.0",
+      "scorecard": {
+        "cohort_count": 1,
+        "coverage_ratio": 1.0,
+        "dimensions": [
+          {
+            "dimension": "evidence",
+            "evidence_refs": [
+              "cohort-6617c3158b7a0d8d"
+            ],
+            "level": "low",
+            "limitations": [
+              "insufficient_samples",
+              "short_observation_period"
+            ],
+            "rule_id": "evidence.minimum_confidence.v1",
+            "status": "assessed",
+            "summary": "Evidence confidence is low; mean expected-metric coverage is 100.0%."
+          },
+          {
+            "dimension": "consistency",
+            "evidence_refs": [
+              "cohort-6617c3158b7a0d8d"
+            ],
+            "level": "low",
+            "limitations": [
+              "coefficient_of_variation_unavailable"
+            ],
+            "rule_id": "consistency.cv.v1",
+            "status": "assessed",
+            "summary": "No metric had enough finite variation data for a stable consistency result."
+          },
+          {
+            "dimension": "reliability",
+            "evidence_refs": [
+              "networking-example"
+            ],
+            "level": "medium",
+            "limitations": [
+              "samples_with_warnings:1"
+            ],
+            "rule_id": "reliability.measurement_completion.v1",
+            "status": "assessed",
+            "summary": "Measurement completion was 100.0%; some samples contained quality warnings."
+          },
+          {
+            "dimension": "performance",
+            "evidence_refs": [
+              "cohort-6617c3158b7a0d8d"
+            ],
+            "level": null,
+            "limitations": [
+              "compatible_peer_baseline_required"
+            ],
+            "rule_id": "performance.compatible_peer_required.v1",
+            "status": "not_assessed",
+            "summary": "Performance was measured but not graded because no compatible peer baseline was supplied."
+          },
+          {
+            "dimension": "value",
+            "evidence_refs": [],
+            "level": null,
+            "limitations": [
+              "normalized_pricing_required"
+            ],
+            "rule_id": "value.normalized_price_required.v1",
+            "status": "not_assessed",
+            "summary": "Value was not assessed because the samples do not contain normalized pricing evidence."
+          }
+        ],
+        "profile_count": 1,
+        "profiles": [
+          "networking"
+        ],
+        "sample_count": 1,
+        "successful_measurement_ratio": 1.0
+      }
+    }
+  ],
+  "schema_version": "1.0.0",
+  "source_sample_count": 4
+}

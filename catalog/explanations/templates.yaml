@@ -1,3 +1,7 @@
 name: templates
 version: 1
-status: planned
+status: implemented
+universal_score_message:
+  rule_id: explanation.no_universal_score.v1
+  code: universal_score_not_calculated
+  kind: observation

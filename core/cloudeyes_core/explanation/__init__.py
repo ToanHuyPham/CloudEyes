@@ -1,9 +1,5 @@
-"""Explanation.
+"""Traceable CloudEyes explanation utilities."""
 
-Placeholder for the CloudEyes foundation.
-Implementation will be added with tests and documentation.
-"""
+from .engine import build_explanations
 
-from __future__ import annotations
-
-__all__: list[str] = []
+__all__ = ["build_explanations"]

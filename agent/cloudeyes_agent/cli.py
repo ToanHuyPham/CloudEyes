@@ -6,7 +6,7 @@ import argparse
 from collections.abc import Sequence
 from pathlib import Path
 
-from .commands import run_inspect, run_profile
+from .commands import run_analyze, run_inspect, run_profile
 
 
 def _worker_count(value: str) -> int:
@@ -118,6 +118,28 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="run in the CLI process for debugging; disables hard timeout enforcement",
     )
+
+    analyze_parser = commands.add_parser(
+        "analyze",
+        help="build offline provider analytics from local sample JSON files",
+    )
+    analyze_parser.add_argument(
+        "inputs",
+        nargs="+",
+        type=Path,
+        help="sample JSON file or directory containing sample JSON files",
+    )
+    analyze_parser.add_argument("--output", type=Path, help="optional analytics JSON output path")
+    analyze_parser.add_argument(
+        "--markdown", type=Path, help="optional human-readable Markdown output path"
+    )
+    analyze_parser.add_argument(
+        "--expected-metric",
+        action="append",
+        default=[],
+        help="expected metric name; repeat to declare multiple metrics",
+    )
+    analyze_parser.add_argument("--compact", action="store_true", help="emit compact JSON")
     return parser
 
 
@@ -127,6 +149,14 @@ def main(argv: Sequence[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
     if args.command == "inspect":
         return run_inspect(output=args.output, pretty=not args.compact)
+    if args.command == "analyze":
+        return run_analyze(
+            inputs=tuple(args.inputs),
+            output=args.output,
+            markdown=args.markdown,
+            expected_metrics=tuple(args.expected_metric),
+            pretty=not args.compact,
+        )
     if args.command == "run":
         return run_profile(
             profile=args.profile,

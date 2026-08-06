@@ -1,3 +1,10 @@
 name: verdicts
 version: 1
-status: planned
+status: implemented
+universal_provider_score: prohibited
+performance:
+  status_without_compatible_peer: not_assessed
+  rule_id: performance.compatible_peer_required.v1
+value:
+  status_without_normalized_price: not_assessed
+  rule_id: value.normalized_price_required.v1

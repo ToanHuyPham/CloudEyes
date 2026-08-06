@@ -1,3 +1,10 @@
 name: reasons
 version: 1
-status: planned
+status: implemented
+rule_id: explanation.dimension_level.v1
+kinds:
+  - strength
+  - limitation
+  - observation
+requires_rule_id: true
+requires_evidence_references: true

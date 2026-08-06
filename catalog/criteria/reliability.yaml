@@ -1,3 +1,12 @@
 name: reliability
 version: 1
-status: planned
+status: implemented
+rule_id: reliability.measurement_completion.v1
+high_min_success_ratio: 0.95
+medium_min_success_ratio: 0.80
+high_requires_no_sample_warnings: true
+medium_requires_no_sample_errors: true
+scope: benchmark_completion_and_sample_quality
+excluded_claims:
+  - provider_uptime
+  - sla_compliance

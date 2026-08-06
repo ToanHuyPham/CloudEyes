@@ -74,3 +74,11 @@ of converting it into a failed measurement. Terminate and kill remain final fall
 blocking system calls or non-cooperative code. A deadline still returns exit code 124 even
 when cooperative cleanup succeeds; an interactive interruption returns 130.
 
+## ADR-014 — Provider Analytics v1 is multidimensional and evidence-bounded
+
+Provider Analytics v1 evaluates evidence confidence, observed consistency, and benchmark
+completion reliability as independent dimensions. It does not calculate a universal provider
+score. Performance is not graded without a compatible peer baseline, value is not graded without
+normalized pricing evidence, and benchmark completion must not be presented as provider uptime.
+Every explanation carries a versioned rule ID and evidence references.
+

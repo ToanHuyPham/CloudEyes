@@ -1,3 +1,8 @@
 name: consistency
 version: 1
-status: planned
+status: implemented
+rule_id: consistency.cv.v1
+high_max_coefficient_of_variation: 0.10
+medium_max_coefficient_of_variation: 0.25
+fallback: low
+scope: observed_compatible_cohorts

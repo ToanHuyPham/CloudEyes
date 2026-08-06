@@ -1,9 +1,7 @@
-"""provider scorecard.
-
-Placeholder for the CloudEyes foundation.
-Implementation will be added with tests and documentation.
-"""
+"""Provider scorecard public API."""
 
 from __future__ import annotations
 
-__all__: list[str] = []
+from ..assessment import build_scorecard
+
+__all__ = ["build_scorecard"]

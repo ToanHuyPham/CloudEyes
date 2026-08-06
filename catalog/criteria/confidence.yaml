@@ -1,3 +1,17 @@
 name: confidence
 version: 1
-status: planned
+status: implemented
+rule_id: evidence.minimum_confidence.v1
+dimensions:
+  measurement:
+    high_max_coefficient_of_variation: 0.10
+    medium_max_coefficient_of_variation: 0.25
+  statistical:
+    high_min_samples: 10
+    high_min_observation_days: 7
+    medium_min_samples: 3
+    medium_min_observation_days: 3
+  coverage:
+    high_min_metric_ratio: 0.90
+    medium_min_metric_ratio: 0.60
+overall: lowest_dimension

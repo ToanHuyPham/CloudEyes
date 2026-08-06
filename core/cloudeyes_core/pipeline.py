@@ -5,8 +5,8 @@ from __future__ import annotations
 from datetime import datetime
 
 from .cohorts import build_cohorts
-from .models import ProviderReport, Sample
-from .provider import build_provider_reports
+from .models import AnalyticsBundle, ProviderReport, Sample
+from .provider import build_analytics_bundle, build_provider_reports
 from .repository import JsonSampleRepository
 from .validation import ensure_valid_sample
 
@@ -38,6 +38,36 @@ def analyze_repository(
     """Load every repository sample and build provider reports."""
 
     return analyze_samples(
+        tuple(repository.iter_samples()),
+        expected_metrics=expected_metrics,
+        generated_at=generated_at,
+    )
+
+
+def analyze_provider_analytics(
+    samples: tuple[Sample, ...],
+    *,
+    expected_metrics: tuple[str, ...] = (),
+    generated_at: datetime | None = None,
+) -> AnalyticsBundle:
+    """Build deterministic provider analytics from validated local samples."""
+
+    return build_analytics_bundle(
+        samples,
+        expected_metrics=expected_metrics,
+        generated_at=generated_at,
+    )
+
+
+def analyze_repository_analytics(
+    repository: JsonSampleRepository,
+    *,
+    expected_metrics: tuple[str, ...] = (),
+    generated_at: datetime | None = None,
+) -> AnalyticsBundle:
+    """Load repository samples and build provider analytics."""
+
+    return analyze_provider_analytics(
         tuple(repository.iter_samples()),
         expected_metrics=expected_metrics,
         generated_at=generated_at,

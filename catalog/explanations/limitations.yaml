@@ -1,3 +1,9 @@
 name: limitations
 version: 1
-status: planned
+status: implemented
+rule_id: explanation.coverage_gap.v1
+sources:
+  - coverage_gaps
+  - unassessed_dimensions
+  - low_dimension_results
+requires_evidence_references: true

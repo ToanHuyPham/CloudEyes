@@ -1,3 +1,12 @@
 name: coverage
 version: 1
-status: planned
+status: implemented
+rule_id: evidence.minimum_confidence.v1
+minimum_samples: 3
+minimum_observation_days: 3
+required_identity_fields:
+  - region
+  - zone
+  - product
+  - plan
+missing_expected_metric_prefix: missing_metric

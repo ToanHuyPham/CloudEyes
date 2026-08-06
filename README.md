@@ -31,3 +31,15 @@ python -m cloudeyes_agent run compute \
   --workers 4 \
   --output data/compute-sample.json
 ```
+
+Offline provider analytics:
+
+```bash
+python -m cloudeyes_agent analyze data/samples \
+  --output reports/provider-analytics.json \
+  --markdown reports/provider-analytics.md
+```
+
+Provider Analytics v1 reports independent evidence, consistency, reliability, performance, and
+value dimensions. It deliberately does not calculate a universal provider score.
+

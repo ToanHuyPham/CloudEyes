@@ -37,14 +37,15 @@ Agent → Measurement → Evidence → Sample → Validation → Cohort → Asse
 
 ## Current status
 
-- Phase: Reliable measurements
+- Phase: Provider analytics
 - Version: 0.1.0-dev
 - Completed profiles: General v1, Storage v1, Networking v1, and Compute v1
 - Raw storage evidence: Atomic local JSON
 - Platform: Skeleton only
 - Shared measurement reliability policies: complete
 - Process isolation and cooperative cancellation: complete
-- Next component: Provider analytics v1
+- Provider Analytics v1: complete
+- Next component: Compatible Peer Comparison v1
 
 ## Implementation order
 
@@ -56,10 +57,11 @@ Agent → Measurement → Evidence → Sample → Validation → Cohort → Asse
 6. Networking profile — complete
 7. Compute profile — complete
 8. Cohort builder — complete foundation, expand after reliable measurements
-9. Provider aggregation — complete foundation, expand after reliable measurements
-10. Rule-based assessment and explanation
-11. JSON and Markdown reports
-12. API and dashboard
+9. Provider aggregation — complete v1
+10. Rule-based assessment and explanation — complete v1
+11. JSON and Markdown reports — complete v1
+12. Compatible peer comparison and normalized pricing
+13. API and dashboard
 
 ## Daily update rule
 

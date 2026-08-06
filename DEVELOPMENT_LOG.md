@@ -153,3 +153,28 @@
 - A blocking operating-system call observes cancellation only after it returns or reaches its own timeout.
 - Hard termination remains necessary when third-party or operating-system code ignores the cooperative contract.
 
+## 2026-08-06 — Provider Analytics v1
+
+### Completed
+
+- Added offline analytics bundles with one report per provider.
+- Reused strict cohorts, equal-weight summaries, coverage, and confidence from Core Foundation.
+- Added independent evidence, consistency, reliability, performance, and value dimensions.
+- Added explicit `not_assessed` results when compatible peers or normalized pricing are absent.
+- Added traceable strengths, limitations, observations, rule IDs, and evidence references.
+- Added `cloudeyes analyze` with JSON and optional Markdown output.
+- Added a strict Provider Analytics v1 JSON Schema and unit, integration, and schema tests.
+
+### Current state
+
+- Phase: Provider analytics
+- Component: Provider Analytics v1
+- Status: Complete
+- Next component: Compatible Peer Comparison v1
+
+### Explicit limitations
+
+- Consistency describes only observed cohort variation.
+- Reliability describes benchmark completion and sample quality, not provider uptime.
+- Performance and value remain unassessed without compatible peer and pricing evidence.
+
