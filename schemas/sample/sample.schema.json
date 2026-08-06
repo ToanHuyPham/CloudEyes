@@ -1,5 +1,162 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cloudeyes.dev/schemas/sample/sample.schema.json",
+  "title": "CloudEyes Sample",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "sample_id",
+    "created_at",
+    "provider",
+    "product",
+    "machine",
+    "protocol",
+    "measurements",
+    "quality"
+  ],
+  "properties": {
+    "sample_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "provider": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "provider_id",
+        "name",
+        "country_code"
+      ],
+      "properties": {
+        "provider_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "country_code": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[A-Z]{2}$"
+        }
+      }
+    },
+    "product": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "product",
+        "plan",
+        "region",
+        "zone"
+      ],
+      "properties": {
+        "product": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "plan": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "region": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "zone": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "machine": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "machine_type",
+        "cpu_count",
+        "memory_bytes",
+        "architecture"
+      ],
+      "properties": {
+        "machine_type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "cpu_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "memory_bytes": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "architecture": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "protocol": {
+      "$ref": "../protocol/manifest.schema.json"
+    },
+    "measurements": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "../measurement/measurement.schema.json"
+      }
+    },
+    "quality": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "warnings",
+        "errors"
+      ],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "valid",
+            "valid_with_warnings",
+            "invalid"
+          ]
+        },
+        "warnings": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "errors": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Sample",
   "type": "object",
   "additionalProperties": true
